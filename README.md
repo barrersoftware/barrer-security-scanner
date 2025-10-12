@@ -347,14 +347,90 @@ cd integrations
 
 See [integrations/README.md](integrations/README.md) for full documentation.
 
+## 🖥️ Multi-Server Scanning
+
+**NEW!** Scan multiple servers from a central location using SSH.
+
+```bash
+cd multi-server
+cp servers.yaml.example servers.yaml
+# Edit servers.yaml with your infrastructure
+./scan-servers.sh --group production --notify
+```
+
+**Features:**
+- 🔄 Parallel scanning with GNU Parallel
+- 📋 YAML-based server inventory with groups and tags
+- 🎯 Flexible targeting (by name, group, or tags)
+- 📊 Consolidated reports across all servers
+- 🔔 Automatic notifications on completion
+- ⚡ Fast execution (scan 50 servers in ~15 minutes)
+
+**Examples:**
+```bash
+# Scan production servers
+./scan-servers.sh --group production --parallel 8
+
+# Scan specific servers with consolidated report
+./scan-servers.sh --servers web-01,db-01 --consolidated
+
+# Scan by tags with notifications
+./scan-servers.sh --tags critical --notify
+```
+
+See [multi-server/README.md](multi-server/README.md) for full documentation.
+
+## ☁️ Cloud Security Scanning
+
+**NEW!** Comprehensive security audits for AWS, GCP, and Azure.
+
+```bash
+cd cloud-security
+
+# Scan individual clouds
+./scan-aws.sh
+./scan-gcp.sh
+./scan-azure.sh
+
+# Or scan all at once
+./scan-all-clouds.sh --all --notify
+```
+
+**Supported Services:**
+- **AWS:** IAM, EC2, S3, VPC, RDS, CloudTrail, Security Groups
+- **GCP:** IAM, Compute Engine, Cloud Storage, VPC, Cloud SQL, Logging
+- **Azure:** Azure AD, VMs, Storage, NSGs, SQL, Key Vault, Security Center
+
+**Features:**
+- ☁️ Multi-cloud support (AWS, GCP, Azure)
+- 🔍 Comprehensive service coverage
+- 🤖 AI-powered analysis and recommendations
+- 📊 Detailed markdown reports
+- 🎨 Color-coded severity levels
+- 🔔 Integration with notification system
+
+**Examples:**
+```bash
+# Daily AWS security audit
+./scan-aws.sh && ../integrations/notify.sh --file ~/security-reports/aws_*.md
+
+# Multi-cloud compliance scan
+./scan-all-clouds.sh --all --notify
+
+# Specific clouds only
+./scan-all-clouds.sh --aws --gcp
+```
+
+See [cloud-security/README.md](cloud-security/README.md) for full documentation.
+
 ## 🗺️ Roadmap
 
 - [x] ✅ Web UI dashboard
 - [x] ✅ Integration with Slack/Discord/Teams
-- [ ] Multi-server scanning from central location
+- [x] ✅ Multi-server scanning from central location
+- [x] ✅ Cloud provider security (AWS/GCP/Azure)
 - [ ] Custom rule engine
 - [ ] Kubernetes security scanning
-- [ ] Cloud provider security (AWS/GCP/Azure)
 - [ ] Database security analysis
 - [ ] Compliance framework templates (PCI-DSS, HIPAA, SOC2)
 
