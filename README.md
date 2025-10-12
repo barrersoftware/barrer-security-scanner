@@ -227,6 +227,28 @@ Modify what gets scanned by editing the script sections:
 - **Open Source** - Full transparency, audit the code yourself
 - **Air-gap Compatible** - Works on isolated networks (after initial model download)
 
+## 💖 Why Open Source?
+
+We believe security tools should be open source for several critical reasons:
+
+**Transparency & Trust** - Security software deals with your most sensitive systems and data. Closed-source security tools ask you to trust them blindly. With open source, you can audit every line of code, verify there are no backdoors, and ensure your data stays private. Trust should be earned through transparency, not demanded through obscurity.
+
+**Community Strength** - Security is a collaborative effort. The global security community can review, improve, and contribute to this project, making it stronger and more reliable than any single vendor could achieve. Bugs are found faster, vulnerabilities are patched quicker, and features are built based on real-world needs.
+
+**Freedom & Control** - You own your security infrastructure. No vendor lock-in, no forced updates, no licensing headaches, no telemetry collecting your data. You control when and how to deploy updates, customize the tool for your specific needs, and run it anywhere without restrictions or ongoing costs.
+
+**Educational Value** - Learning security is hard when tools are black boxes. This project serves as both a production tool and an educational resource. Study the code, understand how AI-powered security analysis works, modify it for your use cases, and share your improvements with others.
+
+**Longevity & Sustainability** - Proprietary security companies can be acquired, discontinued, or pivot away from products you depend on. Open source projects live beyond any single organization. Even if the original maintainers move on, the community can continue development, ensuring your investment in this tool isn't wasted.
+
+**Privacy by Design** - We built this tool to run 100% locally because we believe your security data should never leave your infrastructure. This isn't just a feature—it's a philosophy. Open source ensures we can't quietly add telemetry or "phone home" functionality in future updates. The code is the proof.
+
+**No Hidden Costs** - Security tools shouldn't be prohibitively expensive. Organizations of all sizes deserve enterprise-grade security analysis. By making this tool free and open source, we're democratizing access to AI-powered security analysis, whether you're a Fortune 500 company or a solo developer.
+
+This project embodies the principles that have made Linux, OpenSSL, and countless other critical security projects successful. Security through transparency, not obscurity. Community over profit. Freedom over lock-in.
+
+If this project helps you secure your infrastructure, consider contributing back—whether through code, documentation, bug reports, or simply spreading the word. Together, we can build security tools that serve everyone, not just those who can afford expensive proprietary solutions.
+
 ## 💡 Tips
 
 1. **Start with smaller model** - Test with 8B model first, upgrade if needed
