@@ -49,11 +49,20 @@ Comprehensive security analysis tools using local Large Language Models (LLMs) f
 - Anomaly detection
 - Intrusion attempts
 
+## 🪟 Windows Support
+
+**Full Windows support now available!** See [Windows README](windows/README.md) for details.
+
+```powershell
+cd windows
+.\install.ps1
+```
+
 ## 🚀 Quick Start
 
 ### Prerequisites
 
-- Linux, BSD, or macOS system
+- Linux, BSD, macOS, or Windows system
 - 8GB RAM minimum (16GB+ recommended for 70B model)
 - 50GB+ free disk space
 - Internet connection (for initial setup only)
