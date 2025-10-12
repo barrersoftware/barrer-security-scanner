@@ -316,11 +316,42 @@ Access at `http://localhost:3000`
 
 See [web-ui/README.md](web-ui/README.md) for full documentation.
 
+## 🔔 Team Notifications (Slack/Discord/Teams)
+
+**NEW!** Send security alerts and reports to your team communication platforms.
+
+```bash
+cd integrations
+./setup-integrations.sh
+```
+
+**Features:**
+- 🔔 Slack, Discord, and Microsoft Teams support
+- 🎨 Color-coded severity levels (critical, warning, info, success)
+- 📄 Attach full security reports to notifications
+- ⚡ Automatic notifications on scan completion
+- 📊 Rich formatting with emojis and detailed messages
+
+**Examples:**
+```bash
+# Send notification to Slack
+./integrations/notify.sh --platform slack --message "Scan completed"
+
+# Run scan with auto-notification to all platforms
+./integrations/auto-notify.sh comprehensive
+
+# Send critical alert with report
+./integrations/notify.sh --platform all --title "Security Alert" \
+    --file ~/security-reports/latest.md --severity critical
+```
+
+See [integrations/README.md](integrations/README.md) for full documentation.
+
 ## 🗺️ Roadmap
 
 - [x] ✅ Web UI dashboard
+- [x] ✅ Integration with Slack/Discord/Teams
 - [ ] Multi-server scanning from central location
-- [ ] Integration with Slack/Discord/Teams
 - [ ] Custom rule engine
 - [ ] Kubernetes security scanning
 - [ ] Cloud provider security (AWS/GCP/Azure)
