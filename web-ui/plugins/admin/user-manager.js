@@ -28,7 +28,7 @@ class UserManager {
    */
   async createUser(userData) {
     try {
-      const { username, email, password, role = 'user', active = true } = userData;
+      const { username, email, password, role = 'user', active = true, tenantId } = userData;
 
       // Validate input
       if (!username || !email || !password) {
@@ -47,6 +47,20 @@ class UserManager {
       // Validate role
       if (!this.db.roles.has(role)) {
         throw new Error(`Invalid role: ${role}`);
+      }
+
+      // Validate tenant if provided
+      if (tenantId) {
+        const tenantManager = this.core.getService('tenant-manager');
+        if (tenantManager) {
+          const tenant = await tenantManager.getTenant(tenantId);
+          if (!tenant) {
+            throw new Error(`Invalid tenant ID: ${tenantId}`);
+          }
+          if (tenant.status !== 'active') {
+            throw new Error(`Tenant is ${tenant.status}, cannot add users`);
+          }
+        }
       }
 
       // Hash password (in production, use auth service)
@@ -74,6 +88,7 @@ class UserManager {
         password: hashedPassword,
         role,
         active,
+        tenantId: tenantId || null, // Add tenant association
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
         lastLogin: null,
@@ -82,7 +97,7 @@ class UserManager {
 
       this.db.users.set(userId, user);
 
-      this.logger?.info(`User created: ${username} (${email}) with role ${role}`);
+      this.logger?.info(`User created: ${username} (${email}) with role ${role}${tenantId ? ` in tenant ${tenantId}` : ''}`);
 
       // Return user without password
       return this.sanitizeUser(user);
@@ -133,7 +148,8 @@ class UserManager {
       limit = 50,
       role = null,
       active = null,
-      search = null
+      search = null,
+      tenantId = null  // Add tenant filter
     } = options;
 
     let users = Array.from(this.db.users.values());
@@ -145,6 +161,11 @@ class UserManager {
 
     if (active !== null) {
       users = users.filter(u => u.active === active);
+    }
+
+    // Filter by tenant
+    if (tenantId !== null) {
+      users = users.filter(u => u.tenantId === tenantId);
     }
 
     if (search) {
@@ -188,7 +209,7 @@ class UserManager {
       }
 
       // Don't allow updating certain fields
-      const allowedFields = ['email', 'role', 'active'];
+      const allowedFields = ['email', 'role', 'active', 'tenantId'];
       
       for (const [key, value] of Object.entries(updates)) {
         if (allowedFields.includes(key)) {
@@ -196,6 +217,18 @@ class UserManager {
           if (key === 'role' && !this.db.roles.has(value)) {
             throw new Error(`Invalid role: ${value}`);
           }
+          
+          // Validate tenant if updating
+          if (key === 'tenantId' && value !== null) {
+            const tenantManager = this.core.getService('tenant-manager');
+            if (tenantManager) {
+              const tenant = await tenantManager.getTenant(value);
+              if (!tenant) {
+                throw new Error(`Invalid tenant ID: ${value}`);
+              }
+            }
+          }
+          
           user[key] = value;
         }
       }
@@ -304,6 +337,54 @@ class UserManager {
       user.lastLogin = new Date().toISOString();
       user.loginCount = (user.loginCount || 0) + 1;
     }
+  }
+
+  /**
+   * Get users by tenant ID
+   */
+  async getUsersByTenant(tenantId) {
+    const users = Array.from(this.db.users.values());
+    return users.filter(u => u.tenantId === tenantId).map(u => this.sanitizeUser(u));
+  }
+
+  /**
+   * Count users in a tenant
+   */
+  async countUsersByTenant(tenantId) {
+    const users = Array.from(this.db.users.values());
+    return users.filter(u => u.tenantId === tenantId).length;
+  }
+
+  /**
+   * Move user to different tenant
+   */
+  async moveUserToTenant(userId, newTenantId) {
+    const user = this.db.users.get(parseInt(userId));
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    // Validate new tenant
+    if (newTenantId !== null) {
+      const tenantManager = this.core.getService('tenant-manager');
+      if (tenantManager) {
+        const tenant = await tenantManager.getTenant(newTenantId);
+        if (!tenant) {
+          throw new Error(`Invalid tenant ID: ${newTenantId}`);
+        }
+        if (tenant.status !== 'active') {
+          throw new Error(`Tenant is ${tenant.status}, cannot move user`);
+        }
+      }
+    }
+
+    const oldTenantId = user.tenantId;
+    user.tenantId = newTenantId;
+    user.updatedAt = new Date().toISOString();
+
+    this.logger?.info(`User ${user.username} moved from tenant ${oldTenantId} to ${newTenantId}`);
+
+    return this.sanitizeUser(user);
   }
 
   /**
