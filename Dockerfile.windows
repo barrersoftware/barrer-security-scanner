@@ -1,0 +1,29 @@
+# Windows Server Core container for testing AI Security Scanner
+# Note: This requires Docker with Windows container support
+
+FROM mcr.microsoft.com/windows/servercore:ltsc2022
+
+# Install Chocolatey package manager
+RUN powershell -NoProfile -ExecutionPolicy Bypass -Command \
+    "[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12; \
+    iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"
+
+# Install Node.js, Git, and other tools
+RUN choco install -y nodejs-lts git
+
+# Verify installations
+RUN node --version
+RUN npm --version
+RUN git --version
+
+# Create test directory
+WORKDIR C:\\test
+
+# Set PowerShell as default shell
+SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
+
+# Copy test script
+COPY test-windows.ps1 C:\\test\\test-scanner.ps1
+
+# Default command
+CMD ["powershell.exe", "-NoLogo", "-ExecutionPolicy", "Bypass"]
