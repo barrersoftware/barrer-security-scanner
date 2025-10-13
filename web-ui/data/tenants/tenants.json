@@ -38,5 +38,3805 @@
     "createdAt": "2025-10-13T20:44:01.548Z",
     "updatedAt": "2025-10-13T20:44:01.548Z",
     "metadata": {}
+  },
+  {
+    "id": "tenant-bede49f699e75aeaa82fe78ae3220618",
+    "name": "Test Tenant 1",
+    "slug": "tenant-1",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.243Z",
+    "updatedAt": "2025-10-13T23:55:49.243Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-d33099cb5468a436064483b54ae82628",
+    "name": "Test Tenant 2",
+    "slug": "tenant-2",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.305Z",
+    "updatedAt": "2025-10-13T23:55:49.305Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-3c8cfb1924f150fe3890b82b28d7e80b",
+    "name": "Test Tenant 3",
+    "slug": "tenant-3",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.306Z",
+    "updatedAt": "2025-10-13T23:55:49.306Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-dd1ba30288f7dd85620a63ab27343b75",
+    "name": "Test Tenant 4",
+    "slug": "tenant-4",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.307Z",
+    "updatedAt": "2025-10-13T23:55:49.307Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-f08db85737341850f2442d148ada6d2b",
+    "name": "Test Tenant 5",
+    "slug": "tenant-5",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.307Z",
+    "updatedAt": "2025-10-13T23:55:49.307Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-1be897d352c169f28465db7831a6d923",
+    "name": "Test Tenant 6",
+    "slug": "tenant-6",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.308Z",
+    "updatedAt": "2025-10-13T23:55:49.308Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-9e55ff7d764abf432c3ab557b8b1903b",
+    "name": "Test Tenant 7",
+    "slug": "tenant-7",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.308Z",
+    "updatedAt": "2025-10-13T23:55:49.308Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-e9a2a94caa7b7c9d978bcaaeeba13094",
+    "name": "Test Tenant 8",
+    "slug": "tenant-8",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.309Z",
+    "updatedAt": "2025-10-13T23:55:49.309Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-c7bb9a4550ded35d1ef3a679e24df393",
+    "name": "Test Tenant 9",
+    "slug": "tenant-9",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.310Z",
+    "updatedAt": "2025-10-13T23:55:49.310Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-c2d23f0cdbe1a6ddc1909bd92f9b61e9",
+    "name": "Test Tenant 10",
+    "slug": "tenant-10",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.310Z",
+    "updatedAt": "2025-10-13T23:55:49.310Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-4797f12defbff2e8c1673ff80e49a6ae",
+    "name": "Test Tenant 11",
+    "slug": "tenant-11",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.311Z",
+    "updatedAt": "2025-10-13T23:55:49.311Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-22cdd48cf0cc3b2611b6b74720a34964",
+    "name": "Test Tenant 12",
+    "slug": "tenant-12",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.311Z",
+    "updatedAt": "2025-10-13T23:55:49.311Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-d8d755b70efe0f35e96492bd5d04134b",
+    "name": "Test Tenant 13",
+    "slug": "tenant-13",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.312Z",
+    "updatedAt": "2025-10-13T23:55:49.312Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-d2f2faee71015a806277b8a67a54cb06",
+    "name": "Test Tenant 14",
+    "slug": "tenant-14",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.313Z",
+    "updatedAt": "2025-10-13T23:55:49.313Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-5cb48086acaaf225404ccb69a380dfc1",
+    "name": "Test Tenant 15",
+    "slug": "tenant-15",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.313Z",
+    "updatedAt": "2025-10-13T23:55:49.313Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-a75db3cec861516eb4662354b78840d9",
+    "name": "Test Tenant 16",
+    "slug": "tenant-16",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.314Z",
+    "updatedAt": "2025-10-13T23:55:49.314Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-0634b08c65afa2ef90d3772e57f501ab",
+    "name": "Test Tenant 17",
+    "slug": "tenant-17",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.314Z",
+    "updatedAt": "2025-10-13T23:55:49.314Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-d2efd859e0963f5a0b1a524fa190f326",
+    "name": "Test Tenant 18",
+    "slug": "tenant-18",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.315Z",
+    "updatedAt": "2025-10-13T23:55:49.315Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-d3ddcd389dd349d63581bc48f3a79a79",
+    "name": "Test Tenant 19",
+    "slug": "tenant-19",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.315Z",
+    "updatedAt": "2025-10-13T23:55:49.315Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-a4f97e3e4e1ec4d7392998844790a29e",
+    "name": "Test Tenant 20",
+    "slug": "tenant-20",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.316Z",
+    "updatedAt": "2025-10-13T23:55:49.316Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-3df185d947a48658de59e259a7db4598",
+    "name": "Test Tenant 21",
+    "slug": "tenant-21",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.316Z",
+    "updatedAt": "2025-10-13T23:55:49.316Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-ed2292a5fcaf3a62066dcbf00ddfa19c",
+    "name": "Test Tenant 22",
+    "slug": "tenant-22",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.317Z",
+    "updatedAt": "2025-10-13T23:55:49.317Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-6f011baf5f4cd66fee79822c82351c75",
+    "name": "Test Tenant 23",
+    "slug": "tenant-23",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.317Z",
+    "updatedAt": "2025-10-13T23:55:49.317Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-f2208de6aa77609f3b53558a342b4ed3",
+    "name": "Test Tenant 24",
+    "slug": "tenant-24",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.319Z",
+    "updatedAt": "2025-10-13T23:55:49.319Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-9eac7d7e88d9e90bc1c06d651c661aa2",
+    "name": "Test Tenant 25",
+    "slug": "tenant-25",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.320Z",
+    "updatedAt": "2025-10-13T23:55:49.320Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-e1841d6f2f53e156f713578f4f8229ad",
+    "name": "Test Tenant 26",
+    "slug": "tenant-26",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.320Z",
+    "updatedAt": "2025-10-13T23:55:49.320Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-fb0891f26e6d418f99bef05732962c0b",
+    "name": "Test Tenant 27",
+    "slug": "tenant-27",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.321Z",
+    "updatedAt": "2025-10-13T23:55:49.321Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-aeb7f1b35b589ac8fb844cd9d09e15ad",
+    "name": "Test Tenant 28",
+    "slug": "tenant-28",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.321Z",
+    "updatedAt": "2025-10-13T23:55:49.321Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-f0d3a9d87405420edad10fd9dc761628",
+    "name": "Test Tenant 29",
+    "slug": "tenant-29",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.322Z",
+    "updatedAt": "2025-10-13T23:55:49.322Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-89b551d6e5e59961862a8b1da5cd36bf",
+    "name": "Test Tenant 30",
+    "slug": "tenant-30",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.322Z",
+    "updatedAt": "2025-10-13T23:55:49.322Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-a46b0312776a69efae559b0d0433d2ed",
+    "name": "Test Tenant 31",
+    "slug": "tenant-31",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.323Z",
+    "updatedAt": "2025-10-13T23:55:49.323Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-edae36c66d9f2fd811a73639c6ab5e36",
+    "name": "Test Tenant 32",
+    "slug": "tenant-32",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.323Z",
+    "updatedAt": "2025-10-13T23:55:49.323Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-9ec83e4ea2ec80fc2f3166d8ccc9001d",
+    "name": "Test Tenant 33",
+    "slug": "tenant-33",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.323Z",
+    "updatedAt": "2025-10-13T23:55:49.323Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-95d36415970e6bc5a45034ddb8782fe5",
+    "name": "Test Tenant 34",
+    "slug": "tenant-34",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.324Z",
+    "updatedAt": "2025-10-13T23:55:49.324Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-cf5ba00b4ca35f8b3cccf143c52601cb",
+    "name": "Test Tenant 35",
+    "slug": "tenant-35",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.324Z",
+    "updatedAt": "2025-10-13T23:55:49.324Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-bd69d504fbe32593db85ea255636b217",
+    "name": "Test Tenant 36",
+    "slug": "tenant-36",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.325Z",
+    "updatedAt": "2025-10-13T23:55:49.325Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-db619f5048a23c311b39e3280ac0f8b4",
+    "name": "Test Tenant 37",
+    "slug": "tenant-37",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.325Z",
+    "updatedAt": "2025-10-13T23:55:49.325Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-2aef638005570de449aa7091a1b19cb3",
+    "name": "Test Tenant 38",
+    "slug": "tenant-38",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.326Z",
+    "updatedAt": "2025-10-13T23:55:49.326Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-2bbcfaec6905084c5b4ac4b0bc174064",
+    "name": "Test Tenant 39",
+    "slug": "tenant-39",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.326Z",
+    "updatedAt": "2025-10-13T23:55:49.326Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-734a55094e6003d995eebe969c94299e",
+    "name": "Test Tenant 40",
+    "slug": "tenant-40",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.326Z",
+    "updatedAt": "2025-10-13T23:55:49.326Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-4cb3dae87303562276498660f253cdb7",
+    "name": "Test Tenant 41",
+    "slug": "tenant-41",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.327Z",
+    "updatedAt": "2025-10-13T23:55:49.327Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-c893d2b91cf2ad136ef60c3f493eae5c",
+    "name": "Test Tenant 42",
+    "slug": "tenant-42",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.327Z",
+    "updatedAt": "2025-10-13T23:55:49.327Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-8a9bf218851559f6ef5780f6ca3a1d49",
+    "name": "Test Tenant 43",
+    "slug": "tenant-43",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.328Z",
+    "updatedAt": "2025-10-13T23:55:49.328Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-ff5093c83938eacf243135ed77bf0b94",
+    "name": "Test Tenant 44",
+    "slug": "tenant-44",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.328Z",
+    "updatedAt": "2025-10-13T23:55:49.328Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-0756070a12e29acf223f51c6908824bf",
+    "name": "Test Tenant 45",
+    "slug": "tenant-45",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.329Z",
+    "updatedAt": "2025-10-13T23:55:49.329Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-bc5dabbd871fbabb2b99edab24a0d1e7",
+    "name": "Test Tenant 46",
+    "slug": "tenant-46",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.329Z",
+    "updatedAt": "2025-10-13T23:55:49.329Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-fac63c0dbbded0aa68a96eb8690a93b1",
+    "name": "Test Tenant 47",
+    "slug": "tenant-47",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.330Z",
+    "updatedAt": "2025-10-13T23:55:49.330Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-3bff2b309df0b67ad9f667d239c52dea",
+    "name": "Test Tenant 48",
+    "slug": "tenant-48",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.330Z",
+    "updatedAt": "2025-10-13T23:55:49.330Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-78590424d17453553a8de7f11c24d817",
+    "name": "Test Tenant 49",
+    "slug": "tenant-49",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.330Z",
+    "updatedAt": "2025-10-13T23:55:49.330Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-ac6333214352edf3b202df85aec9f773",
+    "name": "Test Tenant 50",
+    "slug": "tenant-50",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.331Z",
+    "updatedAt": "2025-10-13T23:55:49.331Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-3ca861c49dae485320c9e05f9805edfc",
+    "name": "Test Tenant 51",
+    "slug": "tenant-51",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.331Z",
+    "updatedAt": "2025-10-13T23:55:49.331Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-5abf1ba2ef91e7c470248f90f13f4be2",
+    "name": "Test Tenant 52",
+    "slug": "tenant-52",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.332Z",
+    "updatedAt": "2025-10-13T23:55:49.332Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-7cac98f19e31d3c6444b2a583e3ae819",
+    "name": "Test Tenant 53",
+    "slug": "tenant-53",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.333Z",
+    "updatedAt": "2025-10-13T23:55:49.333Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-22b3957412682f478eb1557c1b26a612",
+    "name": "Test Tenant 54",
+    "slug": "tenant-54",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.333Z",
+    "updatedAt": "2025-10-13T23:55:49.333Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-665c50f3f82d0c9cbf8a2881122cb3f8",
+    "name": "Test Tenant 55",
+    "slug": "tenant-55",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.334Z",
+    "updatedAt": "2025-10-13T23:55:49.334Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-a19f0659dad781b3759fb24ca49b4229",
+    "name": "Test Tenant 56",
+    "slug": "tenant-56",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.334Z",
+    "updatedAt": "2025-10-13T23:55:49.334Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-8724e7f35d71b57fff957523a4968e3e",
+    "name": "Test Tenant 57",
+    "slug": "tenant-57",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.335Z",
+    "updatedAt": "2025-10-13T23:55:49.335Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-9be53392a81064cc65b42d309a508917",
+    "name": "Test Tenant 58",
+    "slug": "tenant-58",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.335Z",
+    "updatedAt": "2025-10-13T23:55:49.335Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-0126ab5f729c9593f79cecea2104454a",
+    "name": "Test Tenant 59",
+    "slug": "tenant-59",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.336Z",
+    "updatedAt": "2025-10-13T23:55:49.336Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-8a8786365e0388d63b8501d56cb8feb8",
+    "name": "Test Tenant 60",
+    "slug": "tenant-60",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.336Z",
+    "updatedAt": "2025-10-13T23:55:49.336Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-6c0a944d313ec835e56a3f3d2fd1879b",
+    "name": "Test Tenant 61",
+    "slug": "tenant-61",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.337Z",
+    "updatedAt": "2025-10-13T23:55:49.337Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-3c335445268de1bd263d52c13e363236",
+    "name": "Test Tenant 62",
+    "slug": "tenant-62",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.337Z",
+    "updatedAt": "2025-10-13T23:55:49.337Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-deb3f16b9ff9bc24997504aa8e05797a",
+    "name": "Test Tenant 63",
+    "slug": "tenant-63",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.337Z",
+    "updatedAt": "2025-10-13T23:55:49.337Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-1e59ca651e853771c752f3cb8a59c3a1",
+    "name": "Test Tenant 64",
+    "slug": "tenant-64",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.338Z",
+    "updatedAt": "2025-10-13T23:55:49.338Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-0e63c3352bc5563b6b6e2ad0b0d30656",
+    "name": "Test Tenant 65",
+    "slug": "tenant-65",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.338Z",
+    "updatedAt": "2025-10-13T23:55:49.338Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-d83dea74e738df2c59df2216b70dc4a2",
+    "name": "Test Tenant 66",
+    "slug": "tenant-66",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.339Z",
+    "updatedAt": "2025-10-13T23:55:49.339Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-18dc6c65aafb21900cb74ad13bcbff3d",
+    "name": "Test Tenant 67",
+    "slug": "tenant-67",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.339Z",
+    "updatedAt": "2025-10-13T23:55:49.339Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-29c5465fd633c3229905fbc1ac68807c",
+    "name": "Test Tenant 68",
+    "slug": "tenant-68",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.340Z",
+    "updatedAt": "2025-10-13T23:55:49.340Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-2a5555e2895292c207b83bb390e323f8",
+    "name": "Test Tenant 69",
+    "slug": "tenant-69",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.340Z",
+    "updatedAt": "2025-10-13T23:55:49.340Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-31f4c4f1a8d669fe6418a5828f0ec6e8",
+    "name": "Test Tenant 70",
+    "slug": "tenant-70",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.389Z",
+    "updatedAt": "2025-10-13T23:55:49.389Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-79bb229e1b1bed8a89d765ab52bedab7",
+    "name": "Test Tenant 71",
+    "slug": "tenant-71",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.390Z",
+    "updatedAt": "2025-10-13T23:55:49.390Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-f05316714be3363378794887731f9a99",
+    "name": "Test Tenant 72",
+    "slug": "tenant-72",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.391Z",
+    "updatedAt": "2025-10-13T23:55:49.391Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-7080e7fbe6c1f3fd483ca58f0c30df43",
+    "name": "Test Tenant 73",
+    "slug": "tenant-73",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.392Z",
+    "updatedAt": "2025-10-13T23:55:49.392Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-4fc3a9b02fd373e583cfd09534f0b67d",
+    "name": "Test Tenant 74",
+    "slug": "tenant-74",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.393Z",
+    "updatedAt": "2025-10-13T23:55:49.393Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-35d32264a49155fbe752881390af93c5",
+    "name": "Test Tenant 75",
+    "slug": "tenant-75",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.395Z",
+    "updatedAt": "2025-10-13T23:55:49.395Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-10251458089c5406deea7e35bdafea92",
+    "name": "Test Tenant 76",
+    "slug": "tenant-76",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.396Z",
+    "updatedAt": "2025-10-13T23:55:49.396Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-58207bf58058bb79c17c80f56fab5ef3",
+    "name": "Test Tenant 77",
+    "slug": "tenant-77",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.397Z",
+    "updatedAt": "2025-10-13T23:55:49.397Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-b7cb244e93f814caa7002b0724d6014d",
+    "name": "Test Tenant 78",
+    "slug": "tenant-78",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.399Z",
+    "updatedAt": "2025-10-13T23:55:49.399Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-397590a05a659e6d1924d897dbd8f522",
+    "name": "Test Tenant 79",
+    "slug": "tenant-79",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.401Z",
+    "updatedAt": "2025-10-13T23:55:49.401Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-97456a58f24a65a8233dbcb4e2e771ff",
+    "name": "Test Tenant 80",
+    "slug": "tenant-80",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.402Z",
+    "updatedAt": "2025-10-13T23:55:49.402Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-21107e8c92bcf282a34d8d765297eeb8",
+    "name": "Test Tenant 81",
+    "slug": "tenant-81",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.405Z",
+    "updatedAt": "2025-10-13T23:55:49.405Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-0de600b8cee8ab02fb916d3b27207a0e",
+    "name": "Test Tenant 82",
+    "slug": "tenant-82",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.408Z",
+    "updatedAt": "2025-10-13T23:55:49.408Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-c328b847319747c6fb309a7994451001",
+    "name": "Test Tenant 83",
+    "slug": "tenant-83",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.410Z",
+    "updatedAt": "2025-10-13T23:55:49.410Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-d3689ba3250fffb5ffbcd3511895c56a",
+    "name": "Test Tenant 84",
+    "slug": "tenant-84",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.413Z",
+    "updatedAt": "2025-10-13T23:55:49.413Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-aa73e100b0dad815990a305ded596b98",
+    "name": "Test Tenant 85",
+    "slug": "tenant-85",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.415Z",
+    "updatedAt": "2025-10-13T23:55:49.415Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-3fc0e47801d9c45d6c61f24962e1fbc5",
+    "name": "Test Tenant 86",
+    "slug": "tenant-86",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.418Z",
+    "updatedAt": "2025-10-13T23:55:49.418Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-9207e981ecfd567036f8b875c0729b67",
+    "name": "Test Tenant 87",
+    "slug": "tenant-87",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.420Z",
+    "updatedAt": "2025-10-13T23:55:49.420Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-c3257cdf20e9753eba2cf7db537fccb8",
+    "name": "Test Tenant 88",
+    "slug": "tenant-88",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.423Z",
+    "updatedAt": "2025-10-13T23:55:49.423Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-56de67c5ac1134fb0b2762993f12d4d4",
+    "name": "Test Tenant 89",
+    "slug": "tenant-89",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.425Z",
+    "updatedAt": "2025-10-13T23:55:49.425Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-61938e1bdd603c0ad3eb3296c89a6b2c",
+    "name": "Test Tenant 90",
+    "slug": "tenant-90",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.428Z",
+    "updatedAt": "2025-10-13T23:55:49.428Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-49be3e3336920b9e5f157b72220e29e6",
+    "name": "Test Tenant 91",
+    "slug": "tenant-91",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.431Z",
+    "updatedAt": "2025-10-13T23:55:49.431Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-47674cbccc057289fc9c75be227fe56a",
+    "name": "Test Tenant 92",
+    "slug": "tenant-92",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.433Z",
+    "updatedAt": "2025-10-13T23:55:49.433Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-f2b6f1eeb5325ce7200263d89d036325",
+    "name": "Test Tenant 93",
+    "slug": "tenant-93",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.435Z",
+    "updatedAt": "2025-10-13T23:55:49.435Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-390a8d80952a9e1c7e2e1becc8829637",
+    "name": "Test Tenant 94",
+    "slug": "tenant-94",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.437Z",
+    "updatedAt": "2025-10-13T23:55:49.437Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-c708dc1f9af1b9aa4c7982e3d1a17167",
+    "name": "Test Tenant 95",
+    "slug": "tenant-95",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.439Z",
+    "updatedAt": "2025-10-13T23:55:49.439Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-03aa0f43c3fb7c182a54308b755d2cb1",
+    "name": "Test Tenant 96",
+    "slug": "tenant-96",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.440Z",
+    "updatedAt": "2025-10-13T23:55:49.440Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-1f3447bb16ff7d576a038468cd0f750d",
+    "name": "Test Tenant 97",
+    "slug": "tenant-97",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.442Z",
+    "updatedAt": "2025-10-13T23:55:49.442Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-29d874d307c8ac5131cb73a87d082c5b",
+    "name": "Test Tenant 98",
+    "slug": "tenant-98",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.443Z",
+    "updatedAt": "2025-10-13T23:55:49.443Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-efb2717e2903563cad049a230c249f6a",
+    "name": "Test Tenant 99",
+    "slug": "tenant-99",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.445Z",
+    "updatedAt": "2025-10-13T23:55:49.445Z",
+    "metadata": {}
+  },
+  {
+    "id": "tenant-b3512c35c02c093bb6ac8ead23c99a64",
+    "name": "Test Tenant 100",
+    "slug": "tenant-100",
+    "status": "active",
+    "settings": {
+      "allowedDomains": [],
+      "customBranding": {},
+      "features": {
+        "vpn": true,
+        "scanning": true,
+        "storage": true,
+        "admin": true
+      }
+    },
+    "limits": {
+      "users": 10,
+      "scans": 100,
+      "storage": "1GB",
+      "vpnClients": 5,
+      "apiRequests": 1000
+    },
+    "usage": {
+      "users": 0,
+      "scans": 0,
+      "storage": "0GB",
+      "vpnClients": 0,
+      "apiRequests": 0
+    },
+    "billing": {
+      "plan": "enterprise",
+      "status": "active",
+      "nextBillingDate": null
+    },
+    "createdAt": "2025-10-13T23:55:49.526Z",
+    "updatedAt": "2025-10-13T23:55:49.526Z",
+    "metadata": {}
   }
 ]
