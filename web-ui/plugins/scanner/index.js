@@ -66,6 +66,21 @@ module.exports = {
     // Start comprehensive security scan
     router.post('/api/scanner/start', async (req, res) => {
       try {
+        // Check tenant limits if tenant context available
+        const tenantId = req.tenantId || req.user?.tenantId;
+        if (tenantId) {
+          const resourceLimiter = this.core.getService('resource-limiter');
+          if (resourceLimiter) {
+            const canScan = await resourceLimiter.checkLimit(tenantId, 'scans');
+            if (!canScan) {
+              return res.status(429).json({
+                success: false,
+                error: 'Scan limit reached for your organization'
+              });
+            }
+          }
+        }
+        
         if (this.activeScans.size >= this.config.maxConcurrentScans) {
           return res.status(429).json({
             success: false,
@@ -73,13 +88,22 @@ module.exports = {
           });
         }
         
-        const scanId = await this.startScan('security-scanner', 'comprehensive');
+        const scanId = await this.startScan('security-scanner', 'comprehensive', [], tenantId);
+        
+        // Track usage if tenant context available
+        if (tenantId) {
+          const usageTracker = this.core.getService('usage-tracker');
+          if (usageTracker) {
+            await usageTracker.trackUsage(tenantId, 'scans', 1);
+          }
+        }
         
         res.json({
           success: true,
           data: {
             scanId,
-            message: 'Security scan started successfully'
+            message: 'Security scan started successfully',
+            tenantId: tenantId || null
           }
         });
       } catch (err) {
@@ -100,14 +124,38 @@ module.exports = {
           });
         }
         
-        const scanId = await this.startScan('code-review', 'code-review', [codePath]);
+        // Check tenant limits
+        const tenantId = req.tenantId || req.user?.tenantId;
+        if (tenantId) {
+          const resourceLimiter = this.core.getService('resource-limiter');
+          if (resourceLimiter) {
+            const canScan = await resourceLimiter.checkLimit(tenantId, 'scans');
+            if (!canScan) {
+              return res.status(429).json({
+                success: false,
+                error: 'Scan limit reached for your organization'
+              });
+            }
+          }
+        }
+        
+        const scanId = await this.startScan('code-review', 'code-review', [codePath], tenantId);
+        
+        // Track usage
+        if (tenantId) {
+          const usageTracker = this.core.getService('usage-tracker');
+          if (usageTracker) {
+            await usageTracker.trackUsage(tenantId, 'scans', 1);
+          }
+        }
         
         res.json({
           success: true,
           data: {
             scanId,
             message: 'Code review started successfully',
-            targetPath: codePath
+            targetPath: codePath,
+            tenantId: tenantId || null
           }
         });
       } catch (err) {
@@ -119,13 +167,37 @@ module.exports = {
     // Start malware scan
     router.post('/api/scanner/malware-scan', async (req, res) => {
       try {
-        const scanId = await this.startScan('malware-scanner', 'malware');
+        // Check tenant limits
+        const tenantId = req.tenantId || req.user?.tenantId;
+        if (tenantId) {
+          const resourceLimiter = this.core.getService('resource-limiter');
+          if (resourceLimiter) {
+            const canScan = await resourceLimiter.checkLimit(tenantId, 'scans');
+            if (!canScan) {
+              return res.status(429).json({
+                success: false,
+                error: 'Scan limit reached for your organization'
+              });
+            }
+          }
+        }
+        
+        const scanId = await this.startScan('malware-scanner', 'malware', [], tenantId);
+        
+        // Track usage
+        if (tenantId) {
+          const usageTracker = this.core.getService('usage-tracker');
+          if (usageTracker) {
+            await usageTracker.trackUsage(tenantId, 'scans', 1);
+          }
+        }
         
         res.json({
           success: true,
           data: {
             scanId,
-            message: 'Malware scan started successfully'
+            message: 'Malware scan started successfully',
+            tenantId: tenantId || null
           }
         });
       } catch (err) {
@@ -228,10 +300,10 @@ module.exports = {
   /**
    * Start a scan
    */
-  async startScan(scriptName, scanType, args = []) {
+  async startScan(scriptName, scanType, args = [], tenantId = null) {
     const scanId = Date.now().toString();
     
-    this.logger.info(`Starting ${scanType} scan (ID: ${scanId})`);
+    this.logger.info(`Starting ${scanType} scan (ID: ${scanId})${tenantId ? ` for tenant ${tenantId}` : ''}`);
     
     // Get platform-specific script path
     const scriptPath = this.platform.getScriptPath(scriptName);
@@ -247,7 +319,8 @@ module.exports = {
       output: [],
       process: null,
       exitCode: null,
-      error: null
+      error: null,
+      tenantId: tenantId // Add tenant association
     };
     
     try {

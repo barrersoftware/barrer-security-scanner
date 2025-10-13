@@ -186,7 +186,29 @@ module.exports = {
           return res.status(400).json({ error: 'clientName and serverEndpoint required' });
         }
         
+        // Check VPN client limit for tenant
+        const tenantId = req.tenantId || req.user?.tenantId;
+        if (tenantId) {
+          const resourceLimiter = this.core.getService('resource-limiter');
+          if (resourceLimiter) {
+            const canAddClient = await resourceLimiter.checkLimit(tenantId, 'vpnClients');
+            if (!canAddClient) {
+              return res.status(429).json({
+                error: 'VPN client limit reached for your organization'
+              });
+            }
+          }
+        }
+        
         const client = await this.wireguardManager.generateClientConfig(clientName, serverEndpoint);
+        
+        // Track VPN client usage
+        if (tenantId) {
+          const usageTracker = this.core.getService('usage-tracker');
+          if (usageTracker) {
+            await usageTracker.trackUsage(tenantId, 'vpnClients', 1);
+          }
+        }
         
         // Log audit event
         const auditLogger = this.core.getService('audit-logger');
@@ -197,11 +219,12 @@ module.exports = {
             action: 'wireguard_client_created',
             resource: `vpn:wireguard:${clientName}`,
             status: 'success',
+            tenantId: tenantId || null,
             ip: req.ip
           });
         }
         
-        res.json({ success: true, data: client });
+        res.json({ success: true, data: client, tenantId: tenantId || null });
       } catch (error) {
         res.status(400).json({ error: error.message });
       }
@@ -302,7 +325,29 @@ module.exports = {
           return res.status(400).json({ error: 'clientName and serverEndpoint required' });
         }
         
+        // Check VPN client limit for tenant
+        const tenantId = req.tenantId || req.user?.tenantId;
+        if (tenantId) {
+          const resourceLimiter = this.core.getService('resource-limiter');
+          if (resourceLimiter) {
+            const canAddClient = await resourceLimiter.checkLimit(tenantId, 'vpnClients');
+            if (!canAddClient) {
+              return res.status(429).json({
+                error: 'VPN client limit reached for your organization'
+              });
+            }
+          }
+        }
+        
         const client = await this.openvpnManager.generateClientConfig(clientName, serverEndpoint);
+        
+        // Track VPN client usage
+        if (tenantId) {
+          const usageTracker = this.core.getService('usage-tracker');
+          if (usageTracker) {
+            await usageTracker.trackUsage(tenantId, 'vpnClients', 1);
+          }
+        }
         
         const auditLogger = this.core.getService('audit-logger');
         if (auditLogger) {
@@ -312,6 +357,7 @@ module.exports = {
             action: 'openvpn_client_created',
             resource: `vpn:openvpn:${clientName}`,
             status: 'success',
+            tenantId: tenantId || null,
             ip: req.ip
           });
         }

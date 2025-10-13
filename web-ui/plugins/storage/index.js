@@ -59,11 +59,35 @@ module.exports = {
         try {
           const { name, encrypt, type } = req.body;
           
+          // Check storage limit for tenant
+          const tenantId = req.tenantId || req.user?.tenantId;
+          if (tenantId) {
+            const resourceLimiter = this.core.getService('resource-limiter');
+            if (resourceLimiter) {
+              const canStore = await resourceLimiter.checkLimit(tenantId, 'storage');
+              if (!canStore) {
+                return res.status(429).json({
+                  success: false,
+                  error: 'Storage limit reached for your organization'
+                });
+              }
+            }
+          }
+          
           const backup = await this.backupService.createBackup({
             name,
             encrypt: encrypt || false,
-            type: type || 'manual'
+            type: type || 'manual',
+            tenantId: tenantId
           });
+          
+          // Track storage usage
+          if (tenantId && backup.size) {
+            const usageTracker = this.core.getService('usage-tracker');
+            if (usageTracker) {
+              await usageTracker.trackUsage(tenantId, 'storage', backup.size);
+            }
+          }
           
           res.json({
             success: true,
