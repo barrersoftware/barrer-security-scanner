@@ -1,0 +1,32 @@
+{
+  "name": "admin",
+  "version": "1.0.0",
+  "description": "Admin panel - User management, system monitoring, settings, and audit logs",
+  "author": "AI Security Scanner Team",
+  "main": "index.js",
+  "enabled": true,
+  "priority": 5,
+  "provides": {
+    "services": ["user-manager", "system-monitor", "audit-logger", "settings-manager"],
+    "routes": [
+      "/api/admin/users/*",
+      "/api/admin/system/*",
+      "/api/admin/audit/*",
+      "/api/admin/settings/*",
+      "/api/admin/plugins/*",
+      "/api/admin/dashboard"
+    ],
+    "middleware": ["requireAdmin"]
+  },
+  "requires": {
+    "plugins": ["auth", "security"],
+    "services": ["logger", "auth", "security-middleware"]
+  },
+  "config": {
+    "auditRetentionDays": 90,
+    "defaultUserRole": "user",
+    "allowSelfRegistration": true,
+    "maxUsersPerPage": 50,
+    "sessionTimeout": 3600000
+  }
+}

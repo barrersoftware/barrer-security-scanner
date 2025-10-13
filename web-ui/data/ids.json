@@ -1,5 +1,18 @@
 {
   "blockedIPs": [],
-  "failedAttempts": {},
+  "failedAttempts": {
+    "::1:admin": [
+      {
+        "timestamp": 1760373155786,
+        "ipAddress": "::1",
+        "username": "admin"
+      },
+      {
+        "timestamp": 1760373166099,
+        "ipAddress": "::1",
+        "username": "admin"
+      }
+    ]
+  },
   "suspiciousActivity": []
 }

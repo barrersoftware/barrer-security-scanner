@@ -260,6 +260,16 @@ class PluginManager {
   }
   
   /**
+   * Get plugin instance
+   * @param {string} name - Plugin name
+   * @returns {object} Plugin instance or null
+   */
+  getPlugin(name) {
+    const plugin = this.plugins.get(name);
+    return plugin ? plugin.instance : null;
+  }
+  
+  /**
    * List all plugins with info
    * @returns {Array} Array of plugin information objects
    */

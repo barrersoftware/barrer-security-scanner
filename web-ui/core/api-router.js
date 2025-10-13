@@ -31,7 +31,8 @@ class ApiRouter {
           this.registerPluginRoutes(plugin.name, routes, middleware);
         }
       } catch (err) {
-        this.logger.error(`Error setting up routes for plugin ${plugin.name}:`, err);
+        this.logger.error(`Error setting up routes for plugin ${plugin.name}: ${err.message}`);
+        this.logger.error(err.stack);
       }
     }
     

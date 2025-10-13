@@ -29,6 +29,26 @@
       "role": "user",
       "mfaEnabled": false,
       "createdAt": "2025-10-13T07:20:55.056Z"
+    },
+    {
+      "id": "625d11b0-202a-448a-8251-bdd82e985314",
+      "username": "testadmin",
+      "email": "admin@test.com",
+      "password": "2717a6de45a6428b7185439baa3be6270d05970fb84fa7fb81fa7f5c0df4b1c0fc95cc5704b70ef847e8904768ba9d00875b52e200bf8d9af98154f29122eec3",
+      "salt": "03c36626be7411b28ca800ffeb22963c",
+      "role": "user",
+      "mfaEnabled": false,
+      "createdAt": "2025-10-13T16:27:16.328Z"
+    },
+    {
+      "id": "b44114d8-b3a5-4046-98d3-3ac4ab1af827",
+      "username": "adminuser",
+      "email": "admin@example.com",
+      "password": "7e7755626ba9e6dbd3e221073e56acfd70b2a294d11bc4df93a5ed6219f2f86a52d1cdb1451d4282d3d9e8ef97c4b9673a596722d1fcdea357ba56acd0996a5a",
+      "salt": "00ca1efbf62ac14e3667e743111ac24b",
+      "role": "user",
+      "mfaEnabled": false,
+      "createdAt": "2025-10-13T16:33:31.216Z"
     }
   ]
 }

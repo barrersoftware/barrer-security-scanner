@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 90
+    },
+    "auditLog": "/home/ubuntu/ai-security-scanner/web-ui/logs/.2e41cc34ebd9baab7fa8c7d64a58ce6da5064f1d-audit.json",
+    "files": [
+        {
+            "date": 1760372449259,
+            "name": "/home/ubuntu/ai-security-scanner/web-ui/logs/audit-2025-10-13.log",
+            "hash": "d5654d1480d1b12a36645f26370a7caf0d3f2f2b9a20bca219d04c914b0b71ed"
+        }
+    ],
+    "hashType": "sha256"
+}
