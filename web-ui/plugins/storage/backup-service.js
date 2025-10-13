@@ -18,6 +18,7 @@ class BackupService {
     this.logger = core.getService('logger');
     this.config = core.getConfig('storage') || {};
     this.encryption = core.getService('encryption-service');
+    this.platform = core.getService('platform');
     
     // Backup directories
     this.backupDir = path.join(process.cwd(), this.config.backupDir || 'data/backups');
@@ -27,6 +28,11 @@ class BackupService {
     // Backup metadata
     this.backups = [];
     this.sftpClients = new Map();
+    
+    // Detect platform
+    this.isWindows = process.platform === 'win32';
+    this.isLinux = process.platform === 'linux';
+    this.isMac = process.platform === 'darwin';
   }
   
   async init() {
@@ -55,20 +61,22 @@ class BackupService {
   async createBackup(options = {}) {
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
     const backupName = options.name || `backup-${timestamp}`;
-    const backupPath = path.join(this.backupDir, `${backupName}.tar.gz`);
+    
+    // Use appropriate extension based on platform
+    const extension = this.isWindows ? '.zip' : '.tar.gz';
+    const backupPath = path.join(this.backupDir, `${backupName}${extension}`);
     
     try {
-      this.logger.info(`Creating backup: ${backupName}`);
+      if (this.logger) {
+        this.logger.info(`Creating backup: ${backupName} (${this.isWindows ? 'Windows ZIP' : 'Linux tar.gz'})`);
+      }
       
-      // Create tar.gz archive
-      await this.createArchive(backupPath, [
-        { path: 'data/users.json', name: 'users.json' },
-        { path: 'data/sessions.json', name: 'sessions.json' },
-        { path: 'data/mfa.json', name: 'mfa.json' },
-        { path: 'data/ids.json', name: 'ids.json' },
-        { path: this.reportsDir, name: 'reports' },
-        { path: this.configDir, name: 'config' }
-      ]);
+      // Create archive using platform-specific method
+      if (this.isWindows) {
+        await this.createWindowsBackup(backupPath, options);
+      } else {
+        await this.createLinuxBackup(backupPath, options);
+      }
       
       // Get backup size
       const stats = await fs.stat(backupPath);
@@ -95,13 +103,17 @@ class BackupService {
         type: options.type || 'manual',
         encrypted: !!encryptedPath,
         verified: false,
-        remote: []
+        remote: [],
+        platform: this.isWindows ? 'windows' : 'linux',
+        format: this.isWindows ? 'zip' : 'tar.gz'
       };
       
       this.backups.push(backup);
       await this.saveBackupMetadata();
       
-      this.logger.info(`Backup created: ${backupName} (${this.formatBytes(backupSize)})`);
+      if (this.logger) {
+        this.logger.info(`Backup created: ${backupName} (${this.formatBytes(backupSize)})`);
+      }
       
       // Upload to remote SFTP servers if configured
       if (this.config.enableSFTP && this.config.sftpHosts?.length > 0) {
@@ -113,9 +125,73 @@ class BackupService {
       
       return backup;
     } catch (err) {
-      this.logger.error('Backup creation failed:', err);
+      if (this.logger) {
+        this.logger.error('Backup creation failed:', err);
+      }
       throw err;
     }
+  }
+  
+  /**
+   * Create Windows backup using PowerShell
+   */
+  async createWindowsBackup(backupPath, options) {
+    const scriptPath = path.join(process.cwd(), 'windows/scripts/CreateBackup.ps1');
+    
+    // Sources to backup
+    const sources = [
+      path.join(process.cwd(), 'data/users.json'),
+      path.join(process.cwd(), 'data/sessions.json'),
+      path.join(process.cwd(), 'data/mfa.json'),
+      path.join(process.cwd(), 'data/ids.json'),
+      this.reportsDir,
+      this.configDir
+    ];
+    
+    // Build PowerShell command
+    const sourcesParam = sources.map(s => `"${s}"`).join(',');
+    const encryptFlag = options.encrypt ? '-Encrypt' : '';
+    
+    const psCommand = `pwsh -ExecutionPolicy Bypass -File "${scriptPath}" -BackupName "${path.basename(backupPath, '.zip')}" -BackupPath "${backupPath}" -Sources @(${sourcesParam}) ${encryptFlag}`;
+    
+    try {
+      const { stdout, stderr } = await execAsync(psCommand, { 
+        maxBuffer: 10 * 1024 * 1024,
+        timeout: 300000 // 5 minutes
+      });
+      
+      if (this.logger) {
+        this.logger.info('Windows backup completed successfully');
+      }
+      
+      // Parse result JSON from PowerShell output
+      const resultMatch = stdout.match(/--- RESULT ---\s*({[\s\S]*})/);
+      if (resultMatch) {
+        const result = JSON.parse(resultMatch[1]);
+        if (!result.success) {
+          throw new Error(result.error || 'Windows backup failed');
+        }
+      }
+    } catch (err) {
+      if (this.logger) {
+        this.logger.error('Windows backup failed:', err.message);
+      }
+      throw new Error(`Windows backup failed: ${err.message}`);
+    }
+  }
+  
+  /**
+   * Create Linux backup using tar
+   */
+  async createLinuxBackup(backupPath, options) {
+    await this.createArchive(backupPath, [
+      { path: 'data/users.json', name: 'users.json' },
+      { path: 'data/sessions.json', name: 'sessions.json' },
+      { path: 'data/mfa.json', name: 'mfa.json' },
+      { path: 'data/ids.json', name: 'ids.json' },
+      { path: this.reportsDir, name: 'reports' },
+      { path: this.configDir, name: 'config' }
+    ]);
   }
   
   /**
