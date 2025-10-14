@@ -347,6 +347,7 @@ function showPluginDetails(plugin) {
 // API Helper Functions
 async function fetchAPI(endpoint, options = {}) {
     try {
+        console.log('🌐 Fetching:', endpoint);
         const response = await fetch(endpoint, {
             ...options,
             headers: {
@@ -355,33 +356,39 @@ async function fetchAPI(endpoint, options = {}) {
             }
         });
 
+        console.log('✅ Response status:', response.status, response.ok);
+
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        return await response.json();
+        const data = await response.json();
+        console.log('📦 Real data received:', data);
+        return data;
     } catch (error) {
-        console.error('API Error:', error);
+        console.error('❌ API Error:', error);
+        console.warn('⚠️  Falling back to mock data for:', endpoint);
         // Return mock data for development
         return getMockData(endpoint);
     }
 }
 
-// Mock data for development
+// Mock data for development (FALLBACK ONLY)
 function getMockData(endpoint) {
+    console.warn('🔴 USING MOCK DATA FOR:', endpoint);
     const mockData = {
         '/api/stats': {
-            totalScans: 42,
-            totalUsers: 12,
-            alerts: 3,
-            reports: 28
+            totalScans: 999,  // Changed to make it obvious this is mock
+            totalUsers: 999,
+            alerts: 999,
+            reports: 999
         },
         '/api/scans/recent': [],
         '/api/system/health': {
-            cpu: 45,
-            memory: 62,
-            disk: 38,
-            uptime: '5d 3h'
+            cpu: 99,
+            memory: 99,
+            disk: 99,
+            uptime: 'MOCK DATA'
         }
     };
 
