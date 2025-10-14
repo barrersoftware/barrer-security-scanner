@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Security Scanner - Dashboard</title>
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <!-- Top Header Bar -->
+    <header class="top-header">
+        <div class="header-left">
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <h1 class="logo">🛡️ AI Security Scanner</h1>
+        </div>
+        <div class="header-center">
+            <div class="search-bar">
+                <input type="text" placeholder="Search plugins, scans, users..." id="globalSearch">
+                <span class="search-icon">🔍</span>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="connection-status" id="connectionStatus">
+                <span class="status-dot"></span>
+                <span class="status-text">Connected</span>
+            </div>
+            <div class="notifications" id="notifications">
+                <button class="notification-btn">
+                    🔔
+                    <span class="notification-badge" id="notificationCount">0</span>
+                </button>
+            </div>
+            <div class="user-menu">
+                <button class="user-btn" id="userMenuBtn">
+                    <span class="user-avatar">👤</span>
+                    <span class="user-name" id="userName">Admin</span>
+                    <span class="dropdown-arrow">▼</span>
+                </button>
+                <div class="user-dropdown" id="userDropdown">
+                    <a href="#" id="profileLink">👤 Profile</a>
+                    <a href="#" id="settingsLink">⚙️ Settings</a>
+                    <hr>
+                    <a href="#" id="logoutLink">🚪 Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Side Menu -->
+        <aside class="side-menu" id="sideMenu">
+            <nav class="menu-nav">
+                <!-- Dashboard Section -->
+                <div class="menu-section">
+                    <div class="menu-section-header">
+                        <span class="section-icon">📊</span>
+                        <span class="section-title">Dashboard</span>
+                    </div>
+                    <ul class="menu-list">
+                        <li><a href="#" class="menu-item active" data-view="overview">
+                            <span class="item-icon">🏠</span>
+                            <span class="item-text">Overview</span>
+                        </a></li>
+                        <li><a href="#" class="menu-item" data-view="analytics">
+                            <span class="item-icon">📈</span>
+                            <span class="item-text">Analytics</span>
+                        </a></li>
+                    </ul>
+                </div>
+
+                <!-- Security Section -->
+                <div class="menu-section">
+                    <div class="menu-section-header">
+                        <span class="section-icon">🔐</span>
+                        <span class="section-title">Security</span>
+                    </div>
+                    <ul class="menu-list">
+                        <li><a href="#" class="menu-item" data-view="scanner" data-plugin="scanner">
+                            <span class="item-icon">🔍</span>
+                            <span class="item-text">Scanner</span>
+                        </a></li>
+                        <li><a href="#" class="menu-item" data-view="policies" data-plugin="policies">
+                            <span class="item-icon">📋</span>
+                            <span class="item-text">Policies</span>
+                        </a></li>
+                        <li><a href="#" class="menu-item" data-view="vpn" data-plugin="vpn">
+                            <span class="item-icon">🔒</span>
+                            <span class="item-text">VPN</span>
+                        </a></li>
+                        <li><a href="#" class="menu-item" data-view="rate-limiting" data-plugin="rate-limiting">
+                            <span class="item-icon">🛡️</span>
+                            <span class="item-text">Rate Limiting</span>
+                        </a></li>
+                        <li><a href="#" class="menu-item" data-view="security" data-plugin="security">
+                            <span class="item-icon">🔐</span>
+                            <span class="item-text">Security Services</span>
+                        </a></li>
+                    </ul>
+                </div>
+
+                <!-- Access Management Section -->
+                <div class="menu-section">
+                    <div class="menu-section-header">
+                        <span class="section-icon">👥</span>
+                        <span class="section-title">Access Management</span>
+                    </div>
+                    <ul class="menu-list">
+                        <li><a href="#" class="menu-item" data-view="auth" data-plugin="auth">
+                            <span class="item-icon">🔑</span>
+                            <span class="item-text">Authentication</span>
+                        </a></li>
+                        <li><a href="#" class="menu-item" data-view="admin" data-plugin="admin">
+                            <span class="item-icon">👤</span>
+                            <span class="item-text">Users</span>
+                        </a></li>
+                        <li><a href="#" class="menu-item" data-view="tenants" data-plugin="tenants">
+                            <span class="item-icon">🏢</span>
+                            <span class="item-text">Tenants</span>
+                        </a></li>
+                    </ul>
+                </div>
+
+                <!-- Monitoring Section -->
+                <div class="menu-section">
+                    <div class="menu-section-header">
+                        <span class="section-icon">📡</span>
+                        <span class="section-title">Monitoring</span>
+                    </div>
+                    <ul class="menu-list">
+                        <li><a href="#" class="menu-item" data-view="audit-log" data-plugin="audit-log">
+                            <span class="item-icon">📝</span>
+                            <span class="item-text">Audit Logs</span>
+                        </a></li>
+                        <li><a href="#" class="menu-item" data-view="api-analytics" data-plugin="api-analytics">
+                            <span class="item-icon">📊</span>
+                            <span class="item-text">API Analytics</span>
+                        </a></li>
+                        <li><a href="#" class="menu-item" data-view="system-info" data-plugin="system-info">
+                            <span class="item-icon">💻</span>
+                            <span class="item-text">System Info</span>
+                        </a></li>
+                        <li><a href="#" class="menu-item" data-view="multi-server" data-plugin="multi-server">
+                            <span class="item-icon">🖥️</span>
+                            <span class="item-text">Multi-Server</span>
+                        </a></li>
+                    </ul>
+                </div>
+
+                <!-- Reports & Data Section -->
+                <div class="menu-section">
+                    <div class="menu-section-header">
+                        <span class="section-icon">📄</span>
+                        <span class="section-title">Reports & Data</span>
+                    </div>
+                    <ul class="menu-list">
+                        <li><a href="#" class="menu-item" data-view="reporting" data-plugin="reporting">
+                            <span class="item-icon">📑</span>
+                            <span class="item-text">Reports</span>
+                        </a></li>
+                        <li><a href="#" class="menu-item" data-view="storage" data-plugin="storage">
+                            <span class="item-icon">💾</span>
+                            <span class="item-text">Storage</span>
+                        </a></li>
+                        <li><a href="#" class="menu-item" data-view="backup-recovery" data-plugin="backup-recovery">
+                            <span class="item-icon">💿</span>
+                            <span class="item-text">Backup & Recovery</span>
+                        </a></li>
+                    </ul>
+                </div>
+
+                <!-- Integrations Section -->
+                <div class="menu-section">
+                    <div class="menu-section-header">
+                        <span class="section-icon">🔌</span>
+                        <span class="section-title">Integrations</span>
+                    </div>
+                    <ul class="menu-list">
+                        <li><a href="#" class="menu-item" data-view="webhooks" data-plugin="webhooks">
+                            <span class="item-icon">🪝</span>
+                            <span class="item-text">Webhooks</span>
+                        </a></li>
+                        <li><a href="#" class="menu-item" data-view="notifications" data-plugin="notifications">
+                            <span class="item-icon">🔔</span>
+                            <span class="item-text">Notifications</span>
+                        </a></li>
+                    </ul>
+                </div>
+
+                <!-- System Section -->
+                <div class="menu-section">
+                    <div class="menu-section-header">
+                        <span class="section-icon">⚙️</span>
+                        <span class="section-title">System</span>
+                    </div>
+                    <ul class="menu-list">
+                        <li><a href="#" class="menu-item" data-view="update" data-plugin="update">
+                            <span class="item-icon">🔄</span>
+                            <span class="item-text">Updates</span>
+                        </a></li>
+                        <li><a href="#" class="menu-item" data-view="settings">
+                            <span class="item-icon">⚙️</span>
+                            <span class="item-text">Settings</span>
+                        </a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Menu Footer -->
+            <div class="menu-footer">
+                <div class="version-info">
+                    <span>v4.10.1</span>
+                </div>
+                <div class="system-health">
+                    <span class="health-indicator">●</span>
+                    <span class="health-text">All Systems Operational</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content" id="mainContent">
+            <div class="content-header">
+                <h2 id="pageTitle">Overview</h2>
+                <div class="content-actions" id="contentActions">
+                    <!-- Dynamic action buttons will appear here -->
+                </div>
+            </div>
+
+            <div class="content-body" id="contentBody">
+                <!-- Dynamic content will be loaded here -->
+                <div class="loading">Loading...</div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Scripts -->
+    <script src="/js/dashboard.js"></script>
+    <script src="/js/api-client.js"></script>
+    <script src="/js/views.js"></script>
+</body>
+</html>
