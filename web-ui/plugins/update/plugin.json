@@ -1,0 +1,244 @@
+{
+  "name": "update",
+  "version": "1.0.0",
+  "description": "System update management with multi-platform package manager support and zero telemetry",
+  "author": "AI Security Scanner Team",
+  "license": "MIT",
+  "main": "index.js",
+  "priority": 100,
+  "category": "security",
+  "tags": ["updates", "security", "package-management", "windows-update"],
+  
+  "services": [
+    {
+      "name": "UpdateManager",
+      "description": "Main update orchestration service",
+      "file": "update-manager.js"
+    },
+    {
+      "name": "PlatformDetector",
+      "description": "Detect OS and available package managers",
+      "file": "platform-detector.js"
+    },
+    {
+      "name": "VerificationService",
+      "description": "Cryptographic verification (GPG + checksums)",
+      "file": "verification-service.js"
+    },
+    {
+      "name": "PackageManagerService",
+      "description": "Universal package manager interface",
+      "file": "package-manager-service.js"
+    },
+    {
+      "name": "WindowsUpdateService",
+      "description": "Windows Update integration",
+      "file": "windows-update-service.js"
+    },
+    {
+      "name": "RollbackManager",
+      "description": "Safe rollback on update failure",
+      "file": "rollback-manager.js"
+    },
+    {
+      "name": "UpdateNotifier",
+      "description": "Update notifications integration",
+      "file": "update-notifier.js"
+    }
+  ],
+  
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/api/updates/check",
+      "description": "Check for available updates",
+      "auth": true,
+      "permission": "updates:read"
+    },
+    {
+      "method": "GET",
+      "path": "/api/updates/status",
+      "description": "Get current update status",
+      "auth": true,
+      "permission": "updates:read"
+    },
+    {
+      "method": "POST",
+      "path": "/api/updates/download",
+      "description": "Download available updates",
+      "auth": true,
+      "permission": "updates:write"
+    },
+    {
+      "method": "POST",
+      "path": "/api/updates/install",
+      "description": "Install downloaded updates",
+      "auth": true,
+      "permission": "updates:write"
+    },
+    {
+      "method": "POST",
+      "path": "/api/updates/rollback",
+      "description": "Rollback to previous version",
+      "auth": true,
+      "permission": "updates:write"
+    },
+    {
+      "method": "GET",
+      "path": "/api/updates/history",
+      "description": "Get update history",
+      "auth": true,
+      "permission": "updates:read"
+    },
+    {
+      "method": "GET",
+      "path": "/api/updates/config",
+      "description": "Get update configuration",
+      "auth": true,
+      "permission": "updates:read"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/updates/config",
+      "description": "Update configuration settings",
+      "auth": true,
+      "permission": "updates:write"
+    },
+    {
+      "method": "GET",
+      "path": "/api/updates/platforms",
+      "description": "Get detected platforms and package managers",
+      "auth": true,
+      "permission": "updates:read"
+    },
+    {
+      "method": "GET",
+      "path": "/api/updates/managers",
+      "description": "Get available package managers",
+      "auth": true,
+      "permission": "updates:read"
+    },
+    {
+      "method": "POST",
+      "path": "/api/updates/verify",
+      "description": "Verify update package integrity",
+      "auth": true,
+      "permission": "updates:read"
+    },
+    {
+      "method": "GET",
+      "path": "/api/updates/changelog/:version",
+      "description": "Get changelog for specific version",
+      "auth": false,
+      "permission": null
+    }
+  ],
+  
+  "database": {
+    "tables": [
+      {
+        "name": "update_history",
+        "description": "Track update installations",
+        "columns": [
+          "id TEXT PRIMARY KEY",
+          "tenant_id TEXT NOT NULL",
+          "from_version TEXT NOT NULL",
+          "to_version TEXT NOT NULL",
+          "status TEXT NOT NULL",
+          "method TEXT NOT NULL",
+          "started_at DATETIME NOT NULL",
+          "completed_at DATETIME",
+          "error TEXT",
+          "rollback_available INTEGER DEFAULT 1",
+          "created_at DATETIME DEFAULT CURRENT_TIMESTAMP"
+        ],
+        "indices": [
+          "CREATE INDEX IF NOT EXISTS idx_update_history_tenant ON update_history(tenant_id)",
+          "CREATE INDEX IF NOT EXISTS idx_update_history_status ON update_history(status)"
+        ]
+      },
+      {
+        "name": "update_config",
+        "description": "Update configuration per tenant",
+        "columns": [
+          "id TEXT PRIMARY KEY",
+          "tenant_id TEXT NOT NULL UNIQUE",
+          "auto_check INTEGER DEFAULT 1",
+          "auto_download INTEGER DEFAULT 0",
+          "auto_install INTEGER DEFAULT 0",
+          "check_interval INTEGER DEFAULT 86400",
+          "update_channel TEXT DEFAULT 'stable'",
+          "package_manager TEXT",
+          "backup_before_update INTEGER DEFAULT 1",
+          "notification_enabled INTEGER DEFAULT 1",
+          "last_check_at DATETIME",
+          "created_at DATETIME DEFAULT CURRENT_TIMESTAMP",
+          "updated_at DATETIME DEFAULT CURRENT_TIMESTAMP"
+        ],
+        "indices": [
+          "CREATE INDEX IF NOT EXISTS idx_update_config_tenant ON update_config(tenant_id)"
+        ]
+      },
+      {
+        "name": "update_backups",
+        "description": "Track update backups for rollback",
+        "columns": [
+          "id TEXT PRIMARY KEY",
+          "tenant_id TEXT NOT NULL",
+          "update_id TEXT NOT NULL",
+          "version TEXT NOT NULL",
+          "backup_path TEXT NOT NULL",
+          "backup_size INTEGER",
+          "created_at DATETIME DEFAULT CURRENT_TIMESTAMP",
+          "expires_at DATETIME",
+          "FOREIGN KEY(update_id) REFERENCES update_history(id)"
+        ],
+        "indices": [
+          "CREATE INDEX IF NOT EXISTS idx_update_backups_tenant ON update_backups(tenant_id)",
+          "CREATE INDEX IF NOT EXISTS idx_update_backups_update ON update_backups(update_id)"
+        ]
+      }
+    ]
+  },
+  
+  "config": {
+    "privacy": {
+      "telemetry": false,
+      "anonymous_usage": false,
+      "crash_reports": false,
+      "update_checks_anonymous": true
+    },
+    "security": {
+      "require_signature": true,
+      "require_checksum": true,
+      "https_only": true,
+      "verify_ssl": true
+    },
+    "defaults": {
+      "channel": "stable",
+      "check_interval": 86400,
+      "backup_retention_days": 30
+    },
+    "supported_platforms": [
+      "linux",
+      "darwin",
+      "win32"
+    ],
+    "supported_package_managers": [
+      "apt", "apt-get", "dpkg",
+      "yum", "dnf", "rpm",
+      "pacman", "makepkg",
+      "zypper",
+      "snap", "flatpak", "appimage",
+      "brew", "port", "fink",
+      "winget", "choco", "scoop",
+      "windows-update", "microsoft-store",
+      "npm", "pip", "gem",
+      "docker", "podman"
+    ]
+  },
+  
+  "dependencies": {
+    "external": ["notifications"]
+  }
+}

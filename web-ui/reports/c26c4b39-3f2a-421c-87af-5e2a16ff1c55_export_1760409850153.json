@@ -1,0 +1,28 @@
+{
+  "target": "example.com",
+  "totalVulnerabilities": 25,
+  "criticalCount": 5,
+  "highCount": 8,
+  "mediumCount": 7,
+  "lowCount": 5,
+  "riskScore": 72,
+  "vulnerabilities": [
+    {
+      "title": "SQL Injection",
+      "severity": "critical",
+      "description": "SQL injection vulnerability found",
+      "remediation": "Use prepared statements"
+    },
+    {
+      "title": "XSS Vulnerability",
+      "severity": "high",
+      "description": "Cross-site scripting vulnerability",
+      "remediation": "Sanitize user input"
+    }
+  ],
+  "recommendations": [
+    "Update all dependencies",
+    "Enable security headers",
+    "Implement input validation"
+  ]
+}

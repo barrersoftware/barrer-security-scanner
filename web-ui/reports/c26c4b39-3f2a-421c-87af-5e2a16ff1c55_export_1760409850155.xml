@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report>
+  <target>example.com</target>
+  <totalVulnerabilities>25</totalVulnerabilities>
+  <criticalCount>5</criticalCount>
+  <highCount>8</highCount>
+  <mediumCount>7</mediumCount>
+  <lowCount>5</lowCount>
+  <riskScore>72</riskScore>
+  <vulnerabilities>
+    <item index="0">
+      <title>SQL Injection</title>
+      <severity>critical</severity>
+      <description>SQL injection vulnerability found</description>
+      <remediation>Use prepared statements</remediation>
+    </item>
+    <item index="1">
+      <title>XSS Vulnerability</title>
+      <severity>high</severity>
+      <description>Cross-site scripting vulnerability</description>
+      <remediation>Sanitize user input</remediation>
+    </item>
+  </vulnerabilities>
+  <recommendations>
+    <item index="0">
+      Update all dependencies
+    </item>
+    <item index="1">
+      Enable security headers
+    </item>
+    <item index="2">
+      Implement input validation
+    </item>
+  </recommendations>
+</report>

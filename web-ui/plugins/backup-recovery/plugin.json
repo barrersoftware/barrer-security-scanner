@@ -1,0 +1,408 @@
+{
+  "name": "backup-recovery",
+  "version": "1.0.0",
+  "description": "Automated backup and disaster recovery system with encryption, compression, and ransomware protection",
+  "author": "AI Security Scanner Team",
+  "license": "MIT",
+  "main": "index.js",
+  "priority": 94,
+  "category": "security",
+  "tags": ["backup", "disaster-recovery", "ransomware-protection", "encryption", "security"],
+  
+  "services": [
+    {
+      "name": "BackupService",
+      "description": "Core backup operations for files, databases, and configurations",
+      "file": "backup-service.js"
+    },
+    {
+      "name": "RestoreService",
+      "description": "Restore operations with verification and rollback",
+      "file": "restore-service.js"
+    },
+    {
+      "name": "ScheduleManager",
+      "description": "Automated backup scheduling and management",
+      "file": "schedule-manager.js"
+    },
+    {
+      "name": "StorageManager",
+      "description": "Backup storage management for local and remote locations",
+      "file": "storage-manager.js"
+    },
+    {
+      "name": "EncryptionService",
+      "description": "Backup encryption and decryption with AES-256",
+      "file": "encryption-service.js"
+    },
+    {
+      "name": "IntegrityChecker",
+      "description": "Backup integrity verification with checksums",
+      "file": "integrity-checker.js"
+    }
+  ],
+  
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/api/backup/status",
+      "description": "Get backup system status",
+      "auth": true,
+      "permission": "backup:read"
+    },
+    {
+      "method": "GET",
+      "path": "/api/backup/list",
+      "description": "List all available backups",
+      "auth": true,
+      "permission": "backup:read"
+    },
+    {
+      "method": "POST",
+      "path": "/api/backup/create",
+      "description": "Create a new backup",
+      "auth": true,
+      "permission": "backup:write"
+    },
+    {
+      "method": "POST",
+      "path": "/api/backup/restore",
+      "description": "Restore from backup",
+      "auth": true,
+      "permission": "backup:write"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/backup/:id",
+      "description": "Delete a backup",
+      "auth": true,
+      "permission": "backup:delete"
+    },
+    {
+      "method": "GET",
+      "path": "/api/backup/:id/verify",
+      "description": "Verify backup integrity",
+      "auth": true,
+      "permission": "backup:read"
+    },
+    {
+      "method": "GET",
+      "path": "/api/backup/:id/download",
+      "description": "Download backup file",
+      "auth": true,
+      "permission": "backup:read"
+    },
+    {
+      "method": "GET",
+      "path": "/api/backup/schedules",
+      "description": "Get backup schedules",
+      "auth": true,
+      "permission": "backup:read"
+    },
+    {
+      "method": "POST",
+      "path": "/api/backup/schedules",
+      "description": "Create backup schedule",
+      "auth": true,
+      "permission": "backup:write"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/backup/schedules/:id",
+      "description": "Update backup schedule",
+      "auth": true,
+      "permission": "backup:write"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/backup/schedules/:id",
+      "description": "Delete backup schedule",
+      "auth": true,
+      "permission": "backup:delete"
+    },
+    {
+      "method": "GET",
+      "path": "/api/backup/config",
+      "description": "Get backup configuration",
+      "auth": true,
+      "permission": "backup:read"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/backup/config",
+      "description": "Update backup configuration",
+      "auth": true,
+      "permission": "backup:write"
+    },
+    {
+      "method": "POST",
+      "path": "/api/backup/:id/test-restore",
+      "description": "Test restore without applying changes",
+      "auth": true,
+      "permission": "backup:write"
+    },
+    {
+      "method": "GET",
+      "path": "/api/backup/storage-stats",
+      "description": "Get storage usage statistics",
+      "auth": true,
+      "permission": "backup:read"
+    }
+  ],
+  
+  "database": {
+    "tables": [
+      {
+        "name": "backups",
+        "description": "Backup metadata and tracking",
+        "columns": [
+          "id TEXT PRIMARY KEY",
+          "tenant_id TEXT NOT NULL",
+          "name TEXT NOT NULL",
+          "description TEXT",
+          "backup_type TEXT NOT NULL",
+          "status TEXT NOT NULL",
+          "size_bytes INTEGER DEFAULT 0",
+          "compressed_size INTEGER DEFAULT 0",
+          "file_count INTEGER DEFAULT 0",
+          "storage_path TEXT NOT NULL",
+          "encryption_enabled INTEGER DEFAULT 0",
+          "encryption_algorithm TEXT",
+          "checksum TEXT NOT NULL",
+          "started_at DATETIME NOT NULL",
+          "completed_at DATETIME",
+          "duration_seconds INTEGER",
+          "created_by TEXT",
+          "retention_days INTEGER DEFAULT 30",
+          "expires_at DATETIME",
+          "metadata TEXT",
+          "created_at DATETIME DEFAULT CURRENT_TIMESTAMP",
+          "updated_at DATETIME DEFAULT CURRENT_TIMESTAMP"
+        ],
+        "indices": [
+          "CREATE INDEX IF NOT EXISTS idx_backups_tenant ON backups(tenant_id)",
+          "CREATE INDEX IF NOT EXISTS idx_backups_status ON backups(status)",
+          "CREATE INDEX IF NOT EXISTS idx_backups_type ON backups(backup_type)",
+          "CREATE INDEX IF NOT EXISTS idx_backups_created ON backups(created_at)",
+          "CREATE INDEX IF NOT EXISTS idx_backups_expires ON backups(expires_at)"
+        ]
+      },
+      {
+        "name": "backup_schedules",
+        "description": "Automated backup schedules",
+        "columns": [
+          "id TEXT PRIMARY KEY",
+          "tenant_id TEXT NOT NULL",
+          "name TEXT NOT NULL",
+          "description TEXT",
+          "enabled INTEGER DEFAULT 1",
+          "backup_type TEXT NOT NULL",
+          "schedule_type TEXT NOT NULL",
+          "cron_expression TEXT",
+          "interval_minutes INTEGER",
+          "retention_days INTEGER DEFAULT 30",
+          "max_backups INTEGER DEFAULT 10",
+          "encryption_enabled INTEGER DEFAULT 1",
+          "compression_enabled INTEGER DEFAULT 1",
+          "include_files INTEGER DEFAULT 1",
+          "include_database INTEGER DEFAULT 1",
+          "include_config INTEGER DEFAULT 1",
+          "storage_location TEXT NOT NULL",
+          "notify_on_success INTEGER DEFAULT 0",
+          "notify_on_failure INTEGER DEFAULT 1",
+          "last_run_at DATETIME",
+          "last_run_status TEXT",
+          "next_run_at DATETIME",
+          "created_by TEXT",
+          "created_at DATETIME DEFAULT CURRENT_TIMESTAMP",
+          "updated_at DATETIME DEFAULT CURRENT_TIMESTAMP"
+        ],
+        "indices": [
+          "CREATE INDEX IF NOT EXISTS idx_schedules_tenant ON backup_schedules(tenant_id)",
+          "CREATE INDEX IF NOT EXISTS idx_schedules_enabled ON backup_schedules(enabled)",
+          "CREATE INDEX IF NOT EXISTS idx_schedules_next_run ON backup_schedules(next_run_at)"
+        ]
+      },
+      {
+        "name": "backup_logs",
+        "description": "Backup operation logs",
+        "columns": [
+          "id TEXT PRIMARY KEY",
+          "tenant_id TEXT NOT NULL",
+          "backup_id TEXT",
+          "schedule_id TEXT",
+          "operation TEXT NOT NULL",
+          "status TEXT NOT NULL",
+          "message TEXT",
+          "details TEXT",
+          "error_message TEXT",
+          "started_at DATETIME NOT NULL",
+          "completed_at DATETIME",
+          "duration_seconds INTEGER",
+          "created_at DATETIME DEFAULT CURRENT_TIMESTAMP"
+        ],
+        "indices": [
+          "CREATE INDEX IF NOT EXISTS idx_logs_tenant ON backup_logs(tenant_id)",
+          "CREATE INDEX IF NOT EXISTS idx_logs_backup ON backup_logs(backup_id)",
+          "CREATE INDEX IF NOT EXISTS idx_logs_schedule ON backup_logs(schedule_id)",
+          "CREATE INDEX IF NOT EXISTS idx_logs_status ON backup_logs(status)",
+          "CREATE INDEX IF NOT EXISTS idx_logs_created ON backup_logs(created_at)"
+        ]
+      },
+      {
+        "name": "restore_history",
+        "description": "Restore operation history",
+        "columns": [
+          "id TEXT PRIMARY KEY",
+          "tenant_id TEXT NOT NULL",
+          "backup_id TEXT NOT NULL",
+          "restore_type TEXT NOT NULL",
+          "status TEXT NOT NULL",
+          "test_mode INTEGER DEFAULT 0",
+          "files_restored INTEGER DEFAULT 0",
+          "bytes_restored INTEGER DEFAULT 0",
+          "verification_passed INTEGER DEFAULT 0",
+          "started_at DATETIME NOT NULL",
+          "completed_at DATETIME",
+          "duration_seconds INTEGER",
+          "restored_by TEXT",
+          "error_message TEXT",
+          "rollback_available INTEGER DEFAULT 0",
+          "rollback_id TEXT",
+          "metadata TEXT",
+          "created_at DATETIME DEFAULT CURRENT_TIMESTAMP"
+        ],
+        "indices": [
+          "CREATE INDEX IF NOT EXISTS idx_restore_tenant ON restore_history(tenant_id)",
+          "CREATE INDEX IF NOT EXISTS idx_restore_backup ON restore_history(backup_id)",
+          "CREATE INDEX IF NOT EXISTS idx_restore_status ON restore_history(status)",
+          "CREATE INDEX IF NOT EXISTS idx_restore_created ON restore_history(created_at)"
+        ]
+      },
+      {
+        "name": "backup_config",
+        "description": "Backup configuration per tenant",
+        "columns": [
+          "id TEXT PRIMARY KEY",
+          "tenant_id TEXT NOT NULL UNIQUE",
+          "enabled INTEGER DEFAULT 1",
+          "default_retention_days INTEGER DEFAULT 30",
+          "max_backup_size_mb INTEGER DEFAULT 10240",
+          "compression_enabled INTEGER DEFAULT 1",
+          "compression_level INTEGER DEFAULT 6",
+          "encryption_enabled INTEGER DEFAULT 1",
+          "encryption_algorithm TEXT DEFAULT 'aes-256-gcm'",
+          "storage_location TEXT NOT NULL",
+          "remote_storage_enabled INTEGER DEFAULT 0",
+          "remote_storage_url TEXT",
+          "verify_on_create INTEGER DEFAULT 1",
+          "auto_cleanup_enabled INTEGER DEFAULT 1",
+          "max_concurrent_backups INTEGER DEFAULT 2",
+          "bandwidth_limit_mbps INTEGER DEFAULT 0",
+          "exclude_patterns TEXT",
+          "include_patterns TEXT",
+          "created_at DATETIME DEFAULT CURRENT_TIMESTAMP",
+          "updated_at DATETIME DEFAULT CURRENT_TIMESTAMP"
+        ],
+        "indices": [
+          "CREATE INDEX IF NOT EXISTS idx_config_tenant ON backup_config(tenant_id)"
+        ]
+      },
+      {
+        "name": "backup_storage",
+        "description": "Storage location tracking",
+        "columns": [
+          "id TEXT PRIMARY KEY",
+          "tenant_id TEXT NOT NULL",
+          "name TEXT NOT NULL",
+          "storage_type TEXT NOT NULL",
+          "storage_path TEXT NOT NULL",
+          "total_size_bytes INTEGER DEFAULT 0",
+          "used_size_bytes INTEGER DEFAULT 0",
+          "backup_count INTEGER DEFAULT 0",
+          "last_cleanup_at DATETIME",
+          "created_at DATETIME DEFAULT CURRENT_TIMESTAMP",
+          "updated_at DATETIME DEFAULT CURRENT_TIMESTAMP"
+        ],
+        "indices": [
+          "CREATE INDEX IF NOT EXISTS idx_storage_tenant ON backup_storage(tenant_id)",
+          "CREATE INDEX IF NOT EXISTS idx_storage_type ON backup_storage(storage_type)"
+        ]
+      }
+    ]
+  },
+  
+  "config": {
+    "defaults": {
+      "retention_days": 30,
+      "max_backup_size_mb": 10240,
+      "compression_enabled": true,
+      "compression_level": 6,
+      "encryption_enabled": true,
+      "encryption_algorithm": "aes-256-gcm",
+      "verify_on_create": true,
+      "auto_cleanup_enabled": true,
+      "max_concurrent_backups": 2,
+      "bandwidth_limit_mbps": 0
+    },
+    "backup_types": [
+      "full",
+      "incremental",
+      "differential",
+      "database",
+      "files",
+      "config"
+    ],
+    "schedule_types": [
+      "once",
+      "hourly",
+      "daily",
+      "weekly",
+      "monthly",
+      "cron"
+    ],
+    "storage_types": [
+      "local",
+      "network",
+      "s3",
+      "ftp",
+      "sftp"
+    ],
+    "compression": {
+      "enabled": true,
+      "algorithm": "gzip",
+      "level": 6
+    },
+    "encryption": {
+      "enabled": true,
+      "algorithm": "aes-256-gcm",
+      "key_derivation": "pbkdf2"
+    }
+  },
+  
+  "features": {
+    "ransomware_protection": {
+      "enabled": true,
+      "immutable_backups": true,
+      "version_tracking": true,
+      "suspicious_activity_detection": true
+    },
+    "disaster_recovery": {
+      "enabled": true,
+      "automated_testing": true,
+      "recovery_point_objective": 3600,
+      "recovery_time_objective": 1800
+    },
+    "compliance": {
+      "audit_logging": true,
+      "retention_policies": true,
+      "encryption_at_rest": true,
+      "encryption_in_transit": true
+    }
+  },
+  
+  "dependencies": {
+    "internal": ["tenants", "audit-log", "notifications"],
+    "external": ["archiver", "crypto"]
+  }
+}

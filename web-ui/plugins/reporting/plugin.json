@@ -1,0 +1,75 @@
+{
+  "name": "reporting",
+  "version": "1.0.0",
+  "description": "Advanced reporting with PDF generation, custom templates, and scheduled delivery",
+  "author": "AI Security Scanner Team",
+  "main": "index.js",
+  "enabled": true,
+  "dependencies": [
+    "puppeteer",
+    "handlebars",
+    "pdfkit",
+    "node-cron",
+    "chart.js",
+    "canvas"
+  ],
+  "permissions": [
+    "reports:read",
+    "reports:write",
+    "reports:delete",
+    "reports:schedule",
+    "reports:export"
+  ],
+  "config": {
+    "maxReportSize": 52428800,
+    "defaultFormat": "pdf",
+    "templateDirectory": "./templates",
+    "outputDirectory": "./reports",
+    "scheduleEnabled": true,
+    "historicalRetentionDays": 90
+  },
+  "services": [
+    "ReportGenerator",
+    "TemplateManager",
+    "ScheduleManager",
+    "HistoricalAnalyzer",
+    "ExportManager",
+    "ChartGenerator"
+  ],
+  "formats": [
+    "pdf",
+    "html",
+    "json",
+    "csv",
+    "xml",
+    "markdown"
+  ],
+  "templates": [
+    "executive_summary",
+    "detailed_technical",
+    "compliance_report",
+    "vulnerability_report",
+    "scan_comparison",
+    "trend_analysis",
+    "custom"
+  ],
+  "routes": [
+    "POST /api/reports/generate",
+    "GET /api/reports",
+    "GET /api/reports/:id",
+    "DELETE /api/reports/:id",
+    "GET /api/reports/:id/download",
+    "POST /api/reports/:id/export",
+    "GET /api/reports/templates",
+    "POST /api/reports/templates",
+    "PUT /api/reports/templates/:id",
+    "DELETE /api/reports/templates/:id",
+    "POST /api/reports/schedule",
+    "GET /api/reports/schedules",
+    "PUT /api/reports/schedules/:id",
+    "DELETE /api/reports/schedules/:id",
+    "POST /api/reports/compare",
+    "GET /api/reports/history/:scanId",
+    "GET /api/reports/trends"
+  ]
+}

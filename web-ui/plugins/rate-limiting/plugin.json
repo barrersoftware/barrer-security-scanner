@@ -1,0 +1,290 @@
+{
+  "name": "rate-limiting",
+  "version": "1.0.0",
+  "description": "API rate limiting, DDoS protection, and brute force prevention for enhanced security",
+  "author": "AI Security Scanner Team",
+  "license": "MIT",
+  "main": "index.js",
+  "priority": 95,
+  "category": "security",
+  "tags": ["rate-limiting", "ddos-protection", "security", "brute-force-prevention"],
+  
+  "services": [
+    {
+      "name": "RateLimiter",
+      "description": "Token bucket rate limiting service",
+      "file": "rate-limiter.js"
+    },
+    {
+      "name": "IPTracker",
+      "description": "IP address tracking and analysis",
+      "file": "ip-tracker.js"
+    },
+    {
+      "name": "BruteForceDetector",
+      "description": "Detect and prevent brute force attacks",
+      "file": "brute-force-detector.js"
+    },
+    {
+      "name": "DDoSProtector",
+      "description": "DDoS attack detection and mitigation",
+      "file": "ddos-protector.js"
+    },
+    {
+      "name": "BlockingManager",
+      "description": "Manage IP blocking and whitelisting",
+      "file": "blocking-manager.js"
+    }
+  ],
+  
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/api/rate-limiting/status",
+      "description": "Get current rate limiting status",
+      "auth": true,
+      "permission": "rate-limiting:read"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rate-limiting/config",
+      "description": "Get rate limiting configuration",
+      "auth": true,
+      "permission": "rate-limiting:read"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/rate-limiting/config",
+      "description": "Update rate limiting configuration",
+      "auth": true,
+      "permission": "rate-limiting:write"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rate-limiting/violations",
+      "description": "Get rate limit violations log",
+      "auth": true,
+      "permission": "rate-limiting:read"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rate-limiting/blocked-ips",
+      "description": "Get list of blocked IPs",
+      "auth": true,
+      "permission": "rate-limiting:read"
+    },
+    {
+      "method": "POST",
+      "path": "/api/rate-limiting/block-ip",
+      "description": "Manually block an IP address",
+      "auth": true,
+      "permission": "rate-limiting:write"
+    },
+    {
+      "method": "POST",
+      "path": "/api/rate-limiting/unblock-ip",
+      "description": "Unblock an IP address",
+      "auth": true,
+      "permission": "rate-limiting:write"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rate-limiting/whitelist",
+      "description": "Get whitelisted IPs",
+      "auth": true,
+      "permission": "rate-limiting:read"
+    },
+    {
+      "method": "POST",
+      "path": "/api/rate-limiting/whitelist",
+      "description": "Add IP to whitelist",
+      "auth": true,
+      "permission": "rate-limiting:write"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/rate-limiting/whitelist/:ip",
+      "description": "Remove IP from whitelist",
+      "auth": true,
+      "permission": "rate-limiting:write"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rate-limiting/stats",
+      "description": "Get rate limiting statistics",
+      "auth": true,
+      "permission": "rate-limiting:read"
+    },
+    {
+      "method": "POST",
+      "path": "/api/rate-limiting/reset",
+      "description": "Reset rate limits for user/IP",
+      "auth": true,
+      "permission": "rate-limiting:write"
+    }
+  ],
+  
+  "database": {
+    "tables": [
+      {
+        "name": "rate_limits",
+        "description": "Track rate limit usage per user/IP/tenant",
+        "columns": [
+          "id TEXT PRIMARY KEY",
+          "tenant_id TEXT NOT NULL",
+          "identifier TEXT NOT NULL",
+          "identifier_type TEXT NOT NULL",
+          "endpoint TEXT",
+          "tokens_remaining INTEGER NOT NULL",
+          "last_refill DATETIME NOT NULL",
+          "requests_count INTEGER DEFAULT 0",
+          "window_start DATETIME NOT NULL",
+          "created_at DATETIME DEFAULT CURRENT_TIMESTAMP",
+          "updated_at DATETIME DEFAULT CURRENT_TIMESTAMP"
+        ],
+        "indices": [
+          "CREATE UNIQUE INDEX IF NOT EXISTS idx_rate_limits_identifier ON rate_limits(tenant_id, identifier, identifier_type, endpoint)",
+          "CREATE INDEX IF NOT EXISTS idx_rate_limits_tenant ON rate_limits(tenant_id)",
+          "CREATE INDEX IF NOT EXISTS idx_rate_limits_updated ON rate_limits(updated_at)"
+        ]
+      },
+      {
+        "name": "blocked_ips",
+        "description": "Temporarily or permanently blocked IP addresses",
+        "columns": [
+          "id TEXT PRIMARY KEY",
+          "tenant_id TEXT NOT NULL",
+          "ip_address TEXT NOT NULL",
+          "reason TEXT NOT NULL",
+          "block_type TEXT NOT NULL",
+          "blocked_at DATETIME NOT NULL",
+          "expires_at DATETIME",
+          "blocked_by TEXT",
+          "auto_blocked INTEGER DEFAULT 0",
+          "violation_count INTEGER DEFAULT 0",
+          "metadata TEXT",
+          "created_at DATETIME DEFAULT CURRENT_TIMESTAMP"
+        ],
+        "indices": [
+          "CREATE UNIQUE INDEX IF NOT EXISTS idx_blocked_ips_ip ON blocked_ips(tenant_id, ip_address)",
+          "CREATE INDEX IF NOT EXISTS idx_blocked_ips_tenant ON blocked_ips(tenant_id)",
+          "CREATE INDEX IF NOT EXISTS idx_blocked_ips_expires ON blocked_ips(expires_at)"
+        ]
+      },
+      {
+        "name": "rate_limit_violations",
+        "description": "Audit trail of rate limit violations",
+        "columns": [
+          "id TEXT PRIMARY KEY",
+          "tenant_id TEXT NOT NULL",
+          "identifier TEXT NOT NULL",
+          "identifier_type TEXT NOT NULL",
+          "ip_address TEXT NOT NULL",
+          "endpoint TEXT NOT NULL",
+          "method TEXT NOT NULL",
+          "limit_type TEXT NOT NULL",
+          "current_rate INTEGER NOT NULL",
+          "limit_rate INTEGER NOT NULL",
+          "user_agent TEXT",
+          "timestamp DATETIME NOT NULL",
+          "action_taken TEXT",
+          "created_at DATETIME DEFAULT CURRENT_TIMESTAMP"
+        ],
+        "indices": [
+          "CREATE INDEX IF NOT EXISTS idx_violations_tenant ON rate_limit_violations(tenant_id)",
+          "CREATE INDEX IF NOT EXISTS idx_violations_ip ON rate_limit_violations(ip_address)",
+          "CREATE INDEX IF NOT EXISTS idx_violations_timestamp ON rate_limit_violations(timestamp)"
+        ]
+      },
+      {
+        "name": "ip_whitelist",
+        "description": "Whitelisted IP addresses exempt from rate limiting",
+        "columns": [
+          "id TEXT PRIMARY KEY",
+          "tenant_id TEXT NOT NULL",
+          "ip_address TEXT NOT NULL",
+          "description TEXT",
+          "added_by TEXT NOT NULL",
+          "added_at DATETIME NOT NULL",
+          "expires_at DATETIME",
+          "created_at DATETIME DEFAULT CURRENT_TIMESTAMP"
+        ],
+        "indices": [
+          "CREATE UNIQUE INDEX IF NOT EXISTS idx_whitelist_ip ON ip_whitelist(tenant_id, ip_address)",
+          "CREATE INDEX IF NOT EXISTS idx_whitelist_tenant ON ip_whitelist(tenant_id)"
+        ]
+      },
+      {
+        "name": "rate_limit_config",
+        "description": "Rate limiting configuration per tenant",
+        "columns": [
+          "id TEXT PRIMARY KEY",
+          "tenant_id TEXT NOT NULL UNIQUE",
+          "enabled INTEGER DEFAULT 1",
+          "global_limit INTEGER DEFAULT 1000",
+          "global_window INTEGER DEFAULT 3600",
+          "per_ip_limit INTEGER DEFAULT 100",
+          "per_ip_window INTEGER DEFAULT 60",
+          "per_user_limit INTEGER DEFAULT 1000",
+          "per_user_window INTEGER DEFAULT 3600",
+          "burst_allowance INTEGER DEFAULT 50",
+          "ddos_threshold INTEGER DEFAULT 1000",
+          "ddos_window INTEGER DEFAULT 60",
+          "brute_force_attempts INTEGER DEFAULT 5",
+          "brute_force_window INTEGER DEFAULT 300",
+          "block_duration INTEGER DEFAULT 3600",
+          "auto_block_enabled INTEGER DEFAULT 1",
+          "created_at DATETIME DEFAULT CURRENT_TIMESTAMP",
+          "updated_at DATETIME DEFAULT CURRENT_TIMESTAMP"
+        ],
+        "indices": [
+          "CREATE INDEX IF NOT EXISTS idx_config_tenant ON rate_limit_config(tenant_id)"
+        ]
+      }
+    ]
+  },
+  
+  "config": {
+    "defaults": {
+      "global_limit": 1000,
+      "global_window": 3600,
+      "per_ip_limit": 100,
+      "per_ip_window": 60,
+      "per_user_limit": 1000,
+      "per_user_window": 3600,
+      "burst_allowance": 50,
+      "ddos_threshold": 1000,
+      "ddos_window": 60,
+      "brute_force_attempts": 5,
+      "brute_force_window": 300,
+      "block_duration": 3600,
+      "auto_block_enabled": true
+    },
+    "algorithms": {
+      "rate_limiter": "token_bucket",
+      "ddos_detection": "sliding_window"
+    },
+    "headers": {
+      "enabled": true,
+      "prefix": "X-RateLimit-"
+    },
+    "responses": {
+      "too_many_requests": 429,
+      "blocked": 403
+    }
+  },
+  
+  "middleware": {
+    "enabled": true,
+    "apply_to_all_routes": true,
+    "exclude_paths": [
+      "/health",
+      "/api/auth/login"
+    ]
+  },
+  
+  "dependencies": {
+    "internal": ["auth", "tenants", "audit-log"],
+    "external": []
+  }
+}
