@@ -23,6 +23,15 @@ module.exports = {
     this.auditLogger = new AuditLogger(core);
     this.settingsManager = new SettingsManager(core);
 
+    // Initialize database
+    try {
+      await this.userManager.initDatabase();
+      this.logger?.info('User database initialized');
+    } catch (error) {
+      this.logger?.error(`Failed to initialize user database: ${error.message}`);
+      throw error;
+    }
+
     // Register services
     core.registerService('user-manager', this.userManager);
     core.registerService('system-monitor', this.systemMonitor);

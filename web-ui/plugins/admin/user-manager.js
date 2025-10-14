@@ -1,32 +1,122 @@
 /**
  * User Manager Service
  * Handles user CRUD operations, role management, and user queries
+ * Enhanced with SQLite database persistence
  */
+
+const sqlite3 = require('sqlite3').verbose();
+const path = require('path');
+const fs = require('fs');
 
 class UserManager {
   constructor(core) {
     this.core = core;
     this.logger = core.getService('logger');
-    this.db = this.initDatabase();
+    this.db = null;
+    this.roles = new Map([
+      ['admin', { permissions: ['*'] }],
+      ['user', { permissions: ['read', 'scan', 'report:view'] }],
+      ['auditor', { permissions: ['read', 'report:*', 'audit:view'] }]
+    ]);
+    this.initialized = false;
   }
 
-  initDatabase() {
-    // In-memory database for demo (replace with real DB in production)
-    return {
-      users: new Map(),
-      roles: new Map([
-        ['admin', { permissions: ['*'] }],
-        ['user', { permissions: ['read', 'scan', 'report:view'] }],
-        ['auditor', { permissions: ['read', 'report:*', 'audit:view'] }]
-      ]),
-      nextId: 1
-    };
+  async initDatabase() {
+    if (this.initialized) return;
+
+    // Ensure data directory exists
+    const dataDir = path.join(__dirname, '../../data');
+    if (!fs.existsSync(dataDir)) {
+      fs.mkdirSync(dataDir, { recursive: true });
+    }
+
+    const dbPath = path.join(dataDir, 'users.db');
+    
+    return new Promise((resolve, reject) => {
+      this.db = new sqlite3.Database(dbPath, async (err) => {
+        if (err) {
+          this.logger?.error(`Database connection failed: ${err.message}`);
+          reject(err);
+          return;
+        }
+
+        this.logger?.info(`User database connected: ${dbPath}`);
+
+        try {
+          await this.createTables();
+          await this.createIndexes();
+          this.initialized = true;
+          resolve();
+        } catch (error) {
+          reject(error);
+        }
+      });
+    });
+  }
+
+  async createTables() {
+    const createUsersTable = `
+      CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT UNIQUE NOT NULL,
+        email TEXT UNIQUE NOT NULL,
+        password TEXT NOT NULL,
+        role TEXT NOT NULL DEFAULT 'user',
+        active INTEGER NOT NULL DEFAULT 1,
+        tenant_id TEXT,
+        created_at TEXT NOT NULL,
+        updated_at TEXT NOT NULL,
+        last_login TEXT,
+        login_count INTEGER DEFAULT 0
+      )
+    `;
+
+    return new Promise((resolve, reject) => {
+      this.db.run(createUsersTable, (err) => {
+        if (err) {
+          this.logger?.error(`Failed to create users table: ${err.message}`);
+          reject(err);
+        } else {
+          this.logger?.info('Users table ready');
+          resolve();
+        }
+      });
+    });
+  }
+
+  async createIndexes() {
+    const indexes = [
+      'CREATE INDEX IF NOT EXISTS idx_users_username ON users(username)',
+      'CREATE INDEX IF NOT EXISTS idx_users_email ON users(email)',
+      'CREATE INDEX IF NOT EXISTS idx_users_role ON users(role)',
+      'CREATE INDEX IF NOT EXISTS idx_users_tenant ON users(tenant_id)',
+      'CREATE INDEX IF NOT EXISTS idx_users_active ON users(active)'
+    ];
+
+    for (const indexSql of indexes) {
+      await new Promise((resolve, reject) => {
+        this.db.run(indexSql, (err) => {
+          if (err) reject(err);
+          else resolve();
+        });
+      });
+    }
+
+    this.logger?.info('Database indexes created');
+  }
+
+  async ensureInitialized() {
+    if (!this.initialized) {
+      await this.initDatabase();
+    }
   }
 
   /**
    * Create a new user
    */
   async createUser(userData) {
+    await this.ensureInitialized();
+
     try {
       const { username, email, password, role = 'user', active = true, tenantId } = userData;
 
@@ -36,16 +126,18 @@ class UserManager {
       }
 
       // Check if user exists
-      if (this.findUserByUsername(username)) {
+      const existingByUsername = await this.findUserByUsername(username);
+      if (existingByUsername) {
         throw new Error('Username already exists');
       }
 
-      if (this.findUserByEmail(email)) {
+      const existingByEmail = await this.findUserByEmail(email);
+      if (existingByEmail) {
         throw new Error('Email already exists');
       }
 
       // Validate role
-      if (!this.db.roles.has(role)) {
+      if (!this.roles.has(role)) {
         throw new Error(`Invalid role: ${role}`);
       }
 
@@ -63,44 +155,49 @@ class UserManager {
         }
       }
 
-      // Hash password (in production, use auth service)
+      // Hash password
       let hashedPassword = password;
       try {
         const authService = this.core.getService('auth');
         if (authService && authService.hashPassword) {
           hashedPassword = await authService.hashPassword(password);
         } else {
-          // Fallback to bcrypt if auth service not available
           const bcrypt = require('bcryptjs');
           hashedPassword = await bcrypt.hash(password, 10);
         }
       } catch (error) {
-        // If hashing fails, use bcrypt directly
         const bcrypt = require('bcryptjs');
         hashedPassword = await bcrypt.hash(password, 10);
       }
 
-      const userId = this.db.nextId++;
-      const user = {
-        id: userId,
-        username,
-        email,
-        password: hashedPassword,
-        role,
-        active,
-        tenantId: tenantId || null, // Add tenant association
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-        lastLogin: null,
-        loginCount: 0
-      };
+      const now = new Date().toISOString();
+      const sql = `
+        INSERT INTO users (username, email, password, role, active, tenant_id, created_at, updated_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      `;
 
-      this.db.users.set(userId, user);
+      const self = this;
+      return new Promise((resolve, reject) => {
+        self.db.run(sql, [username, email, hashedPassword, role, active ? 1 : 0, tenantId || null, now, now], function(err) {
+          if (err) {
+            self.logger?.error(`Error creating user: ${err.message}`);
+            reject(err);
+            return;
+          }
 
-      this.logger?.info(`User created: ${username} (${email}) with role ${role}${tenantId ? ` in tenant ${tenantId}` : ''}`);
+          self.logger?.info(`User created: ${username} (${email}) with role ${role}${tenantId ? ` in tenant ${tenantId}` : ''}`);
 
-      // Return user without password
-      return this.sanitizeUser(user);
+          // Fetch the created user
+          const insertedId = this.lastID;
+          self.db.get('SELECT * FROM users WHERE id = ?', [insertedId], (err, user) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(self.sanitizeUser(self.rowToUser(user)));
+            }
+          });
+        });
+      });
     } catch (error) {
       this.logger?.error(`Error creating user: ${error.message}`);
       throw error;
@@ -111,82 +208,138 @@ class UserManager {
    * Get user by ID
    */
   async getUserById(userId) {
-    const user = this.db.users.get(parseInt(userId));
-    return user ? this.sanitizeUser(user) : null;
+    await this.ensureInitialized();
+
+    return new Promise((resolve, reject) => {
+      this.db.get('SELECT * FROM users WHERE id = ?', [userId], (err, row) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(row ? this.sanitizeUser(this.rowToUser(row)) : null);
+        }
+      });
+    });
   }
 
   /**
    * Get user by username
    */
-  findUserByUsername(username) {
-    for (const user of this.db.users.values()) {
-      if (user.username === username) {
-        return user;
-      }
-    }
-    return null;
+  async findUserByUsername(username) {
+    await this.ensureInitialized();
+
+    return new Promise((resolve, reject) => {
+      this.db.get('SELECT * FROM users WHERE username = ?', [username], (err, row) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(row ? this.rowToUser(row) : null);
+        }
+      });
+    });
   }
 
   /**
    * Get user by email
    */
-  findUserByEmail(email) {
-    for (const user of this.db.users.values()) {
-      if (user.email === email) {
-        return user;
-      }
-    }
-    return null;
+  async findUserByEmail(email) {
+    await this.ensureInitialized();
+
+    return new Promise((resolve, reject) => {
+      this.db.get('SELECT * FROM users WHERE email = ?', [email], (err, row) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(row ? this.rowToUser(row) : null);
+        }
+      });
+    });
+  }
+
+  /**
+   * Convert database row to user object
+   */
+  rowToUser(row) {
+    if (!row) return null;
+    return {
+      id: row.id,
+      username: row.username,
+      email: row.email,
+      password: row.password,
+      role: row.role,
+      active: row.active === 1,
+      tenantId: row.tenant_id,
+      createdAt: row.created_at,
+      updatedAt: row.updated_at,
+      lastLogin: row.last_login,
+      loginCount: row.login_count || 0
+    };
   }
 
   /**
    * List all users with pagination and filters
    */
   async listUsers(options = {}) {
+    await this.ensureInitialized();
+
     const {
       page = 1,
       limit = 50,
       role = null,
       active = null,
       search = null,
-      tenantId = null  // Add tenant filter
+      tenantId = null
     } = options;
 
-    let users = Array.from(this.db.users.values());
+    let whereClauses = [];
+    let params = [];
 
-    // Apply filters
     if (role) {
-      users = users.filter(u => u.role === role);
+      whereClauses.push('role = ?');
+      params.push(role);
     }
 
     if (active !== null) {
-      users = users.filter(u => u.active === active);
+      whereClauses.push('active = ?');
+      params.push(active ? 1 : 0);
     }
 
-    // Filter by tenant
     if (tenantId !== null) {
-      users = users.filter(u => u.tenantId === tenantId);
+      whereClauses.push('tenant_id = ?');
+      params.push(tenantId);
     }
 
     if (search) {
-      const searchLower = search.toLowerCase();
-      users = users.filter(u => 
-        u.username.toLowerCase().includes(searchLower) ||
-        u.email.toLowerCase().includes(searchLower)
-      );
+      whereClauses.push('(username LIKE ? OR email LIKE ?)');
+      params.push(`%${search}%`, `%${search}%`);
     }
 
-    // Sort by creation date (newest first)
-    users.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    const whereClause = whereClauses.length > 0 ? 'WHERE ' + whereClauses.join(' AND ') : '';
+    
+    // Get total count
+    const countSql = `SELECT COUNT(*) as count FROM users ${whereClause}`;
+    const total = await new Promise((resolve, reject) => {
+      this.db.get(countSql, params, (err, row) => {
+        if (err) reject(err);
+        else resolve(row.count);
+      });
+    });
 
-    // Pagination
-    const total = users.length;
-    const totalPages = Math.ceil(total / limit);
+    // Get paginated results
     const offset = (page - 1) * limit;
-    const paginatedUsers = users.slice(offset, offset + limit);
+    const dataSql = `SELECT * FROM users ${whereClause} ORDER BY created_at DESC LIMIT ? OFFSET ?`;
+    const dataParams = [...params, limit, offset];
+
+    const users = await new Promise((resolve, reject) => {
+      this.db.all(dataSql, dataParams, (err, rows) => {
+        if (err) reject(err);
+        else resolve(rows.map(row => this.sanitizeUser(this.rowToUser(row))));
+      });
+    });
+
+    const totalPages = Math.ceil(total / limit);
 
     return {
-      users: paginatedUsers.map(u => this.sanitizeUser(u)),
+      users,
       pagination: {
         page,
         limit,
@@ -202,23 +355,27 @@ class UserManager {
    * Update user
    */
   async updateUser(userId, updates) {
+    await this.ensureInitialized();
+
     try {
-      const user = this.db.users.get(parseInt(userId));
+      const user = await this.getUserById(userId);
       if (!user) {
         throw new Error('User not found');
       }
 
-      // Don't allow updating certain fields
-      const allowedFields = ['email', 'role', 'active', 'tenantId'];
-      
+      const allowedFields = ['email', 'role', 'active', 'tenant_id'];
+      let setClauses = [];
+      let params = [];
+
       for (const [key, value] of Object.entries(updates)) {
-        if (allowedFields.includes(key)) {
-          // Validate role if updating
-          if (key === 'role' && !this.db.roles.has(value)) {
+        // Map camelCase to snake_case for database
+        const dbKey = key === 'tenantId' ? 'tenant_id' : key;
+        
+        if (allowedFields.includes(dbKey)) {
+          if (key === 'role' && !this.roles.has(value)) {
             throw new Error(`Invalid role: ${value}`);
           }
-          
-          // Validate tenant if updating
+
           if (key === 'tenantId' && value !== null) {
             const tenantManager = this.core.getService('tenant-manager');
             if (tenantManager) {
@@ -228,16 +385,32 @@ class UserManager {
               }
             }
           }
-          
-          user[key] = value;
+
+          setClauses.push(`${dbKey} = ?`);
+          params.push(key === 'active' ? (value ? 1 : 0) : value);
         }
       }
 
-      user.updatedAt = new Date().toISOString();
+      if (setClauses.length === 0) {
+        return user;
+      }
 
-      this.logger?.info(`User updated: ${user.username}`);
+      setClauses.push('updated_at = ?');
+      params.push(new Date().toISOString());
+      params.push(userId);
 
-      return this.sanitizeUser(user);
+      const sql = `UPDATE users SET ${setClauses.join(', ')} WHERE id = ?`;
+
+      await new Promise((resolve, reject) => {
+        this.db.run(sql, params, (err) => {
+          if (err) reject(err);
+          else resolve();
+        });
+      });
+
+      this.logger?.info(`User updated: ID ${userId}`);
+
+      return await this.getUserById(userId);
     } catch (error) {
       this.logger?.error(`Error updating user: ${error.message}`);
       throw error;
@@ -248,12 +421,20 @@ class UserManager {
    * Delete user
    */
   async deleteUser(userId) {
-    const user = this.db.users.get(parseInt(userId));
+    await this.ensureInitialized();
+
+    const user = await this.getUserById(userId);
     if (!user) {
       throw new Error('User not found');
     }
 
-    this.db.users.delete(parseInt(userId));
+    await new Promise((resolve, reject) => {
+      this.db.run('DELETE FROM users WHERE id = ?', [userId], (err) => {
+        if (err) reject(err);
+        else resolve();
+      });
+    });
+
     this.logger?.info(`User deleted: ${user.username}`);
 
     return { success: true, message: 'User deleted' };
@@ -263,21 +444,39 @@ class UserManager {
    * Change user password
    */
   async changePassword(userId, oldPassword, newPassword) {
-    const user = this.db.users.get(parseInt(userId));
+    await this.ensureInitialized();
+
+    const user = await this.getUserById(userId);
     if (!user) {
       throw new Error('User not found');
     }
 
+    // Get full user with password
+    const fullUser = await new Promise((resolve, reject) => {
+      this.db.get('SELECT * FROM users WHERE id = ?', [userId], (err, row) => {
+        if (err) reject(err);
+        else resolve(this.rowToUser(row));
+      });
+    });
+
     // Verify old password
     const bcrypt = require('bcryptjs');
-    const valid = await bcrypt.compare(oldPassword, user.password);
+    const valid = await bcrypt.compare(oldPassword, fullUser.password);
     if (!valid) {
       throw new Error('Invalid current password');
     }
 
     // Hash new password
-    user.password = await bcrypt.hash(newPassword, 10);
-    user.updatedAt = new Date().toISOString();
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    const now = new Date().toISOString();
+
+    await new Promise((resolve, reject) => {
+      this.db.run('UPDATE users SET password = ?, updated_at = ? WHERE id = ?', 
+        [hashedPassword, now, userId], (err) => {
+        if (err) reject(err);
+        else resolve();
+      });
+    });
 
     this.logger?.info(`Password changed for user: ${user.username}`);
 
@@ -288,28 +487,40 @@ class UserManager {
    * Get user statistics
    */
   async getUserStats() {
-    const users = Array.from(this.db.users.values());
+    await this.ensureInitialized();
 
-    const stats = {
-      total: users.length,
-      active: users.filter(u => u.active).length,
-      inactive: users.filter(u => !u.active).length,
-      byRole: {},
-      recentLogins: users
-        .filter(u => u.lastLogin)
-        .sort((a, b) => new Date(b.lastLogin) - new Date(a.lastLogin))
-        .slice(0, 10)
-        .map(u => ({
-          username: u.username,
-          lastLogin: u.lastLogin,
-          loginCount: u.loginCount
-        }))
-    };
+    const stats = await new Promise((resolve, reject) => {
+      const queries = {
+        total: 'SELECT COUNT(*) as count FROM users',
+        active: 'SELECT COUNT(*) as count FROM users WHERE active = 1',
+        inactive: 'SELECT COUNT(*) as count FROM users WHERE active = 0',
+        byRole: 'SELECT role, COUNT(*) as count FROM users GROUP BY role',
+        recentLogins: 'SELECT username, last_login, login_count FROM users WHERE last_login IS NOT NULL ORDER BY last_login DESC LIMIT 10'
+      };
 
-    // Count by role
-    for (const role of this.db.roles.keys()) {
-      stats.byRole[role] = users.filter(u => u.role === role).length;
-    }
+      Promise.all([
+        new Promise((res, rej) => this.db.get(queries.total, (err, row) => err ? rej(err) : res(row.count))),
+        new Promise((res, rej) => this.db.get(queries.active, (err, row) => err ? rej(err) : res(row.count))),
+        new Promise((res, rej) => this.db.get(queries.inactive, (err, row) => err ? rej(err) : res(row.count))),
+        new Promise((res, rej) => this.db.all(queries.byRole, (err, rows) => err ? rej(err) : res(rows))),
+        new Promise((res, rej) => this.db.all(queries.recentLogins, (err, rows) => err ? rej(err) : res(rows)))
+      ]).then(([total, active, inactive, byRole, recentLogins]) => {
+        const byRoleObj = {};
+        byRole.forEach(r => { byRoleObj[r.role] = r.count; });
+
+        resolve({
+          total,
+          active,
+          inactive,
+          byRole: byRoleObj,
+          recentLogins: recentLogins.map(u => ({
+            username: u.username,
+            lastLogin: u.last_login,
+            loginCount: u.login_count
+          }))
+        });
+      }).catch(reject);
+    });
 
     return stats;
   }
@@ -319,7 +530,7 @@ class UserManager {
    */
   async listRoles() {
     const roles = [];
-    for (const [name, details] of this.db.roles.entries()) {
+    for (const [name, details] of this.roles.entries()) {
       roles.push({
         name,
         permissions: details.permissions
@@ -332,34 +543,53 @@ class UserManager {
    * Record user login
    */
   async recordLogin(userId) {
-    const user = this.db.users.get(parseInt(userId));
-    if (user) {
-      user.lastLogin = new Date().toISOString();
-      user.loginCount = (user.loginCount || 0) + 1;
-    }
+    await this.ensureInitialized();
+
+    const now = new Date().toISOString();
+    await new Promise((resolve, reject) => {
+      this.db.run(
+        'UPDATE users SET last_login = ?, login_count = login_count + 1 WHERE id = ?',
+        [now, userId],
+        (err) => err ? reject(err) : resolve()
+      );
+    });
   }
 
   /**
    * Get users by tenant ID
    */
   async getUsersByTenant(tenantId) {
-    const users = Array.from(this.db.users.values());
-    return users.filter(u => u.tenantId === tenantId).map(u => this.sanitizeUser(u));
+    await this.ensureInitialized();
+
+    return new Promise((resolve, reject) => {
+      this.db.all('SELECT * FROM users WHERE tenant_id = ?', [tenantId], (err, rows) => {
+        if (err) reject(err);
+        else resolve(rows.map(row => this.sanitizeUser(this.rowToUser(row))));
+      });
+    });
   }
 
   /**
    * Count users in a tenant
    */
   async countUsersByTenant(tenantId) {
-    const users = Array.from(this.db.users.values());
-    return users.filter(u => u.tenantId === tenantId).length;
+    await this.ensureInitialized();
+
+    return new Promise((resolve, reject) => {
+      this.db.get('SELECT COUNT(*) as count FROM users WHERE tenant_id = ?', [tenantId], (err, row) => {
+        if (err) reject(err);
+        else resolve(row.count);
+      });
+    });
   }
 
   /**
    * Move user to different tenant
    */
   async moveUserToTenant(userId, newTenantId) {
-    const user = this.db.users.get(parseInt(userId));
+    await this.ensureInitialized();
+
+    const user = await this.getUserById(userId);
     if (!user) {
       throw new Error('User not found');
     }
@@ -379,20 +609,42 @@ class UserManager {
     }
 
     const oldTenantId = user.tenantId;
-    user.tenantId = newTenantId;
-    user.updatedAt = new Date().toISOString();
+    const now = new Date().toISOString();
+
+    await new Promise((resolve, reject) => {
+      this.db.run('UPDATE users SET tenant_id = ?, updated_at = ? WHERE id = ?',
+        [newTenantId, now, userId], (err) => {
+        if (err) reject(err);
+        else resolve();
+      });
+    });
 
     this.logger?.info(`User ${user.username} moved from tenant ${oldTenantId} to ${newTenantId}`);
 
-    return this.sanitizeUser(user);
+    return await this.getUserById(userId);
   }
 
   /**
    * Remove password from user object
    */
   sanitizeUser(user) {
+    if (!user) return null;
     const { password, ...sanitized } = user;
     return sanitized;
+  }
+
+  /**
+   * Close database connection
+   */
+  async close() {
+    if (this.db) {
+      return new Promise((resolve, reject) => {
+        this.db.close((err) => {
+          if (err) reject(err);
+          else resolve();
+        });
+      });
+    }
   }
 }
 
