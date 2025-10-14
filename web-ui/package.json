@@ -1,7 +1,7 @@
 {
   "name": "ai-security-scanner-web-ui",
-  "version": "1.0.0",
-  "description": "Web dashboard for AI Security Scanner",
+  "version": "4.5.0",
+  "description": "Web dashboard for AI Security Scanner - Backend Complete",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
