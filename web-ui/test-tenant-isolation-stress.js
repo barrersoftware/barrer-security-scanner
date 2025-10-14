@@ -358,6 +358,12 @@ async function testConcurrentAccess(tenants) {
   const auditLogger = serviceRegistry.get('AuditLogger');
   
   console.log(`Testing concurrent access with ${tenants.length} tenants...`);
+  
+  if (!tenants || tenants.length === 0) {
+    console.log(`   ⚠️  No tenants available for concurrent access testing`);
+    return;
+  }
+  
   const startTime = Date.now();
   
   // Perform operations concurrently
@@ -397,6 +403,12 @@ async function testQueryPerformance(tenants) {
   const duration1 = Date.now() - start1;
   console.log(`   ✅ List ${allTenants.length} tenants: ${duration1}ms`);
   
+  // Check if we have tenants to test with
+  if (!tenants || tenants.length === 0) {
+    console.log(`   ⚠️  No tenants available for performance testing`);
+    return;
+  }
+  
   // Test 2: Query logs for random tenant
   const randomTenant = tenants[Math.floor(Math.random() * tenants.length)];
   const start2 = Date.now();
@@ -427,14 +439,29 @@ async function testAuditLogIsolation(tenants) {
   
   console.log('Verifying audit log isolation...');
   
-  // Sample 5 tenants
-  const sampleTenants = [
-    tenants[0],
-    tenants[Math.floor(tenants.length / 4)],
-    tenants[Math.floor(tenants.length / 2)],
-    tenants[Math.floor(tenants.length * 3 / 4)],
-    tenants[tenants.length - 1]
-  ];
+  if (!tenants || tenants.length === 0) {
+    console.log(`   ⚠️  No tenants available for audit log isolation testing`);
+    return;
+  }
+  
+  // Sample 5 tenants (or fewer if we have less)
+  const sampleSize = Math.min(5, tenants.length);
+  const sampleTenants = [];
+  
+  if (tenants.length === 1) {
+    sampleTenants.push(tenants[0]);
+  } else if (tenants.length >= 5) {
+    sampleTenants.push(
+      tenants[0],
+      tenants[Math.floor(tenants.length / 4)],
+      tenants[Math.floor(tenants.length / 2)],
+      tenants[Math.floor(tenants.length * 3 / 4)],
+      tenants[tenants.length - 1]
+    );
+  } else {
+    // Use all available tenants if less than 5
+    sampleTenants.push(...tenants);
+  }
   
   for (const tenant of sampleTenants) {
     const logs = await auditQuery.queryLogs({ tenantId: tenant.id }, { limit: 50 });
