@@ -45,6 +45,53 @@ async function initDatabase() {
         driver: sqlite3.Database
     });
     
+    // Create basic tables for plugins that need them
+    try {
+        // Users table
+        await db.exec(`
+            CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                username TEXT UNIQUE NOT NULL,
+                email TEXT UNIQUE NOT NULL,
+                password TEXT NOT NULL,
+                role TEXT DEFAULT 'user',
+                status TEXT DEFAULT 'active',
+                lastLogin TEXT,
+                created TEXT DEFAULT CURRENT_TIMESTAMP
+            )
+        `);
+        
+        // Reports table
+        await db.exec(`
+            CREATE TABLE IF NOT EXISTS reports (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                type TEXT,
+                format TEXT,
+                path TEXT,
+                size INTEGER,
+                created TEXT DEFAULT CURRENT_TIMESTAMP
+            )
+        `);
+        
+        // Audit logs table (simplified - plugin will create full schema)
+        await db.exec(`
+            CREATE TABLE IF NOT EXISTS audit_logs (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                timestamp TEXT DEFAULT CURRENT_TIMESTAMP,
+                user TEXT,
+                action TEXT,
+                category TEXT,
+                status TEXT,
+                details TEXT
+            )
+        `);
+        
+        console.log('✅ Database tables created');
+    } catch (error) {
+        console.log('⚠️  Database table creation:', error.message);
+    }
+    
     console.log('✅ Database connected');
     return db;
 }
@@ -72,7 +119,78 @@ async function loadPlugins() {
     const pluginsDir = path.join(__dirname, 'plugins');
     const pluginDirs = await fs.readdir(pluginsDir);
     
-    pluginContext.db = db;
+    // Service registry
+    const serviceRegistry = {};
+    
+    // Add exec method to database (wraps run for compatibility)
+    if (!db.exec) {
+        db.exec = async function(sql) {
+            return await this.run(sql);
+        };
+    }
+    
+    // Enhanced plugin context with all necessary services and methods
+    const enhancedContext = {
+        db: db, // sqlite wrapper with exec added
+        database: db,
+        logger: console,
+        
+        // Config management
+        getConfig: (key, defaultValue) => {
+            const configs = {
+                'auth.sessionTimeout': 24 * 60 * 60 * 1000,
+                'auth.mfaEnabled': false,
+                'auth.oauth.enabled': false,
+                'auth.tokensDir': path.join(__dirname, 'data', 'tokens'),
+                'storage.maxFileSize': 100 * 1024 * 1024,
+                'storage.uploadDir': path.join(__dirname, 'uploads'),
+                'security.csrfEnabled': true,
+                'security.rateLimitEnabled': true
+            };
+            return configs[key] !== undefined ? configs[key] : defaultValue;
+        },
+        
+        // Service registration
+        registerService: (name, service) => {
+            serviceRegistry[name] = service;
+            pluginContext.services.register(name, service);
+            console.log(`    ✓ Service registered: ${name}`);
+        },
+        
+        // Service getter
+        getService: (name) => {
+            // Built-in services
+            const builtinServices = {
+                'logger': console,
+                'platform': {
+                    isWindows: process.platform === 'win32',
+                    isMac: process.platform === 'darwin',
+                    isLinux: process.platform === 'linux',
+                    getScriptsDir: () => path.join(__dirname, '..', 'scripts'),
+                    getReportsDir: () => path.join(__dirname, 'reports')
+                },
+                'broadcast': {
+                    emit: (event, data) => {
+                        console.log(`[Broadcast] ${event}:`, data);
+                    },
+                    on: (event, handler) => {}
+                },
+                'integrations': {
+                    notify: (channel, message) => {
+                        console.log(`[Notification] ${channel}: ${message}`);
+                    }
+                },
+                'utils': {
+                    generateId: () => Date.now().toString(36),
+                    hash: (data) => require('crypto').createHash('sha256').update(data).digest('hex')
+                }
+            };
+            
+            return serviceRegistry[name] || builtinServices[name];
+        },
+        
+        services: pluginContext.services
+    };
     
     for (const dir of pluginDirs) {
         const pluginPath = path.join(pluginsDir, dir);
@@ -82,24 +200,43 @@ async function loadPlugins() {
         
         try {
             const pluginFile = path.join(pluginPath, 'index.js');
-            const PluginClass = require(pluginFile);
             
-            const plugin = new PluginClass();
+            // Clear require cache
+            delete require.cache[require.resolve(pluginFile)];
             
-            // Initialize plugin
-            await plugin.init(pluginContext);
+            let pluginModule = require(pluginFile);
+            let plugin;
             
-            // Get routes if available
-            const router = plugin.getRouter ? plugin.getRouter() : null;
-            if (router) {
-                app.use(`/api/${plugin.name}`, router);
+            // Handle different export types
+            if (typeof pluginModule === 'function') {
+                // Class export - instantiate it
+                plugin = new pluginModule();
+            } else if (pluginModule && typeof pluginModule.init === 'function') {
+                // Object export with init method
+                plugin = pluginModule;
+            } else {
+                console.log(`  ⚠️  ${dir} - Invalid plugin export`);
+                continue;
             }
             
-            plugins[plugin.name] = plugin;
-            console.log(`  ✅ ${plugin.name} v${plugin.version}`);
+            // Initialize plugin with enhanced context
+            try {
+                await plugin.init(enhancedContext);
+                
+                // Get routes if available
+                const router = plugin.getRouter ? plugin.getRouter() : null;
+                if (router) {
+                    app.use(`/api/${plugin.name}`, router);
+                }
+                
+                plugins[plugin.name] = plugin;
+                console.log(`  ✅ ${plugin.name} v${plugin.version}`);
+            } catch (initError) {
+                console.log(`  ⚠️  ${dir} - Init failed: ${initError.message}`);
+            }
             
         } catch (error) {
-            console.log(`  ⚠️  ${dir} - ${error.message}`);
+            console.log(`  ⚠️  ${dir} - Load failed: ${error.message}`);
         }
     }
     
