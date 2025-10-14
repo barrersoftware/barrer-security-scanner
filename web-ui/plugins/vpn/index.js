@@ -7,10 +7,11 @@ const express = require('express');
 const WireGuardManager = require('./wireguard-manager');
 const OpenVPNManager = require('./openvpn-manager');
 const VPNMonitor = require('./vpn-monitor');
+const ConnectionSecurity = require('./connection-security');
 
 module.exports = {
   name: 'vpn',
-  version: '1.0.0',
+  version: '1.1.0',
 
   async init(core) {
     this.core = core;
@@ -20,11 +21,16 @@ module.exports = {
     this.wireguardManager = new WireGuardManager(core);
     this.openvpnManager = new OpenVPNManager(core);
     this.vpnMonitor = new VPNMonitor(core);
+    this.connectionSecurity = new ConnectionSecurity(core);
 
     // Register services
     core.registerService('wireguard-manager', this.wireguardManager);
     core.registerService('openvpn-manager', this.openvpnManager);
     core.registerService('vpn-monitor', this.vpnMonitor);
+    core.registerService('connection-security', this.connectionSecurity);
+    
+    // Initialize connection security
+    await this.connectionSecurity.init();
 
     // Check VPN software installation
     const wgInstalled = await this.wireguardManager.isInstalled();
@@ -396,6 +402,137 @@ module.exports = {
         res.json({ success: true, data: result });
       } catch (error) {
         res.status(404).json({ error: error.message });
+      }
+    });
+
+    // ==================== Connection Security Routes ====================
+
+    // Verify connection security
+    router.post('/api/vpn/security/verify', requireAuth, async (req, res) => {
+      try {
+        const { targetHost, sourceIp } = req.body;
+        
+        if (!targetHost) {
+          return res.status(400).json({ error: 'targetHost required' });
+        }
+        
+        const verification = await this.connectionSecurity.verifyConnection(
+          targetHost,
+          sourceIp || req.ip
+        );
+        
+        res.json({ success: true, data: verification });
+      } catch (error) {
+        res.status(500).json({ error: error.message });
+      }
+    });
+
+    // Get security policies
+    router.get('/api/vpn/security/policies', requireAuth, async (req, res) => {
+      try {
+        const policies = this.connectionSecurity.getPolicies();
+        res.json({ success: true, data: policies });
+      } catch (error) {
+        res.status(500).json({ error: error.message });
+      }
+    });
+
+    // Update security policies
+    router.put('/api/vpn/security/policies', requireAuth, requireAdmin, async (req, res) => {
+      try {
+        this.connectionSecurity.updatePolicies(req.body);
+        
+        const auditLogger = this.core.getService('audit-logger');
+        if (auditLogger) {
+          await auditLogger.log({
+            userId: req.user.id,
+            username: req.user.username,
+            action: 'security_policies_updated',
+            resource: 'vpn:security:policies',
+            status: 'success',
+            details: req.body,
+            ip: req.ip
+          });
+        }
+        
+        res.json({ success: true, message: 'Security policies updated' });
+      } catch (error) {
+        res.status(500).json({ error: error.message });
+      }
+    });
+
+    // Add allowed network
+    router.post('/api/vpn/security/allowed-networks', requireAuth, requireAdmin, async (req, res) => {
+      try {
+        const { network } = req.body;
+        
+        if (!network) {
+          return res.status(400).json({ error: 'network required (e.g., 10.8.0.0/24)' });
+        }
+        
+        this.connectionSecurity.addAllowedNetwork(network);
+        res.json({ success: true, message: `Network ${network} added to allowed list` });
+      } catch (error) {
+        res.status(500).json({ error: error.message });
+      }
+    });
+
+    // Add blocked network
+    router.post('/api/vpn/security/blocked-networks', requireAuth, requireAdmin, async (req, res) => {
+      try {
+        const { network } = req.body;
+        
+        if (!network) {
+          return res.status(400).json({ error: 'network required (e.g., 192.168.1.0/24)' });
+        }
+        
+        this.connectionSecurity.addBlockedNetwork(network);
+        res.json({ success: true, message: `Network ${network} added to blocked list` });
+      } catch (error) {
+        res.status(500).json({ error: error.message });
+      }
+    });
+
+    // Get security statistics
+    router.get('/api/vpn/security/statistics', requireAuth, async (req, res) => {
+      try {
+        const stats = this.connectionSecurity.getStatistics();
+        res.json({ success: true, data: stats });
+      } catch (error) {
+        res.status(500).json({ error: error.message });
+      }
+    });
+
+    // Enforce VPN requirement
+    router.put('/api/vpn/security/enforce-vpn', requireAuth, requireAdmin, async (req, res) => {
+      try {
+        const { required } = req.body;
+        
+        if (typeof required !== 'boolean') {
+          return res.status(400).json({ error: 'required must be true or false' });
+        }
+        
+        this.connectionSecurity.enforceVPN(required);
+        
+        const auditLogger = this.core.getService('audit-logger');
+        if (auditLogger) {
+          await auditLogger.log({
+            userId: req.user.id,
+            username: req.user.username,
+            action: 'vpn_enforcement_changed',
+            resource: 'vpn:security:enforcement',
+            status: 'success',
+            details: { required },
+            ip: req.ip
+          });
+        }
+        
+        res.json({ 
+          success: true, 
+          message: `VPN requirement ${required ? 'enabled' : 'disabled'}` 
+        });
+      } catch (error) {
+        res.status(500).json({ error: error.message });
       }
     });
 

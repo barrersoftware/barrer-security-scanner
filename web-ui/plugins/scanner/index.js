@@ -66,6 +66,27 @@ module.exports = {
     // Start comprehensive security scan
     router.post('/api/scanner/start', async (req, res) => {
       try {
+        const { targetHost } = req.body;
+        
+        // Verify connection security if target host provided
+        if (targetHost) {
+          const connectionSecurity = this.core.getService('connection-security');
+          if (connectionSecurity) {
+            const verification = await connectionSecurity.verifyConnection(targetHost, req.ip);
+            
+            if (!verification.secure) {
+              this.logger?.warn(`Scan blocked - insecure connection to ${targetHost}`);
+              return res.status(403).json({
+                success: false,
+                error: 'Connection security check failed',
+                details: verification
+              });
+            }
+            
+            this.logger?.info(`Connection security verified for ${targetHost}`);
+          }
+        }
+        
         // Check tenant limits if tenant context available
         const tenantId = req.tenantId || req.user?.tenantId;
         if (tenantId) {
