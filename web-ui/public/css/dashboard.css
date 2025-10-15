@@ -1472,3 +1472,111 @@ body {
     border-top-color: var(--primary-color);
 }
 
+/* Dark Mode: Side Menu - CRITICAL FIX */
+[data-theme="dark"] .side-menu {
+    background: var(--card-bg);
+    border-right-color: var(--border-color);
+}
+
+[data-theme="dark"] .menu-item {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .menu-item:hover {
+    background: #2a2a2a;
+    color: var(--primary-color);
+}
+
+[data-theme="dark"] .menu-item.active {
+    background: rgba(74, 158, 255, 0.15);
+    color: var(--primary-color);
+}
+
+[data-theme="dark"] .menu-footer {
+    border-top-color: var(--border-color);
+}
+
+/* Dark Mode: Generic Tables (not just .data-table) */
+[data-theme="dark"] table {
+    color: var(--text-primary);
+    background: var(--card-bg);
+}
+
+[data-theme="dark"] table thead {
+    background: #2a2a2a;
+}
+
+[data-theme="dark"] table th {
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] table td {
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] table tbody tr:hover {
+    background: #2a2a2a;
+}
+
+[data-theme="dark"] table tr {
+    border-color: var(--border-color);
+}
+
+/* Dark Mode: Overview/Dashboard specific tables */
+[data-theme="dark"] .overview-content table,
+[data-theme="dark"] .main-content table,
+[data-theme="dark"] #mainContent table {
+    background: var(--card-bg);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .overview-content table td,
+[data-theme="dark"] .main-content table td,
+[data-theme="dark"] #mainContent table td {
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .overview-content table th,
+[data-theme="dark"] .main-content table th,
+[data-theme="dark"] #mainContent table th {
+    background: #2a2a2a;
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+/* Dark Mode: All possible table variations */
+[data-theme="dark"] .table,
+[data-theme="dark"] .table-striped,
+[data-theme="dark"] .table-bordered {
+    background: var(--card-bg);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .table th,
+[data-theme="dark"] .table-striped th,
+[data-theme="dark"] .table-bordered th {
+    background: #2a2a2a;
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .table td,
+[data-theme="dark"] .table-striped td,
+[data-theme="dark"] .table-bordered td {
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .table-striped tbody tr:nth-of-type(odd) {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="dark"] .table tbody tr:hover,
+[data-theme="dark"] .table-striped tbody tr:hover,
+[data-theme="dark"] .table-bordered tbody tr:hover {
+    background: #2a2a2a;
+}
+
+
