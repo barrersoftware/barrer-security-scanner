@@ -16,13 +16,16 @@ class RollbackManager {
   constructor(platformDetector, db) {
     this.platformDetector = platformDetector;
     this.db = db;
-    this.backupDir = this.getBackupDirectory();
+    this.backupDir = null; // Will be set during init
     this.maxBackups = 10;
     this.backupRetentionDays = 30;
   }
 
   async init() {
     logger.info('[RollbackManager] Initializing...');
+    
+    // Set backup directory after platform detector is initialized
+    this.backupDir = this.getBackupDirectory();
     
     // Ensure backup directory exists
     await this.ensureBackupDirectory();
@@ -39,7 +42,8 @@ class RollbackManager {
    */
   getBackupDirectory() {
     const platform = this.platformDetector.platform;
-    const baseDir = this.platformDetector.getPaths().data;
+    const paths = this.platformDetector.getPaths();
+    const baseDir = paths ? paths.data : path.join(process.cwd(), 'data');
     
     return path.join(baseDir, 'backups', 'updates');
   }

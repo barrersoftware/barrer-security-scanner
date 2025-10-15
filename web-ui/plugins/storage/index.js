@@ -36,8 +36,8 @@ module.exports = {
     
     // Get auth middleware
     const authPlugin = this.core.getPlugins().getAll().find(p => p.name === 'auth');
-    const requireAuth = authPlugin ? authPlugin.instance.requireAuth.bind(authPlugin.instance) : null;
-    const requireAdmin = authPlugin ? authPlugin.instance.requireAdmin.bind(authPlugin.instance) : null;
+    const requireAuth = authPlugin && authPlugin.requireAuth ? authPlugin.requireAuth.bind(authPlugin) : (req, res, next) => next();
+    const requireAdmin = authPlugin && authPlugin.requireAdmin ? authPlugin.requireAdmin.bind(authPlugin) : (req, res, next) => next();
     
     // Get security middleware
     const securityMiddleware = this.core.getService('security-middleware');

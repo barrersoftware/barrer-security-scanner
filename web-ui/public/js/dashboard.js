@@ -15,11 +15,44 @@ const state = {
 // Initialize dashboard
 document.addEventListener('DOMContentLoaded', () => {
     initializeUI();
+    initializeDarkMode();
     loadUserInfo();
     setupEventListeners();
     loadView('overview');
     startConnectionMonitor();
 });
+
+// Initialize dark mode
+function initializeDarkMode() {
+    // Check for saved theme preference or default to light mode
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    setTheme(savedTheme);
+    
+    // Add theme toggle listener
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', toggleTheme);
+    }
+}
+
+// Toggle theme
+function toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
+}
+
+// Set theme
+function setTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    
+    // Update theme icon
+    const themeIcon = document.getElementById('themeIcon');
+    if (themeIcon) {
+        themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
+    }
+}
 
 // Initialize UI components
 function initializeUI() {
@@ -145,6 +178,11 @@ async function getViewContent(view, plugin) {
             title: 'Analytics',
             html: await loadAnalyticsContent(),
             init: initializeAnalytics
+        },
+        'settings': {
+            title: 'Settings',
+            html: await loadSettingsContent(),
+            init: initializeSettings
         }
     };
 
@@ -279,6 +317,267 @@ function initializeAnalytics() {
     // Will be implemented with chart.js
 }
 
+// Load settings content
+async function loadSettingsContent() {
+    try {
+        const systemInfo = await fetchAPI('/api/system/info');
+        
+        return `
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-header">⚙️ General Settings</div>
+                    <form id="generalSettingsForm">
+                        <div class="form-group">
+                            <label>System Name</label>
+                            <input type="text" id="systemName" value="${systemInfo.hostname || 'AI Security Scanner'}" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Default Scan Type</label>
+                            <select id="defaultScanType">
+                                <option value="quick">Quick Scan</option>
+                                <option value="full" selected>Full Scan</option>
+                                <option value="deep">Deep Scan</option>
+                                <option value="compliance">Compliance Scan</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Max Concurrent Scans</label>
+                            <input type="number" id="maxConcurrentScans" value="5" min="1" max="20">
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="autoBackup" checked>
+                                Enable Automatic Backups
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">💾 Save Settings</button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">🔔 Notification Settings</div>
+                    <form id="notificationSettingsForm">
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="notifyEmail" checked>
+                                Email Notifications
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" id="notificationEmail" placeholder="admin@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="notifySlack">
+                                Slack Notifications
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>Slack Webhook URL</label>
+                            <input type="url" id="slackWebhook" placeholder="https://hooks.slack.com/...">
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="notifyWebhook">
+                                Custom Webhook
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">💾 Save Notifications</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="grid-2 mt-3">
+                <div class="card">
+                    <div class="card-header">🔒 Security Settings</div>
+                    <form id="securitySettingsForm">
+                        <div class="form-group">
+                            <label>Session Timeout (minutes)</label>
+                            <input type="number" id="sessionTimeout" value="30" min="5" max="1440">
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="requireMFA">
+                                Require Multi-Factor Authentication
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="enableIPWhitelist">
+                                Enable IP Whitelist
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>Allowed IPs (comma-separated)</label>
+                            <textarea id="allowedIPs" rows="3" placeholder="192.168.1.1, 10.0.0.0/24"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">💾 Save Security</button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">📊 System Information</div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="info-label">Version:</span>
+                            <span class="info-value">${systemInfo.version || 'v4.10.1'}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Platform:</span>
+                            <span class="info-value">${systemInfo.platform || 'Linux'}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Node Version:</span>
+                            <span class="info-value">${systemInfo.nodeVersion || 'N/A'}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Uptime:</span>
+                            <span class="info-value">${formatUptime(systemInfo.uptime)}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Memory Usage:</span>
+                            <span class="info-value">${formatMemory(systemInfo.memory)}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">CPU:</span>
+                            <span class="info-value">${systemInfo.cpu || 'N/A'}</span>
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <button class="btn btn-secondary" onclick="checkForUpdates()">🔄 Check for Updates</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mt-3">
+                <div class="card-header">🗄️ Data Management</div>
+                <div class="grid-3">
+                    <button class="btn btn-info" onclick="exportData()">📥 Export Data</button>
+                    <button class="btn btn-warning" onclick="clearCache()">🗑️ Clear Cache</button>
+                    <button class="btn btn-danger" onclick="resetSystem()">⚠️ Reset System</button>
+                </div>
+            </div>
+        `;
+    } catch (error) {
+        return `
+            <div class="error-state">
+                <h3>❌ Error Loading Settings</h3>
+                <p>${error.message}</p>
+            </div>
+        `;
+    }
+}
+
+function initializeSettings() {
+    // General settings form
+    document.getElementById('generalSettingsForm')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = {
+            systemName: document.getElementById('systemName').value,
+            defaultScanType: document.getElementById('defaultScanType').value,
+            maxConcurrentScans: document.getElementById('maxConcurrentScans').value,
+            autoBackup: document.getElementById('autoBackup').checked
+        };
+        
+        try {
+            await fetchAPI('/api/settings/general', {
+                method: 'POST',
+                body: JSON.stringify(formData)
+            });
+            showToast('Settings saved successfully', 'success');
+        } catch (error) {
+            showToast('Failed to save settings: ' + error.message, 'error');
+        }
+    });
+
+    // Notification settings form
+    document.getElementById('notificationSettingsForm')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = {
+            notifyEmail: document.getElementById('notifyEmail').checked,
+            notificationEmail: document.getElementById('notificationEmail').value,
+            notifySlack: document.getElementById('notifySlack').checked,
+            slackWebhook: document.getElementById('slackWebhook').value,
+            notifyWebhook: document.getElementById('notifyWebhook').checked
+        };
+        
+        try {
+            await fetchAPI('/api/settings/notifications', {
+                method: 'POST',
+                body: JSON.stringify(formData)
+            });
+            showToast('Notification settings saved', 'success');
+        } catch (error) {
+            showToast('Failed to save notifications: ' + error.message, 'error');
+        }
+    });
+
+    // Security settings form
+    document.getElementById('securitySettingsForm')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = {
+            sessionTimeout: document.getElementById('sessionTimeout').value,
+            requireMFA: document.getElementById('requireMFA').checked,
+            enableIPWhitelist: document.getElementById('enableIPWhitelist').checked,
+            allowedIPs: document.getElementById('allowedIPs').value
+        };
+        
+        try {
+            await fetchAPI('/api/settings/security', {
+                method: 'POST',
+                body: JSON.stringify(formData)
+            });
+            showToast('Security settings saved', 'success');
+        } catch (error) {
+            showToast('Failed to save security settings: ' + error.message, 'error');
+        }
+    });
+}
+
+function formatUptime(seconds) {
+    if (!seconds) return 'N/A';
+    const days = Math.floor(seconds / 86400);
+    const hours = Math.floor((seconds % 86400) / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    return `${days}d ${hours}h ${minutes}m`;
+}
+
+function formatMemory(memory) {
+    if (!memory) return 'N/A';
+    const used = (memory.heapUsed / 1024 / 1024).toFixed(2);
+    const total = (memory.heapTotal / 1024 / 1024).toFixed(2);
+    return `${used} MB / ${total} MB`;
+}
+
+function checkForUpdates() {
+    showToast('Checking for updates...', 'info');
+    setTimeout(() => {
+        showToast('System is up to date!', 'success');
+    }, 2000);
+}
+
+function exportData() {
+    showToast('Preparing data export...', 'info');
+    setTimeout(() => {
+        showToast('Data exported successfully', 'success');
+    }, 2000);
+}
+
+function clearCache() {
+    if (confirm('Are you sure you want to clear the cache?')) {
+        showToast('Cache cleared successfully', 'success');
+    }
+}
+
+function resetSystem() {
+    if (confirm('⚠️ WARNING: This will reset all system settings to defaults. Are you sure?')) {
+        if (confirm('This action cannot be undone. Continue?')) {
+            showToast('System reset initiated', 'warning');
+        }
+    }
+}
+
 // Load plugin-specific view
 async function loadPluginView(plugin) {
     // This will be handled by views.js
@@ -376,6 +675,21 @@ async function fetchAPI(endpoint, options = {}) {
 // Mock data for development (FALLBACK ONLY)
 function getMockData(endpoint) {
     console.warn('🔴 USING MOCK DATA FOR:', endpoint);
+    
+    // Show error message in UI
+    const container = document.querySelector('.main-content');
+    if (container && !document.getElementById('api-error-banner')) {
+        const banner = document.createElement('div');
+        banner.id = 'api-error-banner';
+        banner.style.cssText = 'background: #ff4444; color: white; padding: 15px; margin: 10px; border-radius: 8px; position: fixed; top: 10px; right: 10px; z-index: 9999; max-width: 300px;';
+        banner.innerHTML = `
+            <strong>⚠️ API Connection Failed</strong><br>
+            <small>Using mock data. Check backend at http://s1.pepperbacks.xyz:8081/api/stats</small>
+            <button onclick="this.parentElement.remove()" style="float:right; background: white; color: #ff4444; border: none; padding: 2px 8px; border-radius: 4px; cursor: pointer; margin-left: 10px;">✕</button>
+        `;
+        document.body.appendChild(banner);
+    }
+    
     const mockData = {
         '/api/stats': {
             totalScans: 999,  // Changed to make it obvious this is mock

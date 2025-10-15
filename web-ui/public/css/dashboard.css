@@ -18,6 +18,31 @@
     --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
     --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    
+    /* Light mode colors */
+    --text-primary: #343a40;
+    --text-secondary: #6c757d;
+    --card-bg: #ffffff;
+    --border-color: #e0e0e0;
+}
+
+/* Dark mode */
+[data-theme="dark"] {
+    --primary-color: #4a9eff;
+    --success-color: #4caf50;
+    --danger-color: #f44336;
+    --warning-color: #ff9800;
+    --info-color: #2196f3;
+    --dark-color: #1a1a1a;
+    --light-color: #2d2d2d;
+    --bg-color: #121212;
+    --text-primary: #e0e0e0;
+    --text-secondary: #b0b0b0;
+    --card-bg: #1e1e1e;
+    --border-color: #333333;
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3);
 }
 
 * {
@@ -29,8 +54,9 @@
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     background: var(--bg-color);
-    color: var(--dark-color);
+    color: var(--text-primary);
     line-height: 1.6;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
 }
 
 /* Top Header */
@@ -40,14 +66,15 @@ body {
     left: 0;
     right: 0;
     height: var(--header-height);
-    background: white;
-    border-bottom: 1px solid #e0e0e0;
+    background: var(--card-bg);
+    border-bottom: 1px solid var(--border-color);
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 20px;
     z-index: 1000;
     box-shadow: var(--shadow-sm);
+    transition: background-color var(--transition-speed), border-color var(--transition-speed);
 }
 
 .header-left {
@@ -514,11 +541,12 @@ body {
 
 /* Cards */
 .card {
-    background: white;
+    background: var(--card-bg);
     border-radius: var(--border-radius);
     padding: 20px;
     box-shadow: var(--shadow-sm);
     margin-bottom: 20px;
+    transition: background-color var(--transition-speed);
 }
 
 .card-header {
@@ -526,7 +554,9 @@ body {
     font-weight: 600;
     margin-bottom: 15px;
     padding-bottom: 15px;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-primary);
+    transition: border-color var(--transition-speed), color var(--transition-speed);
 }
 
 /* Grid Layouts */
@@ -1054,3 +1084,30 @@ body {
 /* Spacing utilities */
 .mb-2 { margin-bottom: 10px; }
 .mt-2 { margin-top: 10px; }
+
+/* Dark Mode Toggle */
+.theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: background-color var(--transition-speed);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-toggle:hover {
+    background: var(--bg-color);
+}
+
+.theme-icon {
+    display: inline-block;
+    transition: transform var(--transition-speed);
+}
+
+.theme-toggle:hover .theme-icon {
+    transform: rotate(180deg);
+}

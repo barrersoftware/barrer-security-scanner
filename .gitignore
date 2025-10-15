@@ -18,3 +18,18 @@ Thumbs.db
 *.tmp
 *.temp
 web-ui/node_modules/
+
+# Local development history and changelogs (stored in ../ai-security-scanner-changelogs/)
+*CHAT_HISTORY*.md
+*CHECKPOINT*.md
+*CHANGELOG*.md
+*SESSION*.md
+CURRENT_STATE*.md
+*.changelog.md
+*LOOP_CHECK*.md
+*PRIORITY*.md
+*PROGRESS*.md
+docs/archive/chat-histories/
+docs/archive/checkpoints/
+docs/archive/old-sessions/
+docs/current/v4.*/

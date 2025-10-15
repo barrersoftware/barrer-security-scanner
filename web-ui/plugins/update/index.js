@@ -4,7 +4,8 @@
  */
 
 const path = require('path');
-const logger = require('../../../utils/logger');
+// Logger will be injected during init
+let logger = console;
 
 // Services
 const PlatformDetector = require('./platform-detector');
@@ -102,10 +103,15 @@ class UpdatePlugin {
       );
       await this.services.packageManagerService.init();
 
-      this.services.windowsUpdateService = new WindowsUpdateService();
+      this.services.windowsUpdateService = new WindowsUpdateService(
+        this.services.platformDetector
+      );
       await this.services.windowsUpdateService.init();
 
-      this.services.rollbackManager = new RollbackManager(this.db);
+      this.services.rollbackManager = new RollbackManager(
+        this.services.platformDetector,
+        this.db
+      );
       await this.services.rollbackManager.init();
 
       this.services.updateNotifier = new UpdateNotifier(this.io);

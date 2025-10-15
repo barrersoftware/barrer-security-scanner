@@ -4,6 +4,7 @@
  */
 
 const os = require('os');
+const path = require('path');
 const { exec } = require('child_process');
 const { promisify } = require('util');
 const fs = require('fs').promises;
@@ -216,21 +217,25 @@ class PlatformDetector {
    * Get platform-specific paths
    */
   getPaths() {
+    // Use local paths relative to the project for web-ui context
+    const projectRoot = path.join(__dirname, '..', '..');
+    
     const basePaths = {
-      config: process.env.CONFIG_DIR || '/etc/ai-security-scanner',
-      data: process.env.DATA_DIR || '/var/lib/ai-security-scanner',
-      logs: process.env.LOG_DIR || '/var/log/ai-security-scanner',
+      config: process.env.CONFIG_DIR || path.join(projectRoot, 'data', 'config'),
+      data: process.env.DATA_DIR || path.join(projectRoot, 'data'),
+      logs: process.env.LOG_DIR || path.join(projectRoot, 'logs'),
       temp: os.tmpdir()
     };
 
-    if (this.platform === 'win32') {
-      basePaths.config = process.env.CONFIG_DIR || 'C:\\ProgramData\\AISecurityScanner';
-      basePaths.data = process.env.DATA_DIR || 'C:\\ProgramData\\AISecurityScanner\\data';
-      basePaths.logs = process.env.LOG_DIR || 'C:\\ProgramData\\AISecurityScanner\\logs';
-    } else if (this.platform === 'darwin') {
-      basePaths.config = process.env.CONFIG_DIR || '/usr/local/etc/ai-security-scanner';
-      basePaths.data = process.env.DATA_DIR || '/usr/local/var/ai-security-scanner';
-      basePaths.logs = process.env.LOG_DIR || '/usr/local/var/log/ai-security-scanner';
+    // Keep system paths if explicitly set via environment
+    if (!process.env.DATA_DIR) {
+      // For production deployments, these would be set via environment
+      if (this.platform === 'win32') {
+        // Windows paths - but fallback to local if not writable
+        basePaths.config = path.join(projectRoot, 'data', 'config');
+        basePaths.data = path.join(projectRoot, 'data');
+        basePaths.logs = path.join(projectRoot, 'logs');
+      }
     }
 
     return basePaths;

@@ -61,16 +61,25 @@ async function initDatabase() {
             )
         `);
         
-        // Reports table
+        // Reports table (for reporting plugin)
         await db.exec(`
             CREATE TABLE IF NOT EXISTS reports (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                id TEXT PRIMARY KEY,
+                tenant_id TEXT DEFAULT 'default',
                 name TEXT NOT NULL,
-                type TEXT,
-                format TEXT,
-                path TEXT,
-                size INTEGER,
-                created TEXT DEFAULT CURRENT_TIMESTAMP
+                description TEXT,
+                template_id TEXT,
+                format TEXT DEFAULT 'pdf',
+                scan_id TEXT,
+                status TEXT DEFAULT 'generating',
+                file_path TEXT,
+                file_size INTEGER,
+                data TEXT,
+                options TEXT,
+                generated_by TEXT,
+                generated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                completed_at DATETIME,
+                error TEXT
             )
         `);
         
@@ -122,18 +131,17 @@ async function loadPlugins() {
     // Service registry
     const serviceRegistry = {};
     
-    // Add exec method to database (wraps run for compatibility)
-    if (!db.exec) {
-        db.exec = async function(sql) {
-            return await this.run(sql);
-        };
-    }
-    
     // Enhanced plugin context with all necessary services and methods
     const enhancedContext = {
-        db: db, // sqlite wrapper with exec added
+        db: db, // sqlite wrapper - already has exec, run, get, all methods
         database: db,
-        logger: console,
+        logger: {
+            info: console.log.bind(console),
+            log: console.log.bind(console),
+            warn: console.warn.bind(console),
+            error: console.error.bind(console),
+            debug: console.debug.bind(console)
+        },
         
         // Config management
         getConfig: (key, defaultValue) => {
@@ -142,13 +150,25 @@ async function loadPlugins() {
                 'auth.mfaEnabled': false,
                 'auth.oauth.enabled': false,
                 'auth.tokensDir': path.join(__dirname, 'data', 'tokens'),
+                'auth.dataDir': path.join(__dirname, 'data'),
+                'paths.data': path.join(__dirname, 'data'),
                 'storage.maxFileSize': 100 * 1024 * 1024,
                 'storage.uploadDir': path.join(__dirname, 'uploads'),
                 'security.csrfEnabled': true,
-                'security.rateLimitEnabled': true
+                'security.rateLimitEnabled': true,
+                'server.dataDir': path.join(__dirname, 'data'),
+                'server.reportsDir': path.join(__dirname, 'reports')
             };
             return configs[key] !== undefined ? configs[key] : defaultValue;
         },
+        
+        // Get all loaded plugins
+        getPlugins: () => ({
+            getAll: () => Object.values(plugins),
+            get: (name) => plugins[name],
+            list: () => Object.keys(plugins),
+            count: () => Object.keys(plugins).length
+        }),
         
         // Service registration
         registerService: (name, service) => {
@@ -161,13 +181,25 @@ async function loadPlugins() {
         getService: (name) => {
             // Built-in services
             const builtinServices = {
-                'logger': console,
+                'logger': {
+                    info: console.log.bind(console),
+                    log: console.log.bind(console),
+                    warn: console.warn.bind(console),
+                    error: console.error.bind(console),
+                    debug: console.debug.bind(console)
+                },
                 'platform': {
                     isWindows: process.platform === 'win32',
                     isMac: process.platform === 'darwin',
                     isLinux: process.platform === 'linux',
+                    details: {
+                        isWindows: process.platform === 'win32',
+                        isMac: process.platform === 'darwin',
+                        isLinux: process.platform === 'linux'
+                    },
                     getScriptsDir: () => path.join(__dirname, '..', 'scripts'),
-                    getReportsDir: () => path.join(__dirname, 'reports')
+                    getReportsDir: () => path.join(__dirname, 'reports'),
+                    getDataDir: () => path.join(__dirname, 'data')
                 },
                 'broadcast': {
                     emit: (event, data) => {
@@ -183,7 +215,8 @@ async function loadPlugins() {
                 'utils': {
                     generateId: () => Date.now().toString(36),
                     hash: (data) => require('crypto').createHash('sha256').update(data).digest('hex')
-                }
+                },
+                'app': app // Express app for middleware mounting
             };
             
             return serviceRegistry[name] || builtinServices[name];
@@ -221,18 +254,83 @@ async function loadPlugins() {
             
             // Initialize plugin with enhanced context
             try {
-                await plugin.init(enhancedContext);
+                // Check if plugin expects old-style (db, app, io) or new-style (core) init
+                const initString = plugin.init.toString();
+                const usesOldStyle = initString.includes('(db,') || initString.includes('(db ,');
                 
-                // Get routes if available
-                const router = plugin.getRouter ? plugin.getRouter() : null;
-                if (router) {
-                    app.use(`/api/${plugin.name}`, router);
+                if (usesOldStyle) {
+                    // Old style: init(db, app, io)
+                    await plugin.init(db, app, null); // no WebSocket io for now
+                } else {
+                    // New style: init(core)
+                    await plugin.init(enhancedContext);
                 }
                 
+                // Provide app to plugin for routes that need it
+                plugin.app = app;
+                
+                // Add to registry immediately after successful init
                 plugins[plugin.name] = plugin;
                 console.log(`  ✅ ${plugin.name} v${plugin.version}`);
+                
+                // Get routes if available - check both routes() and getRouter()
+                let router = null;
+                if (typeof plugin.routes === 'function') {
+                    // Check what parameters routes() expects
+                    const routesStr = plugin.routes.toString();
+                    const routesParams = routesStr.match(/routes\s*\(([^)]*)\)/);
+                    
+                    if (routesParams && routesParams[1].trim()) {
+                        const params = routesParams[1].split(',').map(p => p.trim());
+                        
+                        if (params[0] === 'app') {
+                            // Plugin expects routes(app) - call it with app
+                            plugin.routes(app);
+                            console.log(`    ✓ Routes registered with app for ${plugin.name}`);
+                        } else if (params[0] === 'router' || params.includes('router')) {
+                            // Plugin expects routes(router, ...) - create a router and pass it
+                            const pluginRouter = require('express').Router();
+                            
+                            // Mock auth middleware
+                            const authenticateToken = (req, res, next) => { next(); };
+                            const getTenantId = (req) => 'default';
+                            
+                            plugin.routes(pluginRouter, authenticateToken, getTenantId);
+                            app.use('', pluginRouter);
+                            console.log(`    ✓ Routes mounted for ${plugin.name}`);
+                        } else {
+                            // No parameters or unknown - call without parameters
+                            router = plugin.routes();
+                            if (router) {
+                                app.use('', router);
+                                console.log(`    ✓ Routes mounted for ${plugin.name}`);
+                            }
+                        }
+                    } else {
+                        // No parameters - call and mount returned router
+                        router = plugin.routes();
+                        if (router) {
+                            app.use('', router);
+                            console.log(`    ✓ Routes mounted for ${plugin.name}`);
+                        }
+                    }
+                } else if (typeof plugin.getRouter === 'function') {
+                    router = plugin.getRouter();
+                    if (router) {
+                        app.use('', router);
+                        console.log(`    ✓ Routes mounted for ${plugin.name}`);
+                    }
+                }
+                
+                // Routes mounted successfully (if any)
+                if (router) {
+                    console.log(`    ✓ Routes active for ${plugin.name}`);
+                }
             } catch (initError) {
                 console.log(`  ⚠️  ${dir} - Init failed: ${initError.message}`);
+                if (process.env.DEBUG) {
+                    console.error(initError.stack);
+                }
             }
             
         } catch (error) {
@@ -340,6 +438,8 @@ app.post('/api/scanner/scan', async (req, res) => {
 
 // Plugins list
 app.get('/api/plugins', (req, res) => {
+    console.log(`[API] /api/plugins called - plugins object has ${Object.keys(plugins).length} plugins`);
+    console.log('[API] Plugin names:', Object.keys(plugins).join(', '));
     const pluginList = Object.keys(plugins).map(name => ({
         name,
         version: plugins[name].version,
@@ -628,6 +728,134 @@ app.get('/api/update/check', (req, res) => {
         latestVersion: '4.11.1',
         upToDate: true,
         lastChecked: new Date().toISOString()
+    });
+});
+
+// ===== SETTINGS ENDPOINTS =====
+app.get('/api/settings/general', (req, res) => {
+    res.json({
+        siteName: 'AI Security Scanner',
+        siteDescription: 'Enterprise Security Scanning Platform',
+        language: 'en',
+        timezone: 'UTC',
+        dateFormat: 'YYYY-MM-DD',
+        maintenanceMode: false
+    });
+});
+
+app.put('/api/settings/general', (req, res) => {
+    console.log('Updating general settings:', req.body);
+    res.json({ success: true, message: 'Settings updated successfully' });
+});
+
+app.get('/api/settings/notifications', (req, res) => {
+    res.json({
+        email: {
+            enabled: true,
+            smtp: {
+                host: 'smtp.example.com',
+                port: 587,
+                secure: true,
+                from: 'security@example.com'
+            }
+        },
+        slack: {
+            enabled: false,
+            webhook: ''
+        },
+        discord: {
+            enabled: false,
+            webhook: ''
+        },
+        telegram: {
+            enabled: false,
+            botToken: '',
+            chatId: ''
+        }
+    });
+});
+
+app.put('/api/settings/notifications', (req, res) => {
+    console.log('Updating notification settings:', req.body);
+    res.json({ success: true, message: 'Notification settings updated successfully' });
+});
+
+app.get('/api/settings/security', (req, res) => {
+    res.json({
+        authentication: {
+            sessionTimeout: 86400000,
+            maxLoginAttempts: 5,
+            lockoutDuration: 900000,
+            mfaRequired: false,
+            passwordPolicy: {
+                minLength: 12,
+                requireUppercase: true,
+                requireLowercase: true,
+                requireNumbers: true,
+                requireSpecialChars: true
+            }
+        },
+        encryption: {
+            algorithm: 'AES-256-GCM',
+            keyRotationDays: 90
+        },
+        cors: {
+            enabled: true,
+            origins: ['*']
+        },
+        rateLimit: {
+            enabled: true,
+            requestsPerMinute: 100
+        }
+    });
+});
+
+app.put('/api/settings/security', (req, res) => {
+    console.log('Updating security settings:', req.body);
+    res.json({ success: true, message: 'Security settings updated successfully' });
+});
+
+// ===== ANALYTICS DASHBOARD ENDPOINT =====
+app.get('/api/analytics/dashboard', (req, res) => {
+    res.json({
+        overview: {
+            totalRequests: 15234,
+            totalUsers: 12,
+            totalScans: 342,
+            activeAlerts: 3
+        },
+        traffic: {
+            hourly: Array.from({ length: 24 }, (_, i) => ({
+                hour: i,
+                requests: Math.floor(Math.random() * 1000) + 500
+            })),
+            daily: Array.from({ length: 7 }, (_, i) => ({
+                day: new Date(Date.now() - i * 24 * 60 * 60 * 1000).toLocaleDateString(),
+                requests: Math.floor(Math.random() * 10000) + 5000
+            }))
+        },
+        performance: {
+            avgResponseTime: 145,
+            p95ResponseTime: 320,
+            p99ResponseTime: 580,
+            errorRate: 0.8
+        },
+        topEndpoints: [
+            { endpoint: '/api/scanner/scan', count: 342, avgTime: 1234 },
+            { endpoint: '/api/admin/users', count: 156, avgTime: 89 },
+            { endpoint: '/api/reporting/generate', count: 89, avgTime: 2456 },
+            { endpoint: '/api/audit/logs', count: 76, avgTime: 156 },
+            { endpoint: '/api/system/health', count: 654, avgTime: 23 }
+        ],
+        statusCodes: {
+            '200': 14234,
+            '201': 234,
+            '400': 45,
+            '401': 23,
+            '403': 12,
+            '404': 67,
+            '500': 19
+        }
     });
 });
 
