@@ -3,6 +3,11 @@
  * Handles UI interactions, routing, and plugin integration
  */
 
+// API Configuration
+const API_BASE_URL = window.location.port === '8081' || window.location.port === '' 
+    ? 'http://54.37.254.74:3001'  // When accessing via nginx on 8081
+    : '';  // When accessing directly from port 3001
+
 // Global state
 const state = {
     currentView: 'overview',
@@ -718,8 +723,11 @@ function showPluginDetails(plugin) {
 // API Helper Functions
 async function fetchAPI(endpoint, options = {}) {
     try {
-        console.log('🌐 Fetching:', endpoint);
-        const response = await fetch(endpoint, {
+        // Construct full URL with API base
+        const url = API_BASE_URL + endpoint;
+        console.log('🌐 Fetching:', url);
+        
+        const response = await fetch(url, {
             ...options,
             headers: {
                 'Content-Type': 'application/json',
@@ -738,7 +746,8 @@ async function fetchAPI(endpoint, options = {}) {
         return data;
     } catch (error) {
         console.error('❌ API Error:', error);
-        console.warn('⚠️  Falling back to mock data for:', endpoint);
+        console.warn('⚠️  API Connection failed. Using mock data for:', endpoint);
+        console.warn('⚠️  Expected API at:', API_BASE_URL);
         // Return mock data for development
         return getMockData(endpoint);
     }
