@@ -725,6 +725,7 @@ async function fetchAPI(endpoint, options = {}) {
         // Construct full URL with API base
         const url = API_BASE_URL + endpoint;
         console.log('🌐 Fetching:', url);
+        console.log('🔍 Full URL:', window.location.origin + url);
         
         const response = await fetch(url, {
             ...options,
@@ -735,9 +736,19 @@ async function fetchAPI(endpoint, options = {}) {
         });
 
         console.log('✅ Response status:', response.status, response.ok);
+        console.log('📋 Response headers:', response.headers.get('content-type'));
 
         if (!response.ok) {
+            const text = await response.text();
+            console.error('❌ Response error body:', text);
             throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            const text = await response.text();
+            console.error('❌ Non-JSON response:', text.substring(0, 200));
+            throw new Error('Response is not JSON');
         }
 
         const data = await response.json();
@@ -745,6 +756,8 @@ async function fetchAPI(endpoint, options = {}) {
         return data;
     } catch (error) {
         console.error('❌ API Error:', error);
+        console.error('❌ Error name:', error.name);
+        console.error('❌ Error message:', error.message);
         console.warn('⚠️  API Connection failed. Using mock data for:', endpoint);
         console.warn('⚠️  Expected API at:', API_BASE_URL);
         // Return mock data for development
