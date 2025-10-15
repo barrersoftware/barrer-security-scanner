@@ -305,12 +305,79 @@ function initializeOverview() {
 
 // Load analytics content
 async function loadAnalyticsContent() {
-    return `
-        <div class="card">
-            <div class="card-header">API Analytics Dashboard</div>
-            <p>Analytics integration coming soon...</p>
-        </div>
-    `;
+    try {
+        // Fetch analytics data from API
+        const analytics = await fetchAPI('/api/api-analytics/stats') || {};
+        
+        return `
+            <div class="grid-4">
+                <div class="stat-card">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-value">${analytics.totalRequests || 0}</div>
+                    <div class="stat-label">Total API Requests</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-value">${analytics.successRate || 0}%</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⚡</div>
+                    <div class="stat-value">${analytics.avgResponseTime || 0}ms</div>
+                    <div class="stat-label">Avg Response Time</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🔥</div>
+                    <div class="stat-value">${analytics.activeEndpoints || 0}</div>
+                    <div class="stat-label">Active Endpoints</div>
+                </div>
+            </div>
+            
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-header">🎯 Top API Endpoints</div>
+                    <div class="endpoint-list">
+                        ${analytics.topEndpoints && analytics.topEndpoints.length > 0 
+                            ? analytics.topEndpoints.map(e => `
+                                <div class="endpoint-item">
+                                    <span class="endpoint-path">${e.path}</span>
+                                    <span class="endpoint-count">${e.count} requests</span>
+                                </div>
+                            `).join('')
+                            : '<p class="text-muted">No endpoint data available</p>'}
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">📈 Request Timeline</div>
+                    <div style="padding: 40px; text-align: center; color: var(--text-secondary);">
+                        <p>📊 Chart visualization</p>
+                        <p style="font-size: 12px; margin-top: 10px;">Real-time analytics from /api/api-analytics/stats</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">🔍 Quick Actions</div>
+                <div class="quick-actions">
+                    <button class="btn btn-primary" onclick="loadPluginView('api-analytics')">
+                        📊 View Full API Analytics
+                    </button>
+                    <button class="btn btn-secondary" onclick="loadView('settings')">
+                        ⚙️ Configure Analytics
+                    </button>
+                </div>
+            </div>
+        `;
+    } catch (error) {
+        return `
+            <div class="card">
+                <div class="card-header">📊 API Analytics Dashboard</div>
+                <p class="text-muted">Unable to load analytics data. Check API connection.</p>
+                <button class="btn btn-primary" onclick="loadView('analytics')">🔄 Retry</button>
+            </div>
+        `;
+    }
 }
 
 function initializeAnalytics() {
