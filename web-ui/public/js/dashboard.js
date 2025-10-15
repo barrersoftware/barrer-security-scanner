@@ -179,6 +179,11 @@ async function getViewContent(view, plugin) {
             html: await loadAnalyticsContent(),
             init: initializeAnalytics
         },
+        'ai-assistant': {
+            title: 'AI Security Assistant',
+            html: await loadAIAssistantContent(),
+            init: initializeAIAssistant
+        },
         'settings': {
             title: 'Settings',
             html: await loadSettingsContent(),
@@ -864,6 +869,286 @@ function formatDate(date) {
     if (!date) return 'N/A';
     const d = new Date(date);
     return d.toLocaleDateString() + ' ' + d.toLocaleTimeString();
+}
+
+// ===== AI ASSISTANT FUNCTIONS =====
+
+// Load AI Assistant content
+async function loadAIAssistantContent() {
+    // Check AI status
+    let aiStatus = { available: false, error: 'Checking...' };
+    try {
+        aiStatus = await fetchAPI('/api/chat/status');
+    } catch (error) {
+        console.error('Failed to check AI status:', error);
+    }
+
+    return `
+        <div class="ai-assistant-container">
+            <div class="card">
+                <div class="card-header">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span>🤖 AI Security Assistant</span>
+                        <span class="badge ${aiStatus.available ? 'badge-success' : 'badge-danger'}">
+                            ${aiStatus.available ? '✅ Online' : '❌ Offline'}
+                        </span>
+                    </div>
+                </div>
+                
+                ${aiStatus.available ? `
+                    <div class="ai-info" style="padding: 15px; background: var(--bg-color); border-radius: 8px; margin-bottom: 20px;">
+                        <p style="margin: 0; color: var(--text-secondary);">
+                            <strong>Powered by:</strong> ${aiStatus.recommended || 'Ollama LLM'} 
+                            ${aiStatus.models?.length ? `(${aiStatus.models.length} models available)` : ''}
+                        </p>
+                    </div>
+                ` : `
+                    <div class="alert alert-warning" style="padding: 15px; background: rgba(255, 152, 0, 0.1); border-left: 4px solid var(--warning-color); margin-bottom: 20px;">
+                        <strong>⚠️ AI Assistant Offline</strong>
+                        <p style="margin: 10px 0 0 0;">Ollama is not running or models are not installed. 
+                        Please ensure Ollama is installed and running with a model like llama3.1:8b.</p>
+                    </div>
+                `}
+                
+                <div class="chat-container" id="chatContainer">
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="ai-message">
+                            <div class="message-avatar">🤖</div>
+                            <div class="message-content">
+                                <strong>AI Security Assistant</strong>
+                                <p>Hello! I'm your AI security assistant powered by Ollama. I can help you with:
+                                <ul>
+                                    <li>Security best practices and recommendations</li>
+                                    <li>Vulnerability analysis and remediation</li>
+                                    <li>Threat assessment and mitigation strategies</li>
+                                    <li>Compliance and security standards</li>
+                                    <li>Incident response guidance</li>
+                                </ul>
+                                Ask me anything about cybersecurity!</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-input-container">
+                        <form id="chatForm" style="display: flex; gap: 10px;">
+                            <input 
+                                type="text" 
+                                id="chatInput" 
+                                class="chat-input" 
+                                placeholder="Ask a security question..."
+                                ${!aiStatus.available ? 'disabled' : ''}
+                                style="flex: 1; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--card-bg); color: var(--text-primary);"
+                            />
+                            <button 
+                                type="submit" 
+                                class="btn btn-primary" 
+                                ${!aiStatus.available ? 'disabled' : ''}
+                                id="sendBtn"
+                            >
+                                <span id="sendBtnText">Send 🚀</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card" style="margin-top: 20px;">
+                <div class="card-header">💡 Quick Questions</div>
+                <div class="quick-questions">
+                    <button class="btn btn-outline quick-question-btn" ${!aiStatus.available ? 'disabled' : ''}>
+                        What are the top 10 OWASP vulnerabilities?
+                    </button>
+                    <button class="btn btn-outline quick-question-btn" ${!aiStatus.available ? 'disabled' : ''}>
+                        How can I secure my API endpoints?
+                    </button>
+                    <button class="btn btn-outline quick-question-btn" ${!aiStatus.available ? 'disabled' : ''}>
+                        What is zero-trust security?
+                    </button>
+                    <button class="btn btn-outline quick-question-btn" ${!aiStatus.available ? 'disabled' : ''}>
+                        Explain SQL injection and prevention
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <style>
+            .chat-messages {
+                height: 400px;
+                overflow-y: auto;
+                padding: 20px;
+                background: var(--bg-color);
+                border-radius: 8px;
+                margin-bottom: 15px;
+            }
+            
+            .ai-message, .user-message {
+                display: flex;
+                gap: 12px;
+                margin-bottom: 20px;
+                animation: fadeIn 0.3s ease;
+            }
+            
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            
+            .user-message {
+                flex-direction: row-reverse;
+            }
+            
+            .message-avatar {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 24px;
+                background: var(--card-bg);
+                border: 2px solid var(--border-color);
+                flex-shrink: 0;
+            }
+            
+            .message-content {
+                flex: 1;
+                background: var(--card-bg);
+                padding: 15px;
+                border-radius: 12px;
+                border: 1px solid var(--border-color);
+            }
+            
+            .user-message .message-content {
+                background: rgba(0, 123, 255, 0.1);
+                border-color: var(--primary-color);
+            }
+            
+            .message-content strong {
+                display: block;
+                margin-bottom: 8px;
+                color: var(--text-primary);
+            }
+            
+            .message-content p {
+                margin: 0;
+                color: var(--text-primary);
+                line-height: 1.6;
+            }
+            
+            .message-content ul {
+                margin: 10px 0;
+                padding-left: 20px;
+            }
+            
+            .message-content li {
+                margin: 5px 0;
+                color: var(--text-primary);
+            }
+            
+            .quick-questions {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            
+            .quick-question-btn {
+                font-size: 13px;
+                padding: 8px 15px;
+            }
+            
+            .loading-dots {
+                display: inline-block;
+            }
+            
+            .loading-dots::after {
+                content: '...';
+                animation: dots 1.5s steps(4, end) infinite;
+            }
+            
+            @keyframes dots {
+                0%, 20% { content: '.'; }
+                40% { content: '..'; }
+                60%, 100% { content: '...'; }
+            }
+        </style>
+    `;
+}
+
+function initializeAIAssistant() {
+    const chatForm = document.getElementById('chatForm');
+    const chatInput = document.getElementById('chatInput');
+    const chatMessages = document.getElementById('chatMessages');
+    const sendBtn = document.getElementById('sendBtn');
+    const sendBtnText = document.getElementById('sendBtnText');
+    
+    // Handle form submission
+    if (chatForm) {
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const message = chatInput.value.trim();
+            if (!message) return;
+            
+            // Add user message to chat
+            addMessage('user', message);
+            chatInput.value = '';
+            
+            // Disable input and show loading
+            chatInput.disabled = true;
+            sendBtn.disabled = true;
+            sendBtnText.innerHTML = '<span class="loading-dots">Thinking</span>';
+            
+            try {
+                // Send message to AI
+                const response = await fetch('/api/chat/message', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    addMessage('ai', data.response);
+                } else {
+                    addMessage('ai', `Error: ${data.error || 'Failed to get response'}`);
+                }
+            } catch (error) {
+                addMessage('ai', `Error: ${error.message}`);
+            } finally {
+                // Re-enable input
+                chatInput.disabled = false;
+                sendBtn.disabled = false;
+                sendBtnText.textContent = 'Send 🚀';
+                chatInput.focus();
+            }
+        });
+    }
+    
+    // Handle quick questions
+    const quickQuestionBtns = document.querySelectorAll('.quick-question-btn');
+    quickQuestionBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            chatInput.value = btn.textContent.trim();
+            chatForm.dispatchEvent(new Event('submit'));
+        });
+    });
+    
+    // Helper function to add messages
+    function addMessage(type, content) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = type === 'user' ? 'user-message' : 'ai-message';
+        
+        messageDiv.innerHTML = `
+            <div class="message-avatar">${type === 'user' ? '👤' : '🤖'}</div>
+            <div class="message-content">
+                <strong>${type === 'user' ? 'You' : 'AI Assistant'}</strong>
+                <p>${content.replace(/\n/g, '<br>')}</p>
+            </div>
+        `;
+        
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
 }
 
 // Export functions for use in other scripts
