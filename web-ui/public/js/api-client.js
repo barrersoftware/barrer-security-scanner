@@ -362,4 +362,6 @@ class APIClient {
 }
 
 // Create global API client instance
-window.api = new APIClient();
+const apiClient = new APIClient();
+window.apiClient = apiClient;
+window.api = apiClient; // Also keep 'api' for backwards compatibility
