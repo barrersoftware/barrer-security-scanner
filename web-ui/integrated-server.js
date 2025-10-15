@@ -16,7 +16,8 @@ const PORT = process.env.PORT || 3001;
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
+// Serve static files but don't serve index.html automatically
+app.use(express.static(path.join(__dirname, 'public'), { index: false }));
 
 // CORS for development
 app.use((req, res, next) => {
