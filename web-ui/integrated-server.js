@@ -341,6 +341,13 @@ async function loadPlugins() {
     console.log(`\n✅ Loaded ${Object.keys(plugins).length} plugins`);
 }
 
+// ===== WEB ROUTES =====
+
+// Serve dashboard as default
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
+});
+
 // ===== API ENDPOINTS =====
 
 // Health check
