@@ -4,9 +4,8 @@
  */
 
 // API Configuration
-const API_BASE_URL = window.location.port === '8081' || window.location.port === '' 
-    ? 'http://54.37.254.74:3001'  // When accessing via nginx on 8081
-    : '';  // When accessing directly from port 3001
+// Using relative URLs - nginx on port 8081 will proxy /api/ to port 3001
+const API_BASE_URL = '';
 
 // Global state
 const state = {
