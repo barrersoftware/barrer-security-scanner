@@ -245,7 +245,7 @@ body {
     top: 100%;
     right: 0;
     margin-top: 10px;
-    background: white;
+    background: var(--card-bg);
     border: 1px solid #e0e0e0;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-lg);
@@ -287,7 +287,7 @@ body {
 /* Side Menu */
 .side-menu {
     width: var(--sidebar-width);
-    background: white;
+    background: var(--card-bg);
     border-right: 1px solid #e0e0e0;
     display: flex;
     flex-direction: column;
@@ -423,7 +423,7 @@ body {
 }
 
 .content-body {
-    background: white;
+    background: var(--card-bg);
     border-radius: var(--border-radius);
     padding: 25px;
     box-shadow: var(--shadow-sm);
@@ -452,7 +452,7 @@ body {
 }
 
 .toast {
-    background: white;
+    background: var(--card-bg);
     border-left: 4px solid var(--primary-color);
     padding: 15px 20px;
     border-radius: var(--border-radius);
@@ -647,7 +647,7 @@ body {
 
 /* Stat Cards */
 .stat-card {
-    background: white;
+    background: var(--card-bg);
     border-radius: var(--border-radius);
     padding: 20px;
     box-shadow: var(--shadow-sm);
