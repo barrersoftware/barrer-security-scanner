@@ -1,0 +1,125 @@
+# AI Security Scanner - Server Inventory
+# Define your servers for centralized scanning
+
+servers:
+  # Production Web Servers
+  - name: web-prod-01
+    host: 192.168.1.10
+    user: ubuntu
+    ssh_key: ~/.ssh/id_rsa
+    port: 22
+    tags:
+      - production
+      - web
+      - critical
+    description: Primary production web server
+    
+  - name: web-prod-02
+    host: 192.168.1.11
+    user: ubuntu
+    ssh_key: ~/.ssh/id_rsa
+    port: 22
+    tags:
+      - production
+      - web
+      - critical
+    description: Secondary production web server
+    
+  # Database Servers
+  - name: db-prod-01
+    host: 192.168.1.20
+    user: ubuntu
+    ssh_key: ~/.ssh/db_key
+    port: 22
+    tags:
+      - production
+      - database
+      - critical
+    description: Production database server
+    
+  - name: db-dev-01
+    host: 192.168.1.21
+    user: ubuntu
+    ssh_key: ~/.ssh/id_rsa
+    port: 22
+    tags:
+      - development
+      - database
+    description: Development database server
+    
+  # API Servers
+  - name: api-prod-01
+    host: api.example.com
+    user: admin
+    ssh_key: ~/.ssh/api_key
+    port: 2222
+    tags:
+      - production
+      - api
+      - critical
+    description: API gateway server
+    
+  # Development Servers
+  - name: dev-server-01
+    host: dev.example.com
+    user: developer
+    ssh_key: ~/.ssh/id_rsa
+    port: 22
+    tags:
+      - development
+      - testing
+    description: Development and testing server
+
+# Server Groups - for bulk operations
+groups:
+  production:
+    - web-prod-01
+    - web-prod-02
+    - db-prod-01
+    - api-prod-01
+    
+  development:
+    - db-dev-01
+    - dev-server-01
+    
+  web-tier:
+    - web-prod-01
+    - web-prod-02
+    
+  database-tier:
+    - db-prod-01
+    - db-dev-01
+    
+  critical:
+    - web-prod-01
+    - web-prod-02
+    - db-prod-01
+    - api-prod-01
+
+# Scan Configuration
+scan_config:
+  # Parallel execution
+  parallel: true
+  max_concurrent: 4
+  
+  # SSH connection settings
+  ssh_timeout: 30
+  ssh_retry: 3
+  
+  # Report settings
+  reports_dir: ~/security-reports/multi-server
+  consolidated_report: true
+  per_server_reports: true
+  
+  # Notification settings
+  notify_on_completion: true
+  notify_platforms:
+    - slack
+    - discord
+  
+  # Scan options
+  comprehensive: true
+  quick_scan: false
+  
+  # AI model for analysis
+  ai_model: llama3.1:8b
