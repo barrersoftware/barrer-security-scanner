@@ -726,7 +726,7 @@ For questions or issues:
 - Review documentation: `/docs`
 - Check audit logs: `/api/admin/audit/logs`
 - System health: `/api/admin/health`
-- GitHub Issues: [Report Issue](https://github.com/ssfdre38/ai-security-scanner/issues)
+- GitHub Issues: [Report Issue](https://github.com/barrersoftware/ai-security-scanner/issues)
 
 ---
 

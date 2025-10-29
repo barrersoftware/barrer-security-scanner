@@ -32,7 +32,7 @@ EOF
 echo -e "${NC}"
 
 # Configuration
-REPO_URL="https://github.com/ssfdre38/ai-security-scanner.git"
+REPO_URL="https://github.com/barrersoftware/ai-security-scanner.git"
 INSTALL_DIR="$HOME/ai-security-scanner"
 WEB_UI_PORT=3000
 
@@ -662,7 +662,7 @@ show_summary() {
     echo ""
     
     print_info "Need help? Check the documentation or visit:"
-    echo "  https://github.com/ssfdre38/ai-security-scanner"
+    echo "  https://github.com/barrersoftware/ai-security-scanner"
     echo ""
 }
 

@@ -232,7 +232,7 @@ sudo apt update && sudo apt upgrade -y
 curl -fsSL https://raw.githubusercontent.com/ssfdre38/ai-security-scanner/master/setup.sh | bash
 
 # Or manual installation
-git clone https://github.com/ssfdre38/ai-security-scanner.git
+git clone https://github.com/barrersoftware/ai-security-scanner.git
 cd ai-security-scanner
 ./setup.sh
 ```
@@ -388,7 +388,7 @@ WORKDIR /app
 RUN apk add --no-cache git python3 openssl clamav
 
 # Clone repository
-RUN git clone https://github.com/ssfdre38/ai-security-scanner.git .
+RUN git clone https://github.com/barrersoftware/ai-security-scanner.git .
 
 # Install Node packages
 WORKDIR /app/web-ui
@@ -624,8 +624,8 @@ npm install
 - **Documentation:** [SECURITY_ENHANCEMENTS_v3.1.0.md](SECURITY_ENHANCEMENTS_v3.1.0.md)
 - **Quick Start:** [QUICK_START_SECURITY_FEATURES.md](QUICK_START_SECURITY_FEATURES.md)
 - **Changelog:** [CHANGELOG_v3.1.0.md](CHANGELOG_v3.1.0.md)
-- **GitHub:** https://github.com/ssfdre38/ai-security-scanner
-- **Issues:** https://github.com/ssfdre38/ai-security-scanner/issues
+- **GitHub:** https://github.com/barrersoftware/ai-security-scanner
+- **Issues:** https://github.com/barrersoftware/ai-security-scanner/issues
 
 ---
 

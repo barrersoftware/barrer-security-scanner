@@ -391,12 +391,12 @@ Internet
 We want YOUR input! Here's how to participate:
 
 #### 1. **Check Existing Requests**
-- Browse [GitHub Discussions](https://github.com/ssfdre38/ai-security-scanner/discussions)
-- Search [Issues](https://github.com/ssfdre38/ai-security-scanner/issues) for similar requests
+- Browse [GitHub Discussions](https://github.com/barrersoftware/ai-security-scanner/discussions)
+- Search [Issues](https://github.com/barrersoftware/ai-security-scanner/issues) for similar requests
 - Review this roadmap for planned features
 
 #### 2. **Submit New Request**
-- Create a [Discussion](https://github.com/ssfdre38/ai-security-scanner/discussions/new?category=ideas) in the "Ideas" category
+- Create a [Discussion](https://github.com/barrersoftware/ai-security-scanner/discussions/new?category=ideas) in the "Ideas" category
 - Use template: **[FEATURE REQUEST] Your Feature Name**
 - Include:
   - **Problem:** What problem does this solve?
@@ -539,10 +539,10 @@ Vote on features you want to see! Most-requested features get prioritized.
 
 ### Connect With Us
 
-- **GitHub:** [github.com/ssfdre38/ai-security-scanner](https://github.com/ssfdre38/ai-security-scanner)
-- **Discussions:** [GitHub Discussions](https://github.com/ssfdre38/ai-security-scanner/discussions)
-- **Issues:** [GitHub Issues](https://github.com/ssfdre38/ai-security-scanner/issues)
-- **Email:** [Create Issue](https://github.com/ssfdre38/ai-security-scanner/issues/new)
+- **GitHub:** [github.com/barrersoftware/ai-security-scanner](https://github.com/barrersoftware/ai-security-scanner)
+- **Discussions:** [GitHub Discussions](https://github.com/barrersoftware/ai-security-scanner/discussions)
+- **Issues:** [GitHub Issues](https://github.com/barrersoftware/ai-security-scanner/issues)
+- **Email:** [Create Issue](https://github.com/barrersoftware/ai-security-scanner/issues/new)
 
 ---
 
@@ -605,8 +605,8 @@ Together, we can make the internet safer for everyone. 🛡️
 
 ---
 
-**Want to see a feature on this roadmap?** [Start a discussion!](https://github.com/ssfdre38/ai-security-scanner/discussions/new?category=ideas)
+**Want to see a feature on this roadmap?** [Start a discussion!](https://github.com/barrersoftware/ai-security-scanner/discussions/new?category=ideas)
 
-**Found a bug?** [Report it here!](https://github.com/ssfdre38/ai-security-scanner/issues/new)
+**Found a bug?** [Report it here!](https://github.com/barrersoftware/ai-security-scanner/issues/new)
 
 **Ready to contribute?** Check out our [Contributing Guide](CONTRIBUTING.md)!

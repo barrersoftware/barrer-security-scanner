@@ -219,7 +219,7 @@ That's it! 2-10 minutes later, you'll have a fully configured, enterprise-grade 
 
 ### Manual Installation
 
-See [SETUP_GUIDE.md](https://github.com/ssfdre38/ai-security-scanner/blob/master/SETUP_GUIDE.md) for detailed instructions.
+See [SETUP_GUIDE.md](https://github.com/barrersoftware/ai-security-scanner/blob/master/SETUP_GUIDE.md) for detailed instructions.
 
 ---
 
@@ -392,8 +392,8 @@ Planned features for the next release:
 ### Getting Help
 
 - **Documentation:** See docs folder
-- **Issues:** [GitHub Issues](https://github.com/ssfdre38/ai-security-scanner/issues)
-- **Discussions:** [GitHub Discussions](https://github.com/ssfdre38/ai-security-scanner/discussions)
+- **Issues:** [GitHub Issues](https://github.com/barrersoftware/ai-security-scanner/issues)
+- **Discussions:** [GitHub Discussions](https://github.com/barrersoftware/ai-security-scanner/discussions)
 - **Logs:** Check `web-ui/logs/` directory
 
 ### Reporting Bugs
@@ -428,7 +428,7 @@ irm https://raw.githubusercontent.com/ssfdre38/ai-security-scanner/master/setup.
 
 **Manual Download:**
 ```bash
-git clone https://github.com/ssfdre38/ai-security-scanner.git
+git clone https://github.com/barrersoftware/ai-security-scanner.git
 cd ai-security-scanner
 ./setup.sh  # or .\setup.ps1 on Windows
 ```
@@ -461,7 +461,7 @@ docker run -p 3000:3000 ssfdre38/ai-security-scanner:3.1.0
 **Version:** 3.1.0  
 **Status:** ✅ Production Ready  
 
-**Download:** [https://github.com/ssfdre38/ai-security-scanner/releases/tag/v3.1.0](https://github.com/ssfdre38/ai-security-scanner/releases/tag/v3.1.0)
+**Download:** [https://github.com/barrersoftware/ai-security-scanner/releases/tag/v3.1.0](https://github.com/barrersoftware/ai-security-scanner/releases/tag/v3.1.0)
 
 ---
 

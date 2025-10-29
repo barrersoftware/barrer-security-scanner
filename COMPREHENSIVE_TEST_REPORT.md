@@ -437,7 +437,7 @@ Success Rate:    92%
 
 **Project:** AI Security Scanner  
 **Version:** 3.0.0 (with authentication and extended compliance)  
-**Repository:** https://github.com/ssfdre38/ai-security-scanner  
+**Repository:** https://github.com/barrersoftware/ai-security-scanner  
 **License:** MIT  
 
 Made with ❤️ for the security community by GitHub Copilot CLI

@@ -11,7 +11,7 @@
 Instead, please report security issues by:
 
 1. **Opening a GitHub Security Advisory** (Recommended)
-   - Go to: https://github.com/ssfdre38/ai-security-scanner/security/advisories/new
+   - Go to: https://github.com/barrersoftware/ai-security-scanner/security/advisories/new
    - This creates a private discussion with the maintainers
    
 2. **Email** (Alternative)

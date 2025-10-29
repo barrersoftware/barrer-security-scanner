@@ -406,8 +406,8 @@ MIT License - see [LICENSE](../LICENSE) file
 
 ## Support
 
-- Issues: [GitHub Issues](https://github.com/ssfdre38/ai-security-scanner/issues)
-- Discussions: [GitHub Discussions](https://github.com/ssfdre38/ai-security-scanner/discussions)
+- Issues: [GitHub Issues](https://github.com/barrersoftware/ai-security-scanner/issues)
+- Discussions: [GitHub Discussions](https://github.com/barrersoftware/ai-security-scanner/discussions)
 
 ---
 

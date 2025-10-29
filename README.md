@@ -3,7 +3,7 @@
 **Enterprise-grade security analysis powered by local AI - completely private, no data ever leaves your server.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/Version-3.1.1-blue.svg)](https://github.com/ssfdre38/ai-security-scanner/releases/tag/v3.1.1)
+[![Version](https://img.shields.io/badge/Version-3.1.1-blue.svg)](https://github.com/barrersoftware/ai-security-scanner/releases/tag/v3.1.1)
 [![Security Score](https://img.shields.io/badge/Security%20Score-100%2F100-brightgreen.svg)](SECURITY_SCORE_100.md)
 [![Platform: Linux](https://img.shields.io/badge/Platform-Linux%20%7C%20macOS%20%7C%20Windows-blue.svg)](https://www.kernel.org/)
 [![AI Model: Llama 3.1](https://img.shields.io/badge/AI-Llama%203.1-green.svg)](https://ollama.com/)
@@ -12,7 +12,7 @@ Comprehensive security analysis tools using local Large Language Models (LLMs) f
 
 **🎉 NEW in v3.1.1: Perfect 100/100 Security Score Achieved!** - See [Release Notes](RELEASE_NOTES_v3.1.0.md)
 
-📍 **[View Roadmap](ROADMAP.md)** | 💡 **[Request Features](https://github.com/ssfdre38/ai-security-scanner/discussions/new?category=ideas)** | ⭐ **[Star on GitHub](https://github.com/ssfdre38/ai-security-scanner)**
+📍 **[View Roadmap](ROADMAP.md)** | 💡 **[Request Features](https://github.com/barrersoftware/ai-security-scanner/discussions/new?category=ideas)** | ⭐ **[Star on GitHub](https://github.com/barrersoftware/ai-security-scanner)**
 
 ## 🌟 Features
 
@@ -122,7 +122,7 @@ See [SETUP_GUIDE.md](SETUP_GUIDE.md) for advanced configuration options.
 
 ```bash
 # Clone the repository
-git clone https://github.com/ssfdre38/ai-security-scanner.git
+git clone https://github.com/barrersoftware/ai-security-scanner.git
 cd ai-security-scanner
 
 # Run the installer
@@ -381,8 +381,8 @@ This tool is for security analysis and educational purposes. It complements but 
 
 ## 📞 Support
 
-- **Issues:** [GitHub Issues](https://github.com/ssfdre38/ai-security-scanner/issues)
-- **Discussions:** [GitHub Discussions](https://github.com/ssfdre38/ai-security-scanner/discussions)
+- **Issues:** [GitHub Issues](https://github.com/barrersoftware/ai-security-scanner/issues)
+- **Discussions:** [GitHub Discussions](https://github.com/barrersoftware/ai-security-scanner/discussions)
 - **Security Issues:** security@yourdomain.com (private disclosure)
 
 ## 🌐 Web UI Dashboard
@@ -700,6 +700,6 @@ We believe that security should not be a luxury reserved for corporations with d
 
 **Star ⭐ this repo if you find it useful!**
 
-**Latest Release:** [v3.1.1 - Perfect Security Score 100/100](https://github.com/ssfdre38/ai-security-scanner/releases/tag/v3.1.1) ✨
+**Latest Release:** [v3.1.1 - Perfect Security Score 100/100](https://github.com/barrersoftware/ai-security-scanner/releases/tag/v3.1.1) ✨
 
 Made with ❤️ for the security community

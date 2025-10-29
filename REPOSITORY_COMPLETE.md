@@ -2,7 +2,7 @@
 
 **Date:** October 12, 2025  
 **Status:** Fully Set Up & Production Ready  
-**Repository:** https://github.com/ssfdre38/ai-security-scanner
+**Repository:** https://github.com/barrersoftware/ai-security-scanner
 
 ---
 
@@ -211,7 +211,7 @@ irm https://raw.githubusercontent.com/ssfdre38/ai-security-scanner/master/setup.
 
 ### Manual Install
 ```bash
-git clone https://github.com/ssfdre38/ai-security-scanner.git
+git clone https://github.com/barrersoftware/ai-security-scanner.git
 cd ai-security-scanner
 sudo ./install.sh
 ```
@@ -481,8 +481,8 @@ Everything is in place:
 
 ---
 
-**Repository URL:** https://github.com/ssfdre38/ai-security-scanner  
-**Latest Release:** https://github.com/ssfdre38/ai-security-scanner/releases/tag/v3.1.1  
+**Repository URL:** https://github.com/barrersoftware/ai-security-scanner  
+**Latest Release:** https://github.com/barrersoftware/ai-security-scanner/releases/tag/v3.1.1  
 **Security Score:** 100/100 ✨  
 **Status:** Production Ready  
 

@@ -33,7 +33,7 @@ Enterprise-grade security analysis for Windows servers and workstations, powered
 
 1. **Download the repository:**
    ```powershell
-   git clone https://github.com/ssfdre38/ai-security-scanner.git
+   git clone https://github.com/barrersoftware/ai-security-scanner.git
    cd ai-security-scanner\windows
    ```
 
@@ -331,7 +331,7 @@ Get-GPOReport -All -ReportType Html -Path "GPOReport.html"
 
 ## Support
 
-- **Issues**: [GitHub Issues](https://github.com/ssfdre38/ai-security-scanner/issues)
+- **Issues**: [GitHub Issues](https://github.com/barrersoftware/ai-security-scanner/issues)
 - **Windows-specific questions**: Tag with `windows` label
 - **Documentation**: [Main README](../README.md)
 
