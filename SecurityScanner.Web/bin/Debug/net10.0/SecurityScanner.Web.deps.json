@@ -1,0 +1,39 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "SecurityScanner.Web/1.0.0": {
+        "dependencies": {
+          "SecurityScanner.Core": "1.0.0"
+        },
+        "runtime": {
+          "SecurityScanner.Web.dll": {}
+        }
+      },
+      "SecurityScanner.Core/1.0.0": {
+        "runtime": {
+          "SecurityScanner.Core.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "SecurityScanner.Web/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "SecurityScanner.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

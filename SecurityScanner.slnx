@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SecurityScanner.Core/SecurityScanner.Core.csproj" />
+  <Project Path="SecurityScanner.Web/SecurityScanner.Web.csproj" />
+</Solution>

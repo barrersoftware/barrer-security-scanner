@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "Cdo24iMNMW0=",
+  "success": true,
+  "projectFilePath": "/home/ssfdre38/ai-security-scanner-dotnet10/src/SecurityScanner.Web/SecurityScanner.Web.csproj",
+  "expectedPackageFiles": [
+    "/home/ssfdre38/.nuget/packages/microsoft.aspnetcore.app.internal.assets/10.0.0/microsoft.aspnetcore.app.internal.assets.10.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

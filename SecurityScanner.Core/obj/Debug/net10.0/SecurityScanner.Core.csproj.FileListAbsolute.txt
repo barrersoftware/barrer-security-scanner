@@ -1,0 +1,12 @@
+/home/ssfdre38/ai-security-scanner-dotnet10/src/SecurityScanner.Core/bin/Debug/net10.0/SecurityScanner.Core.deps.json
+/home/ssfdre38/ai-security-scanner-dotnet10/src/SecurityScanner.Core/bin/Debug/net10.0/SecurityScanner.Core.dll
+/home/ssfdre38/ai-security-scanner-dotnet10/src/SecurityScanner.Core/bin/Debug/net10.0/SecurityScanner.Core.pdb
+/home/ssfdre38/ai-security-scanner-dotnet10/src/SecurityScanner.Core/obj/Debug/net10.0/SecurityScanner.Core.GeneratedMSBuildEditorConfig.editorconfig
+/home/ssfdre38/ai-security-scanner-dotnet10/src/SecurityScanner.Core/obj/Debug/net10.0/SecurityScanner.Core.AssemblyInfoInputs.cache
+/home/ssfdre38/ai-security-scanner-dotnet10/src/SecurityScanner.Core/obj/Debug/net10.0/SecurityScanner.Core.AssemblyInfo.cs
+/home/ssfdre38/ai-security-scanner-dotnet10/src/SecurityScanner.Core/obj/Debug/net10.0/SecurityScanner.Core.csproj.CoreCompileInputs.cache
+/home/ssfdre38/ai-security-scanner-dotnet10/src/SecurityScanner.Core/obj/Debug/net10.0/SecurityScanner.Core.sourcelink.json
+/home/ssfdre38/ai-security-scanner-dotnet10/src/SecurityScanner.Core/obj/Debug/net10.0/SecurityScanner.Core.dll
+/home/ssfdre38/ai-security-scanner-dotnet10/src/SecurityScanner.Core/obj/Debug/net10.0/refint/SecurityScanner.Core.dll
+/home/ssfdre38/ai-security-scanner-dotnet10/src/SecurityScanner.Core/obj/Debug/net10.0/SecurityScanner.Core.pdb
+/home/ssfdre38/ai-security-scanner-dotnet10/src/SecurityScanner.Core/obj/Debug/net10.0/ref/SecurityScanner.Core.dll
