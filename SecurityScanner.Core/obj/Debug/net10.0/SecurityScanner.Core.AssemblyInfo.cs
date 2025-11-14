@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SecurityScanner.Core")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2676fb4882963da6c3d75dc34bc7e29f35d387e9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a5a2118277b141cd106ba441fbb33edc19620788")]
 [assembly: System.Reflection.AssemblyProductAttribute("SecurityScanner.Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SecurityScanner.Core")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
