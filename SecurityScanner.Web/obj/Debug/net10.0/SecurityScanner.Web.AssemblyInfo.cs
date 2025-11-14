@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SecurityScanner.Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7cf3d3283955118d50540ea2c23009ffc2e0fd19")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2676fb4882963da6c3d75dc34bc7e29f35d387e9")]
 [assembly: System.Reflection.AssemblyProductAttribute("SecurityScanner.Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SecurityScanner.Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
